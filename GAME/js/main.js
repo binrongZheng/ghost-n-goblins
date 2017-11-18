@@ -1,14 +1,14 @@
 var platformer = platformer || {};
 
 var gameOptions = {
-	gameWidth:512,
-	gameHeight:448,
-	level1Height:448,
-	level1Width:7168,
-    playerLife:3,
+		gameWidth:512,
+		gameHeight:448,
+		level1Height:448,
+		level1Width:7168,
+    playerLife:true,
     playerGravity:1000,
-	playerSpeed:200,
-	playerJumpForce:350,
+		playerSpeed:200,
+		playerJumpForce:350,
     lanceSpeed:500,
     dagaSpeed:50,
     torchaSpeed:100,
@@ -17,6 +17,7 @@ var gameOptions = {
     crowXoffset:20,
     crowYoffset:3,
     zombieSpeed: 150,
+		levelOption:3
 };
 
 platformer.game = new Phaser.Game(gameOptions.gameWidth,gameOptions.gameHeight,Phaser.AUTO,null,this,false,false);
@@ -29,4 +30,3 @@ platformer.game.state.add('level1',platformer.level1);
 platformer.game.state.add('finalLevel',platformer.finalLevel);
 
 platformer.game.state.start('mainMenu');
-

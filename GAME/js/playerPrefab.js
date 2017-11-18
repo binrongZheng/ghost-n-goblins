@@ -1,7 +1,8 @@
 var platformer = platformer || {};
 
-platformer.playerPrefab = function (game,x,y, _level,_player_life,_cursors,_jump_key,_space,_with_cloth) {
+platformer.playerPrefab = function (game,x,y, _level,_player_life,_cursors,_jump_key,_space,_with_cloth,player_have_life) {
     //INPUT VALUE
+    this.playerHaveLife=player_have_life;
     this.player_life=_player_life;
 	  this.level = _level;
     this.cursors = _cursors;
@@ -10,6 +11,7 @@ platformer.playerPrefab = function (game,x,y, _level,_player_life,_cursors,_jump
     this.with_cloth = _with_cloth;
     this.isKill=2;
     this.playerPos=[x,y];
+
     //SPRITE
 	  Phaser.Sprite.call(this,game,x,y,'hero');
 	  game.add.existing (this);
@@ -237,17 +239,22 @@ platformer.playerPrefab.prototype.killPlayer = function (hero,enemy) {
             this.player_life--;
             if(this.player_life<lastLife) {
                 //play so of died
-                hero.reset(this.playerPos[0],this.playerPos[1]);
+              /*  hero.reset(this.playerPos[0],this.playerPos[1]);
                 this.with_cloth=true;
-                this.isKill=2;
+                this.isKill=2;*/
+                gameOptions.levelOption = this.player_life;
+                this.level.themeMusic.stop();
+                this.game.state.start('tutorial');
             }
         }
-        if(this.player_life==0){
-            this.killOnComplete=true;
-            if(this.killOnComplete){
-            this.game.state.start('mainMenu');
-            this.level.themeMusic.stop();
-            }
+        if(this.playerHaveLife){
+          if(this.player_life==0){
+              this.killOnComplete=true;
+              if(this.killOnComplete){
+              this.game.state.start('mainMenu');
+              this.level.themeMusic.stop();
+              }
+          }
         }
     }
 }
@@ -260,17 +267,25 @@ platformer.playerPrefab.prototype.PlayerDie = function (hero,water) {
         this.player_life--;
         if(this.player_life<lastLife) {
             //play so of died
+            /*
             hero.reset(this.playerPos[0],this.playerPos[1]);
             this.with_cloth=true;
-            this.isKill=2;
-        }
-
-        if(this.player_life==0){
-            this.killOnComplete=true;
-            if(this.killOnComplete){
-            this.game.state.start('mainMenu');
+            this.isKill=2;*/
+            gameOptions.levelOption = this.player_life;
             this.level.themeMusic.stop();
-            }
+            this.game.state.start('tutorial');
+        }
+        if(this.playerHaveLife){
+          if(this.player_life==0){
+              this.killOnComplete=true;
+              if(this.killOnComplete){
+              this.game.state.start('mainMenu');
+              this.level.themeMusic.stop();
+              }
+          }
+        }
+        else{
+
         }
     }
   }

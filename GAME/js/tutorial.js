@@ -70,7 +70,8 @@ platformer.tutorial = {
         this.game.world.setBounds(0, 0, gameOptions.level1Width, gameOptions.level1Height);
         //player init value
         this.with_cloth=true;
-        this.player_life=gameOptions.playerLife;
+        this.player_life=gameOptions.levelOption;
+        this.playerHaveLife=gameOptions.playerLife;//playerLife==false;
         this.isPlay=true;
 	},
 	preload:function(){
@@ -134,7 +135,7 @@ platformer.tutorial = {
         //BACKGROUND
         this.bg = this.game.add.tileSprite(0,0,gameOptions.level1Width, gameOptions.level1Height, 'bg');
 
-		//MAP
+		      //MAP
 		    this.map = this.game.add.tilemap('map');
         this.map.addTilesetImage('platform_collision');
 
@@ -145,7 +146,7 @@ platformer.tutorial = {
 		    this.map.createLayer('platform_up');
         this.map.createLayer('ladder');
 
-		//CONTROLS
+		      //CONTROLS
 		    this.cursors = this.game.input.keyboard.createCursorKeys();
         this.jump_key=this.game.input.keyboard.addKey(Phaser.Keyboard.Z);
 		    this.space = this.game.input.keyboard.addKey(Phaser.Keyboard.X);
@@ -153,7 +154,7 @@ platformer.tutorial = {
         this.playKey = this.game.input.keyboard.addKey(Phaser.Keyboard.P);
 
         //PLAYER ->(game,x,y, _level,_player_life,_cursors,_jump_key,_space,_with_cloth)
-        this.hero = new platformer.playerPrefab(this.game,gameOptions.gameWidth/2,350,this,this.player_life,this.cursors,this.jump_key,this.space,this.with_cloth );
+        this.hero = new platformer.playerPrefab(this.game,gameOptions.gameWidth/2,350,this,this.player_life,this.cursors,this.jump_key,this.space,this.with_cloth,this.playerHaveLife );
 
         //BALES DEL PERSONATGE
         this.projectiles = this.add.group();
@@ -188,6 +189,7 @@ platformer.tutorial = {
 	},
 	update:function(){
         if(this.themeMusic.loop==false) this.themeMusic.stop();
+        console.log(gameOptions.levelOption);
 	},
     createGraves:function(){
       // Creo il gruppo delle tombe
