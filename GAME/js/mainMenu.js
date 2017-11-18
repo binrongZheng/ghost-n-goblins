@@ -149,11 +149,13 @@ platformer.mainMenu={
                     case 1:
                       console.log(gameOptions.levelOption);
                       gameOptions.levelOption=3;
+                      gameOptions.lastOption=gameOptions.levelOption;
                       gameOptions.playerLife=true;
                       break;
                     case 2:
                       console.log(gameOptions.levelOption);
                       gameOptions.levelOption=1;
+                      gameOptions.lastOption=gameOptions.levelOption;
                       gameOptions.playerLife=true;
                       break;
                 }

@@ -58,7 +58,6 @@ window.onkeydown = function(event) {
                 break;
         }
     }
-
 }
 
 platformer.tutorial = {
@@ -113,6 +112,8 @@ platformer.tutorial = {
         this.load.image('water','img/water.png');
         //MENU PAUSA
         this.load.image('menu_pausa', 'img/menu pausa.png');
+        //GAME OVER
+        this.load.image('game_over', 'img/game_over.png');
         //KEY
         this.load.image('key', 'img/key.png');
 
@@ -165,8 +166,6 @@ platformer.tutorial = {
 
         //KEY - la instanciara el cyborg al morir
         new platformer.keyPrefab(this.game,7000,0,this);
-
-
         //WATER
         this.createWater();
 
@@ -176,6 +175,7 @@ platformer.tutorial = {
 		    this.createCrows();
         this.enemies.add (new platformer.zombiePrefab(this.game,200+gameOptions.gameWidth/2,350,this));
         this.redDevil = new platformer.RedDemonPrefab(this.game,2900,350,this);
+
 		//CAMERA
 		this.camera.follow(this.hero);
         //HUD
@@ -189,7 +189,10 @@ platformer.tutorial = {
 	},
 	update:function(){
         if(this.themeMusic.loop==false) this.themeMusic.stop();
-        console.log(gameOptions.levelOption);
+        //GAMEOVER screen
+        this.game_over = this.add.sprite(this.camera.x+gameOptions.gameWidth/2,this.camera.y+gameOptions.gameHeight/2, 'game_over');
+        this.game_over.anchor.setTo(0.5);
+        this.game_over.visible=false;
 	},
     createGraves:function(){
       // Creo il gruppo delle tombe
