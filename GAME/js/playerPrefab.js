@@ -3,7 +3,7 @@ var platformer = platformer || {};
 platformer.playerPrefab = function (game,x,y, _level,_player_life,_cursors,_jump_key,_space,_with_cloth) {
     //INPUT VALUE
     this.player_life=_player_life;
-	this.level = _level;
+	  this.level = _level;
     this.cursors = _cursors;
     this.jump_key = _jump_key;
     this.space = _space;
@@ -11,9 +11,9 @@ platformer.playerPrefab = function (game,x,y, _level,_player_life,_cursors,_jump
     this.isKill=2;
     this.playerPos=[x,y];
     //SPRITE
-	Phaser.Sprite.call(this,game,x,y,'hero');
-	game.add.existing (this);
-	this.anchor.setTo(.5);
+	  Phaser.Sprite.call(this,game,x,y,'hero');
+	  game.add.existing (this);
+	  this.anchor.setTo(.5);
 	//ARMADURA - GONE
     this.animations.add("removeArmadura", [33,39], 10, true);
     //PLAYER - WITH CLOTH
@@ -50,8 +50,8 @@ platformer.playerPrefab = function (game,x,y, _level,_player_life,_cursors,_jump
     this.playerShoot = this.level.add.audio('player_Shoot');
 
 	//physics
-	game.physics.arcade.enable(this);
-	this.body.collideWorldBounds = true;
+	  game.physics.arcade.enable(this);
+  	this.body.collideWorldBounds = true;
 
     //Timer del dispar
     this.canShoot = true;
@@ -71,11 +71,13 @@ platformer.playerPrefab.prototype.constructor = platformer.playerPrefab;
 platformer.playerPrefab.prototype.update = function () {
 
     this.touchGrave=false;
-	this.game.physics.arcade.collide(this, this.level.platform_collision);
+	  this.game.physics.arcade.collide(this, this.level.platform_collision);
     this.game.physics.arcade.collide(this,this.level.graves, this.touch, null, this);
+    this.game.physics.arcade.collide (this, this.level.water, this.PlayerDie, null, this);
+
     //colisions
-	this.game.physics.arcade.collide (this, this.level.enemies, this.kill, null, this);
-	this.game.physics.arcade.collide (this, this.level.enemyProjectiles, this.kill, null, this);
+	this.game.physics.arcade.collide (this, this.level.enemies, this.killPlayer, null, this);
+	this.game.physics.arcade.collide (this, this.level.enemyProjectiles, this.killPlayer, null, this);
 
 
 	this.body.velocity.x = 0;
@@ -225,8 +227,7 @@ platformer.playerPrefab.prototype.showArmourGone = function(hero,enemy){
   anim.play("armourGone");
   anim.killOnComplete = true;
 }
-platformer.playerPrefab.prototype.kill = function (hero,enemy) {
-    //setTimeout(endGame,1000);
+platformer.playerPrefab.prototype.killPlayer = function (hero,enemy) {
     if(!this.invincible){
         if(this.with_cloth==true)   this.showArmourGone(hero,enemy);
         this.with_cloth=false;
@@ -242,7 +243,6 @@ platformer.playerPrefab.prototype.kill = function (hero,enemy) {
             }
         }
         if(this.player_life==0){
-
             this.killOnComplete=true;
             if(this.killOnComplete){
             this.game.state.start('mainMenu');
@@ -250,4 +250,28 @@ platformer.playerPrefab.prototype.kill = function (hero,enemy) {
             }
         }
     }
+}
+platformer.playerPrefab.prototype.PlayerDie = function (hero,water) {
+    //setTimeout(endGame,1000);
+    if(!this.invincible){
+    if(hero.body.touching.down&&water.body.touching.up){
+        //play so of died
+        lastLife=this.player_life;
+        this.player_life--;
+        if(this.player_life<lastLife) {
+            //play so of died
+            hero.reset(this.playerPos[0],this.playerPos[1]);
+            this.with_cloth=true;
+            this.isKill=2;
+        }
+
+        if(this.player_life==0){
+            this.killOnComplete=true;
+            if(this.killOnComplete){
+            this.game.state.start('mainMenu');
+            this.level.themeMusic.stop();
+            }
+        }
+    }
+  }
 }

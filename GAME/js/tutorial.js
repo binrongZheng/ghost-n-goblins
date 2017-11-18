@@ -58,7 +58,7 @@ window.onkeydown = function(event) {
                 break;
         }
     }
-    
+
 }
 
 platformer.tutorial = {
@@ -66,7 +66,7 @@ platformer.tutorial = {
 		this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
 		this.scale.pageAlignHorizontally = true;
 		this.scale.pageAlignVertically = true;
-		this.scale.setGameSize(gameOptions.gameWidth, gameOptions.gameHeight); 	
+		this.scale.setGameSize(gameOptions.gameWidth, gameOptions.gameHeight);
         this.game.world.setBounds(0, 0, gameOptions.level1Width, gameOptions.level1Height);
         //player init value
         this.with_cloth=true;
@@ -76,8 +76,8 @@ platformer.tutorial = {
 	preload:function(){
         //MAPA
         this.load.image('bg','img/mapa_level1.png');
-		this.load.tilemap('map','TileMaps/mapa_level.json',null,Phaser.Tilemap.TILED_JSON);
-        this.load.image('platform_collision','img/platform_collision.png');   
+		    this.load.tilemap('map','TileMaps/mapa_level.json',null,Phaser.Tilemap.TILED_JSON);
+        this.load.image('platform_collision','img/platform_collision.png');
         //PLAYER SPRITE
         this.load.spritesheet('hero', 'img/arthur.png', 64, 64);
         //HUD SPRITE
@@ -88,18 +88,18 @@ platformer.tutorial = {
         //EXPLOSION SPRITES
         this.load.spritesheet('explosion_medium', 'img/mediumExplosion.png', 64, 64);
         this.load.spritesheet('explosion_normal', 'img/normalExplosion.png', 64, 64);
-		
+
         //ENEMY BULLET SPRITES
         this.load.spritesheet('ull', 'img/ull.png', 18, 18);
-        
+
         //ENEMY SPRITES
         this.load.spritesheet('planta', 'img/Planta.png', 36, 64);
         this.load.spritesheet('crow', 'img/crow.png', 36, 32);
-		this.load.spritesheet('zombie', 'img/zombie.png', 32, 32);
-        
+    		this.load.spritesheet('zombie', 'img/zombie.png', 32, 32);
+
         //RED DEVIL
         this.load.spritesheet('redDevil', 'img/redDevil.png', 42, 42);
-        
+
         //BULLET SPRITES
         this.load.image('arma_lance','img/lance.png');
         //GRAVE
@@ -108,9 +108,13 @@ platformer.tutorial = {
         this.load.image('grave2','img/grave2.png');
         //LADDER
         this.load.image('ladders', 'img/ladder.png');
+        //WATER
+        this.load.image('water','img/water.png');
+        //MENU PAUSA
         this.load.image('menu_pausa', 'img/menu pausa.png');
         //KEY
         this.load.image('key', 'img/key.png');
+
         //SO
         this.game.load.audio('theme_music','sounds/gngTheme.mp3');
         this.game.load.audio('player_Shoot','sounds/lance.mp3');
@@ -129,42 +133,46 @@ platformer.tutorial = {
         this.createLadders();
         //BACKGROUND
         this.bg = this.game.add.tileSprite(0,0,gameOptions.level1Width, gameOptions.level1Height, 'bg');
-		
+
 		//MAP
-		this.map = this.game.add.tilemap('map');
+		    this.map = this.game.add.tilemap('map');
         this.map.addTilesetImage('platform_collision');
 
         this.platform_collision = this.map.createLayer('platform_up');
-       
+
         this.map.setCollisionBetween(2,5,true,'platform_up');
-		
-		this.map.createLayer('platform_up');	
-        this.map.createLayer('ladder');	
-        
+
+		    this.map.createLayer('platform_up');
+        this.map.createLayer('ladder');
+
 		//CONTROLS
-		this.cursors = this.game.input.keyboard.createCursorKeys();
+		    this.cursors = this.game.input.keyboard.createCursorKeys();
         this.jump_key=this.game.input.keyboard.addKey(Phaser.Keyboard.Z);
-		this.space = this.game.input.keyboard.addKey(Phaser.Keyboard.X);
+		    this.space = this.game.input.keyboard.addKey(Phaser.Keyboard.X);
         this.escKey = this.game.input.keyboard.addKey(Phaser.Keyboard.ESC);
         this.playKey = this.game.input.keyboard.addKey(Phaser.Keyboard.P);
-        
+
         //PLAYER ->(game,x,y, _level,_player_life,_cursors,_jump_key,_space,_with_cloth)
         this.hero = new platformer.playerPrefab(this.game,gameOptions.gameWidth/2,350,this,this.player_life,this.cursors,this.jump_key,this.space,this.with_cloth );
-        
+
         //BALES DEL PERSONATGE
-        this.projectiles = this.add.group();  
+        this.projectiles = this.add.group();
         //BALES DELS ENEMICS
         this.enemyProjectiles = this.add.group();
         //EXPLOSIONS
         this.explosions = this.add.group();
-        
+
         //KEY - la instanciara el cyborg al morir
         new platformer.keyPrefab(this.game,7000,0,this);
-        
+
+
+        //WATER
+        this.createWater();
+
         //ENEMIES
         this.enemies = this.add.group();
         this.createPlants();
-		this.createCrows();
+		    this.createCrows();
         this.enemies.add (new platformer.zombiePrefab(this.game,200+gameOptions.gameWidth/2,350,this));
         this.redDevil = new platformer.RedDemonPrefab(this.game,2900,350,this);
 		//CAMERA
@@ -173,8 +181,8 @@ platformer.tutorial = {
         this.hud = new platformer.hudPrefab(this.game,0,0);
 		//MUSIC
         this.themeMusic=this.add.audio('theme_music');
-        this.themeMusic.loop = true; 
-        this.themeMusic.play();      
+        this.themeMusic.loop = true;
+        this.themeMusic.play();
         //MENU PAUSA
         this.inPlay=true;
 	},
@@ -186,7 +194,7 @@ platformer.tutorial = {
       this.graves = this.game.add.group();
       this.graves.enableBody = true;
       this.graves.immovable = true;
-      
+
       // Creo le singole tombe
       this.createGrave(0,64,324,0 );
       this.createGrave(0,64,324,0 );
@@ -226,7 +234,13 @@ platformer.tutorial = {
      ladder.body.allowGravity=false;
      ladder.width = 46;
      ladder.height = 172;
-    }
+   },
+   createWater:function(){
+     this.water = this.add.sprite(6*512+202, 416, 'water');
+     this.game.physics.arcade.enable(this.water);
+     this.water.body.immovable = true;
+     this.water.body.allowGravity = false;
+   }
 };
 
 platformer.tutorial.createPlants = function(){
