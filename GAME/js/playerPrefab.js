@@ -30,7 +30,6 @@ platformer.playerPrefab = function (game,x,y, _level,_player_life,_cursors,_jump
     this.animations.add("climbontop0", [14], 10, false);
     this.animations.add("climbontop1", [13], 10, false);
 
-    var hola="hola"; 
     //PLAYER - WITHOUT CLOTH
     this.animations.add('walk_N', [16,17,18,19],10,true);
     this.animations.add('stand_N', [20],10,false);
