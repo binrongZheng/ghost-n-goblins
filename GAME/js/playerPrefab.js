@@ -1,9 +1,9 @@
 var platformer = platformer || {};
 
-platformer.playerPrefab = function (game,x,y, _level,_player_life,_cursors,_jump_key,_space,_with_cloth) { 
+platformer.playerPrefab = function (game,x,y, _level,_player_life,_cursors,_jump_key,_space,_with_cloth) {
     //INPUT VALUE
     this.player_life=_player_life;
-	this.level = _level;	
+	this.level = _level;
     this.cursors = _cursors;
     this.jump_key = _jump_key;
     this.space = _space;
@@ -11,7 +11,7 @@ platformer.playerPrefab = function (game,x,y, _level,_player_life,_cursors,_jump
     this.isKill=2;
     this.playerPos=[x,y];
     //SPRITE
-	Phaser.Sprite.call(this,game,x,y,'hero');    
+	Phaser.Sprite.call(this,game,x,y,'hero');
 	game.add.existing (this);
 	this.anchor.setTo(.5);
 	//ARMADURA - GONE
@@ -29,7 +29,8 @@ platformer.playerPrefab = function (game,x,y, _level,_player_life,_cursors,_jump
     this.animations.add("climbstopright", [15], 10, false);
     this.animations.add("climbontop0", [14], 10, false);
     this.animations.add("climbontop1", [13], 10, false);
-        
+
+    var hola="hola"; 
     //PLAYER - WITHOUT CLOTH
     this.animations.add('walk_N', [16,17,18,19],10,true);
     this.animations.add('stand_N', [20],10,false);
@@ -48,80 +49,80 @@ platformer.playerPrefab = function (game,x,y, _level,_player_life,_cursors,_jump
 
     //AUDIO
     this.playerShoot = this.level.add.audio('player_Shoot');
-    
+
 	//physics
 	game.physics.arcade.enable(this);
-	this.body.collideWorldBounds = true; 
-    
+	this.body.collideWorldBounds = true;
+
     //Timer del dispar
     this.canShoot = true;
     this.timeCheck;
-    this.shootWait = 250;   
+    this.shootWait = 250;
     //toca grave
     this.touchGrave=false;
     this.body.checkCollision.up = false;
-    
+
     this.invincible = false;
     this.invincibleKey = game.input.keyboard.addKey(Phaser.Keyboard.I);
 };
 
 platformer.playerPrefab.prototype = Object.create(Phaser.Sprite.prototype);
-platformer.playerPrefab.prototype.constructor = platformer.playerPrefab; 
+platformer.playerPrefab.prototype.constructor = platformer.playerPrefab;
 
 platformer.playerPrefab.prototype.update = function () {
-	
+
     this.touchGrave=false;
-	this.game.physics.arcade.collide(this, this.level.platform_collision); 
+	this.game.physics.arcade.collide(this, this.level.platform_collision);
     this.game.physics.arcade.collide(this,this.level.graves, this.touch, null, this);
     //colisions
 	this.game.physics.arcade.collide (this, this.level.enemies, this.kill, null, this);
 	this.game.physics.arcade.collide (this, this.level.enemyProjectiles, this.kill, null, this);
-	
-    
+
+
 	this.body.velocity.x = 0;
-	
+
 	//INVENCIBILITAT
 	if(this.invincibleKey.isDown){
         this.invincible = !this.invicible;
     }
-   
+
     //WITH CLOTH ANIMATION
         if(this.with_cloth==true){
-             
+
             //ATTACK
-            if (this.space.isDown){	
+            if (this.space.isDown){
                 this.animations.play('attack');
                 if (this.canShoot)
                     this.shoot();
             }
             //AJUPIR
-            else if (this.cursors.down.isDown && this.body.blocked.down||this.cursors.down.isDown && this.touchGrave==true ){				
-                this.animations.play('ajupir');		
+            else if (this.cursors.down.isDown && this.body.blocked.down||this.cursors.down.isDown && this.touchGrave==true ){
+                this.animations.play('ajupir');
                 //this.body.setSize(0,);
             }
             //MOVEMENT LEFT/RIGHT with or without JUMP
-            else if (this.cursors.left.isDown){		
+            else if (this.cursors.left.isDown){
                 if(this.body.blocked.down||this.touchGrave==true){
-                    this.body.velocity.x = -gameOptions.playerSpeed;			
+                    this.body.velocity.x = -gameOptions.playerSpeed;
                     this.animations.play('walk');
-                    this.scale.x = -1;		
+                    this.scale.x = -1;
                 }
                 if(this.jump_key.isDown&&!this.body.blocked.down&&this.touchGrave==false){
                     this.animations.play('jump_throw');
-                    this.scale.x = -1;		
-                    this.body.velocity.x = -gameOptions.playerSpeed;	
+                    this.scale.x = -1;
+                    this.body.velocity.x = -gameOptions.playerSpeed;
                 }
             }
-            else if (this.cursors.right.isDown ){		
+            else if (this.cursors.right.isDown ){
                 if(this.body.blocked.down||this.touchGrave==true){
-                    this.body.velocity.x =+gameOptions.playerSpeed;			
+                    this.body.velocity.x =+gameOptions.playerSpeed;
                     this.animations.play('walk');
-                    this.scale.x=1;		
+                    this.scale.x=1;
                 }
                 if(this.jump_key.isDown&&!this.body.blocked.down&&this.touchGrave==false){
                     this.animations.play('jump_throw');
-                    this.scale.x = 1;		
-                    this.body.velocity.x =+gameOptions.playerSpeed;		
+                    this.scale.x = 1;
+                    this.body.velocity.x =+gameOptions.playerSpeed;
                 }
             }
             else if(!this.body.blocked.down&&this.touchGrave==false){
@@ -130,53 +131,53 @@ platformer.playerPrefab.prototype.update = function () {
                  //STAND
             else if(this.body.blocked.down||this.touchGrave==true){
                 this.animations.play('stand');
-            }     
-            
+            }
+
             //JUMP
-            if (this.jump_key.isDown && this.body.blocked.down && this.jump_key.downDuration(250)||this.jump_key.isDown && this.touchGrave==true && this.jump_key.downDuration(250)){ 
-                this.body.velocity.y = -gameOptions.playerJumpForce;			
-            }  
-             
+            if (this.jump_key.isDown && this.body.blocked.down && this.jump_key.downDuration(250)||this.jump_key.isDown && this.touchGrave==true && this.jump_key.downDuration(250)){
+                this.body.velocity.y = -gameOptions.playerJumpForce;
+            }
+
         }
-    
+
      else if(this.isKill!=0){
             //ATTACK
-            if (this.space.isDown && this.canShoot){	
+            if (this.space.isDown && this.canShoot){
                 this.animations.play('attack_N');
                 if (this.canShoot)
                     this.shoot();
             }
             //AJUPIR
-            else if (this.cursors.down.isDown && this.body.blocked.down||this.cursors.down.isDown && this.touchGrave==true ){				
-                this.animations.play('ajupir_N');		
+            else if (this.cursors.down.isDown && this.body.blocked.down||this.cursors.down.isDown && this.touchGrave==true ){
+                this.animations.play('ajupir_N');
             }
             //JUMP
-            if (this.jump_key.isDown && this.body.blocked.down && this.jump_key.downDuration(250)||this.jump_key.isDown && this.touchGrave==true && this.jump_key.downDuration(250)){ 
-                this.body.velocity.y = -gameOptions.playerJumpForce;			
+            if (this.jump_key.isDown && this.body.blocked.down && this.jump_key.downDuration(250)||this.jump_key.isDown && this.touchGrave==true && this.jump_key.downDuration(250)){
+                this.body.velocity.y = -gameOptions.playerJumpForce;
             }
             //MOVEMENT LEFT/RIGHT with or without JUMP
-            else if (this.cursors.left.isDown){		
+            else if (this.cursors.left.isDown){
                 if(this.body.blocked.down||this.touchGrave==true){
-                    this.body.velocity.x = -gameOptions.playerSpeed;			
+                    this.body.velocity.x = -gameOptions.playerSpeed;
                     this.animations.play('walk_N');
-                    this.scale.x = -1;		
+                    this.scale.x = -1;
                 }
                 if(this.jump_key.isDown&&!this.body.blocked.down&&this.touchGrave==false){
                     this.animations.play('jump_throw_N');
-                    this.scale.x = -1;		
-                    this.body.velocity.x = -gameOptions.playerSpeed;	
+                    this.scale.x = -1;
+                    this.body.velocity.x = -gameOptions.playerSpeed;
                 }
             }
-            else if (this.cursors.right.isDown ){		
+            else if (this.cursors.right.isDown ){
                 if(this.body.blocked.down||this.touchGrave==true){
-                    this.body.velocity.x =+gameOptions.playerSpeed;			
+                    this.body.velocity.x =+gameOptions.playerSpeed;
                     this.animations.play('walk_N');
-                    this.scale.x=1;		
+                    this.scale.x=1;
                 }
                 if(this.jump_key.isDown&&!this.body.blocked.down&&this.touchGrave==false){
                     this.animations.play('jump_throw_N');
-                    this.scale.x = 1;		
-                    this.body.velocity.x =+gameOptions.playerSpeed;		
+                    this.scale.x = 1;
+                    this.body.velocity.x =+gameOptions.playerSpeed;
                 }
             }
             else if(!this.body.blocked.down&&this.touchGrave==false){
@@ -185,23 +186,23 @@ platformer.playerPrefab.prototype.update = function () {
                  //STAND
             else if(this.body.blocked.down||this.touchGrave==true){
                 this.animations.play('stand_N');
-            }        
+            }
         }
     else if(this.isKill==0) {
         this.animations.play('die');
-    
+
     }
-    
+
     //timer del dispar
     if (!this.canShoot && platformer.tutorial.game.time.now - this.timeCheck > this.shootWait){
         this.canShoot = true;
     }
-        	
+
 
 }
 platformer.playerPrefab.prototype.shoot = function () {
     //crear arma
-    this.newProjectile = new platformer.playerBulletPrefab(platformer.game,platformer.tutorial.hero.position.x+20,platformer.tutorial.hero.position.y,0, this.level);    
+    this.newProjectile = new platformer.playerBulletPrefab(platformer.game,platformer.tutorial.hero.position.x+20,platformer.tutorial.hero.position.y,0, this.level);
     //afegir a l'array d'armes
     platformer.tutorial.projectiles.add(this.newProjectile);
     //posem el contador al temps actual per no deixar disparar a lo loco
@@ -217,8 +218,8 @@ platformer.playerPrefab.prototype.touch = function (hero,grave) {
 platformer.playerPrefab.prototype.showArmourGone = function(hero,enemy){
 
   if(hero.x>enemy.x){ var span = 16; }
-  else var span = -16; 
-  
+  else var span = -16;
+
   var armourGone = this.game.add.sprite(this.x+span,  this.y-32, "armaduraGone");
   armourGone.anchor.setTo(0.5);
   var anim = armourGone.animations.add("armourGone", [0,1,2,3,3], 14, false);
@@ -234,7 +235,7 @@ platformer.playerPrefab.prototype.kill = function (hero,enemy) {
         if(this.with_cloth==false&&this.isKill==0){
             lastLife=this.player_life;
             this.player_life--;
-            if(this.player_life<lastLife) { 
+            if(this.player_life<lastLife) {
                 //play so of died
                 hero.reset(this.playerPos[0],this.playerPos[1]);
                 this.with_cloth=true;
@@ -242,7 +243,7 @@ platformer.playerPrefab.prototype.kill = function (hero,enemy) {
             }
         }
         if(this.player_life==0){
-           
+
             this.killOnComplete=true;
             if(this.killOnComplete){
             this.game.state.start('mainMenu');
