@@ -11,6 +11,7 @@ platformer.playerPrefab = function (game,x,y, _level,_player_life,_cursors,_jump
     this.with_cloth = _with_cloth;
     this.isKill=2;
     this.playerPos=[x,y];
+    this.animationStop=false;
 
     //SPRITE
 	  Phaser.Sprite.call(this,game,x,y,'hero');
@@ -191,16 +192,18 @@ platformer.playerPrefab.prototype.update = function () {
                 this.animations.play('stand_N');
             }
         }
-    else if(this.isKill==0) {
+    else if(this.isKill==0&&this.animationStop==false) {
         this.animations.play('die');
-
+        this.animations.currentAnim.onComplete.add(function () {
+          console.log('animation complete');
+          this.animationStop=true;
+      }, this);
     }
 
     //timer del dispar
     if (!this.canShoot && platformer.tutorial.game.time.now - this.timeCheck > this.shootWait){
         this.canShoot = true;
     }
-
 
 }
 platformer.playerPrefab.prototype.shoot = function () {
@@ -223,9 +226,9 @@ platformer.playerPrefab.prototype.showArmourGone = function(hero,enemy){
   if(hero.x>enemy.x){ var span = 16; }
   else var span = -16;
 
-  var armourGone = this.game.add.sprite(this.x+span,  this.y-32, "armaduraGone");
+  armourGone = this.game.add.sprite(this.x+span,  this.y-32, "armaduraGone");
   armourGone.anchor.setTo(0.5);
-  var anim = armourGone.animations.add("armourGone", [0,1,2,3,3], 14, false);
+  anim = armourGone.animations.add("armourGone", [0,1,2,3,3], 14, false);
   anim.play("armourGone");
   anim.killOnComplete = true;
 }
@@ -238,10 +241,6 @@ platformer.playerPrefab.prototype.killPlayer = function (hero,enemy) {
             lastLife=this.player_life;
             this.player_life--;
             if(this.player_life<lastLife&&this.player_life!=0) {
-                //play so of died
-              /*  hero.reset(this.playerPos[0],this.playerPos[1]);
-                this.with_cloth=true;
-                this.isKill=2;*/
                 gameOptions.levelOption = this.player_life;
                 this.level.themeMusic.stop();
                 this.game.state.start('tutorial');
@@ -249,15 +248,13 @@ platformer.playerPrefab.prototype.killPlayer = function (hero,enemy) {
         }
         if(this.playerHaveLife){
           if(this.player_life==0){
-            hero.animations.play('die');
+            this.isKill=0;
             this.level.game_over.visible=true;
+            hero.body.checkCollision.left=false;
+            hero.body.checkCollision.right=false;
+            hero.body.velocity=0;
 
-            //if(this.level.game_over.visible) console.log(this.level.game_over.visible);
             this.game.time.events.add(Phaser.Timer.SECOND * 4, this.gameover);
-          /*    this.killOnComplete=true;
-              if(this.killOnComplete){
-              this.game.state.start('mainMenu');
-              this.level.themeMusic.stop();*/
             }
         }
         else{
@@ -276,12 +273,6 @@ platformer.playerPrefab.prototype.PlayerDie = function (hero,water) {
         lastLife=this.player_life;
         this.player_life--;
         if(this.player_life<lastLife&&this.player_life!=0) {
-            //play so of died
-            /*
-            hero.reset(this.playerPos[0],this.playerPos[1]);
-            this.with_cloth=true;
-            this.isKill=2;*/
-
             gameOptions.levelOption = this.player_life;
             this.level.themeMusic.stop();
             this.game.state.start('tutorial');
@@ -289,7 +280,6 @@ platformer.playerPrefab.prototype.PlayerDie = function (hero,water) {
         if(this.playerHaveLife){
           if(this.player_life==0){
               this.level.game_over.visible=true;
-              //if(this.level.game_over.visible) console.log(this.level.game_over.visible);
               this.game.time.events.add(Phaser.Timer.SECOND * 4, this.gameover, this);
               }
           }
