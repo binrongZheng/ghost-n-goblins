@@ -72,10 +72,9 @@ platformer.playerPrefab.prototype = Object.create(Phaser.Sprite.prototype);
 platformer.playerPrefab.prototype.constructor = platformer.playerPrefab;
 
 platformer.playerPrefab.prototype.update = function () {
-
     this.touchGrave=false;
 	  this.game.physics.arcade.collide(this, this.level.platform_collision);
-    this.game.physics.arcade.collide(this,this.level.graves, this.touch, null, this);
+    this.game.physics.arcade.collide(this, this.level.graves, this.touch, null, this);
     this.game.physics.arcade.collide (this, this.level.water, this.PlayerDie, null, this);
 
     //colisions
@@ -87,12 +86,11 @@ platformer.playerPrefab.prototype.update = function () {
 
 	//INVENCIBILITAT
 	if(this.invincibleKey.isDown){
-        this.invincible = !this.invicible;
+        this.invincible = !this.invincible;
     }
 
     //WITH CLOTH ANIMATION
         if(this.with_cloth==true){
-
             //ATTACK
             if (this.space.isDown){
                 this.animations.play('attack');
@@ -102,6 +100,7 @@ platformer.playerPrefab.prototype.update = function () {
             //AJUPIR
             else if (this.cursors.down.isDown && this.body.blocked.down||this.cursors.down.isDown && this.touchGrave==true ){
                 this.animations.play('ajupir');
+                //this.body.setSize(0,32,64,32);
                 //this.body.setSize(0,);
             }
             //MOVEMENT LEFT/RIGHT with or without JUMP
@@ -195,7 +194,6 @@ platformer.playerPrefab.prototype.update = function () {
     else if(this.isKill==0&&this.animationStop==false) {
         this.animations.play('die');
         this.animations.currentAnim.onComplete.add(function () {
-          console.log('animation complete');
           this.animationStop=true;
       }, this);
     }
@@ -229,12 +227,18 @@ platformer.playerPrefab.prototype.showArmourGone = function(hero,enemy){
   armourGone = this.game.add.sprite(this.x+span,  this.y-32, "armaduraGone");
   armourGone.anchor.setTo(0.5);
   anim = armourGone.animations.add("armourGone", [0,1,2,3,3], 14, false);
-  anim.play("armourGone");
+  //anim.play("armourGone");
   anim.killOnComplete = true;
+/*  anim.currentAnim.onComplete.add(function () {
+    console.log('animation complete');
+    this.with_cloth=false;
+}, this);*/
 }
 platformer.playerPrefab.prototype.killPlayer = function (hero,enemy) {
     if(!this.invincible){
-        if(this.with_cloth==true)   this.showArmourGone(hero,enemy);
+        if(this.with_cloth==true&&this.kill==2) {
+          this.showArmourGone(hero,enemy);
+        }
         this.with_cloth=false;
         this.isKill--;
         if(this.with_cloth==false&&this.isKill==0){
@@ -247,13 +251,11 @@ platformer.playerPrefab.prototype.killPlayer = function (hero,enemy) {
             }
         }
         if(this.playerHaveLife){
-          if(this.player_life==0){
+          if(this.player_life==0&&this.with_cloth==false){
             this.isKill=0;
             this.level.game_over.visible=true;
             hero.body.checkCollision.left=false;
             hero.body.checkCollision.right=false;
-            hero.body.velocity=0;
-
             this.game.time.events.add(Phaser.Timer.SECOND * 4, this.gameover);
             }
         }
@@ -262,13 +264,13 @@ platformer.playerPrefab.prototype.killPlayer = function (hero,enemy) {
           this.level.themeMusic.stop();
           this.game.state.start('tutorial');
         }
-  }
+    }
 
 }
 platformer.playerPrefab.prototype.PlayerDie = function (hero,water) {
     //setTimeout(endGame,1000);
-    if(!this.invincible){
-    if(hero.body.touching.down&&water.body.touching.up){
+  if(!this.invincible){
+    if(hero.body.touching.down&&water.body.touching.down){
         //play so of died
         lastLife=this.player_life;
         this.player_life--;
@@ -289,7 +291,7 @@ platformer.playerPrefab.prototype.PlayerDie = function (hero,water) {
         this.level.themeMusic.stop();
         this.game.state.start('tutorial');
       }
-    }
+  }
 
 }
 platformer.playerPrefab.prototype.gameover = function () {
