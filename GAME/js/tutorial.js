@@ -1,5 +1,5 @@
 var platformer = platformer || {};
-//hola
+
 window.onkeydown = function(event) {
     if(platformer.tutorial.inPlay==true){
         if (event.keyCode == 27&&platformer.game.paused==false){
@@ -12,7 +12,7 @@ window.onkeydown = function(event) {
             if(this.cursor.y>=platformer.tutorial.camera.y + gameOptions.gameHeight/2+60){
                  this.cursor.y=platformer.tutorial.camera.y + gameOptions.gameHeight/2-10;
                  this.cursorState=0;
-            }
+            }//asdsadu
             else{
                 this.cursor.y+=35;
                 this.cursorState++;
@@ -31,7 +31,7 @@ window.onkeydown = function(event) {
         switch(this.cursorState){
             case 0:
                  this.cursor.x=platformer.tutorial.camera.x+gameOptions.gameWidth/2-90;
-                 if (event.keyCode == 13&&platformer.game.paused==true){
+                 if (event.keyCode == 13&&platformer.game.paused==true){//asdas
                      platformer.game.paused = false;
                      this.menuPause.kill();
                      this.cursor.kill();
