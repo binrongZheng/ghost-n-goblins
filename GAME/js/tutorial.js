@@ -1,5 +1,5 @@
 var platformer = platformer || {};
-//hola
+
 window.onkeydown = function(event) {
     if(platformer.tutorial.inPlay==true){
         if (event.keyCode == 27&&platformer.game.paused==false){
