@@ -18,7 +18,8 @@ var gameOptions = {
     crowYoffset:3,
     zombieSpeed: 150,
     levelOption:3,
-    lastOption:3
+    lastOption:3,
+	tutorialTime:120
 };
 
 platformer.game = new Phaser.Game(gameOptions.gameWidth,gameOptions.gameHeight,Phaser.AUTO,null,this,false,false);
