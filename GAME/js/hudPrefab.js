@@ -27,7 +27,7 @@ platformer.hudPrefab=function(game,x,y){
     this.time = 0;
 
 	this.timer = game.time.create(false);
-	this.timer.loop(1*1000+999,this.timerFinished,this); //milisegons
+	this.timer.loop(gameOptions.tutorialTime*1000+999,this.timerFinished,this); //milisegons
 	this.timer.start();
 	
 	Phaser.Sprite.call(this,game,x,y,'hud');
@@ -54,6 +54,6 @@ platformer.hudPrefab.prototype.timerFinished = function(){
 };
 platformer.hudPrefab.prototype.resetTimer = function(){
 	this.timer.stop();
-	this.timer.loop(3*1000+999,this.timerFinished,this); //milisegons
+	this.timer.loop(gameOptions.tutorialTime*1000+999,this.timerFinished,this); //milisegons
 	this.timer.start();
 }
