@@ -18,7 +18,7 @@ platformer.zombiePrefab=function(game,x,y,_level){
     
     //ANIMACIONS
     this.animations.add('walk', [0,1,2],5,true);
-    this.animations.add('spawn', [9,8,7,6,5,4],5,false);
+    this.animations.add('spawn', [9,8,7,6,5,4],10,false);
     this.animations.add('deSpawn', [4,5,6,7,8,9],5,false);
     this.animations.play('spawn');    
 	
