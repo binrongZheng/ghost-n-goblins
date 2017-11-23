@@ -9,10 +9,11 @@ platformer.playerPrefab = function (game,x,y, _level,_player_life,_cursors,_jump
     this.jump_key = _jump_key;
     this.space = _space;
     this.with_cloth = _with_cloth;
+    this.onLadder=false;
     this.isKill=2;
     this.playerPos=[x,y];
     this.animationStop=false;
-
+    this.ladder;
     //SPRITE
 	  Phaser.Sprite.call(this,game,x,y,'hero');
 	  game.add.existing (this);
@@ -76,9 +77,21 @@ platformer.playerPrefab.prototype.update = function () {
 	  this.game.physics.arcade.collide(this, this.level.platform_collision);
     this.game.physics.arcade.collide(this, this.level.graves, this.touch, null, this);
     this.game.physics.arcade.collide (this, this.level.water, this.PlayerDie, null, this);
+    //this.game.physics.arcade.overlap(this,this.level.ladders,this.MoveOnLadder,null,this);
+    if(this.game.physics.arcade.overlap(this,this.level.ladders)){
+
+            this.onLadder=true;
+    }
+    else  this.onLadder=false;
+/*
+    if(this.onLadder){
+      if(this.body.blocked.down)  this.onLadder=false;
+    }*/
+      console.log(this.onLadder);
+    //else this.onLadder=false;
 
     //colisions
-	this.game.physics.arcade.collide (this, this.level.enemies, this.killPlayer, null, this);
+	//this.game.physics.arcade.collide (this, this.level.enemies, this.killPlayer, null, this);
 	this.game.physics.arcade.collide (this, this.level.enemyProjectiles, this.killPlayer, null, this);
 
 
@@ -87,6 +100,28 @@ platformer.playerPrefab.prototype.update = function () {
 	//INVENCIBILITAT
 	if(this.invincibleKey.isDown){
         this.invincible = !this.invincible;
+    }
+    if(this.onLadder){
+
+      if(this.cursors.up.isDown){
+        this.animations.play('climb');
+        //this.body.velocity.x=0;
+        this.body.allowGravity=false;
+        this.body.velocity.y=-gameOptions.playerSpeed;
+        console.log("sube");
+        if(this.body.blocked.down) this.body.velocity.x=0;
+      }
+      else if(this.cursors.down.isDown){
+        this.animations.play('climb');
+        //this.body.velocity.x=0;
+        this.body.allowGravity=false;
+        this.body.velocity.y=gameOptions.playerSpeed;
+        if(this.body.blocked.down) this.body.velocity.x=0;
+        console.log("baja");
+      }
+    }
+    else {
+      this.body.allowGravity=true;
     }
 
     //WITH CLOTH ANIMATION
@@ -228,7 +263,7 @@ platformer.playerPrefab.prototype.showArmourGone = function(hero,enemy){
   armourGone.anchor.setTo(0.5);
   anim = armourGone.animations.add("armourGone", [0,1,2,3,3], 14, false);
   //anim.play("armourGone");
-  anim.killOnComplete = true;
+   anim.killOnComplete = true;
 /*  anim.currentAnim.onComplete.add(function () {
     console.log('animation complete');
     this.with_cloth=false;
@@ -254,8 +289,8 @@ platformer.playerPrefab.prototype.killPlayer = function (hero,enemy) {
           if(this.player_life==0&&this.with_cloth==false){
             this.isKill=0;
             this.level.game_over.visible=true;
-            hero.body.checkCollision.left=false;
-            hero.body.checkCollision.right=false;
+            this.body.checkCollision.left=false;
+            this.body.checkCollision.right=false;
             this.game.time.events.add(Phaser.Timer.SECOND * 4, this.gameover);
             }
         }
@@ -302,4 +337,10 @@ platformer.playerPrefab.prototype.gameover = function () {
       platformer.tutorial.themeMusic.stop();
       gameOptions.levelOption=gameOptions.lastOption;
     }
+}
+platformer.playerPrefab.prototype.MoveOnLadder = function (hero,ladder) {
+  if(hero.body.touching.down&&ladder.body.touching.down){
+    this.onLadder=true;
+    console.log(this.onLadder);
+  }
 }
