@@ -11,7 +11,7 @@ platformer.spawnZombiePrefab=function(game,x,y, _level){
     this.spawnY = y;
     this.level = _level;
     this.activateSpawn = false;
-    this.again = false;
+    this.canActivate = true;
 }
 
 platformer.spawnZombiePrefab.prototype=Object.create(Phaser.Sprite.prototype);
@@ -20,15 +20,20 @@ platformer.spawnZombiePrefab.prototype.update = function () {
     
     
     //Si el personatge s'appropa s'activa el spawn    
-    if (Phaser.Math.difference(this.spawnX,this.level.hero.position.x) < 200 && !this.again){        
+    if (Phaser.Math.difference(this.spawnX,this.level.hero.position.x) < 200 && this.canActivate){        
         this.activateSpawn = true;
-        this.again = true;
+        this.canActivate = false;
     }
     
     //Mentre esta activat fem spawn del numerod e zombies que toqui amb un interval entremig
     if (this.activateSpawn){
     
         this.activateSpawn = false;
+        //Daqui a 7 segons si encara estas a prop es tornara a activar
+        this.level.game.time.events.add(7000, function(){
+            if(!this.canActivate)
+                this.canActivate = true;
+        }.bind(this));
         
         //cridem el spawn fins que haguem arrivat al maxim de numZombies
         var timeInter = window.setTimeout(function spawn (){                
