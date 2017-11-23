@@ -35,10 +35,10 @@ platformer.enemyBulletPrefab=function(game,x,y,_enemyBullet_type,velX,velY){
     //col·lisió amb jugador
 
 
-    this.bulletHitsPlayer = function(){ //aclarar en quin lloc es gestionen les col·lisions
+    //this.bulletHitsPlayer = function(){ //aclarar en quin lloc es gestionen les col·lisions
 
-        this.kill();
-    };
+      //  this.kill();
+    //};
 
 };
 
