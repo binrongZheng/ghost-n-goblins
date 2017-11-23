@@ -173,9 +173,11 @@ platformer.tutorial = {
         this.enemies = this.add.group();
         this.createPlants();
 		    this.createCrows();
-        this.enemies.add (new platformer.zombiePrefab(this.game,200+gameOptions.gameWidth/2,350,this));
+        //this.enemies.add (new platformer.zombiePrefab(this.game,200+gameOptions.gameWidth/2,350,this));
         this.redDevil = new platformer.RedDemonPrefab(this.game,2900,350,this);
-
+        
+        this.spawn1 = new platformer.spawnZombiePrefab(this.game,200 + gameOptions.gameWidth/2,350,this);
+        
 		//CAMERA
 		this.camera.follow(this.hero);
         //HUD
@@ -183,7 +185,7 @@ platformer.tutorial = {
 		//MUSIC
         this.themeMusic=this.add.audio('theme_music');
         this.themeMusic.loop = true;
-        this.themeMusic.play();
+        //this.themeMusic.play();
         //MENU PAUSA
         this.inPlay=true;
 	},
@@ -193,6 +195,9 @@ platformer.tutorial = {
         this.game_over = this.add.sprite(this.camera.x+gameOptions.gameWidth/2,this.camera.y+gameOptions.gameHeight/2, 'game_over');
         this.game_over.anchor.setTo(0.5);
         this.game_over.visible=false;
+        
+        //actualitzar spawns pq no es un sprite i no es fa sol
+        this.spawn1.update();
 	},
     createGraves:function(){
       // Creo il gruppo delle tombe
