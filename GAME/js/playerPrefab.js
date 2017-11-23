@@ -329,6 +329,25 @@ platformer.playerPrefab.prototype.PlayerDie = function (hero,water) {
   }
 
 }
+platformer.playerPrefab.prototype.deadByTimer = function(){
+	if(!this.invincible){
+		console.log("no inv");
+		lastLife=this.player_life;
+        this.player_life--;
+        if(this.player_life<lastLife&&this.player_life!=0) {
+            gameOptions.levelOption = this.player_life;
+            this.level.themeMusic.stop();
+            this.game.state.start('tutorial');
+        }
+        if(this.playerHaveLife){
+          if(this.player_life==0){
+              this.level.game_over.visible=true;
+              this.game.time.events.add(Phaser.Timer.SECOND * 4, this.gameover, this);
+              }
+          }
+	}
+}
+
 platformer.playerPrefab.prototype.gameover = function () {
     platformer.tutorial.game_over.destroy();
     this.killOnComplete=true;

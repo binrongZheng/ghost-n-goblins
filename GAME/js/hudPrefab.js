@@ -1,7 +1,7 @@
 var platformer = platformer || {};
 
 
-platformer.hudPrefab=function(game,x,y){
+platformer.hudPrefab=function(game,x,y,_level){
 	this.playerName = platformer.game.add.bitmapText(10, 0, 'gngFont', 'PLAYER 1', 18);
 	this.topScore = platformer.game.add.bitmapText(200, 0, 'gngFont', 'TOP SCORE', 18);
 	this.scoreText = platformer.game.add.bitmapText(10, 17, 'gngFont', '0', 18); 
@@ -22,6 +22,7 @@ platformer.hudPrefab=function(game,x,y){
 	this.timeText.fixedToCamera = true;
 	this.timerText.fixedToCamera = true;
 	
+	this.level = _level;
     this.score = 0;
     this.vides = 0;
     this.time = 0;
@@ -39,7 +40,7 @@ platformer.hudPrefab.prototype=Object.create(Phaser.Sprite.prototype);
 platformer.hudPrefab.prototype.constructor=platformer.hudPrefab;
 platformer.hudPrefab.prototype.update=function(){
 	//actualitzem el text del contador al hud
-	this.timerText.setText(Math.floor(this.timer.duration/60000)+":"+Math.floor((this.timer.duration/1000)%60)); //min:seg
+	this.timerText.setText(Math.floor(this.timer.duration/60000)+"."+Math.floor((this.timer.duration/1000)%60)); //min:seg
 };
 
 platformer.hudPrefab.prototype.updateScore = function(newScore){
@@ -49,7 +50,7 @@ platformer.hudPrefab.prototype.updateScore = function(newScore){
 platformer.hudPrefab.prototype.timerFinished = function(){
 	console.log("--TIME OVER--");
 	this.timer.stop();
-	//posar aquí que el jugador es mori
+	this.level.hero.deadByTimer();
 	
 };
 platformer.hudPrefab.prototype.resetTimer = function(){
