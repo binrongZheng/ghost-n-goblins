@@ -29,6 +29,7 @@ platformer.hudPrefab=function(game,x,y,_level){
 
 	this.timer = game.time.create(false);
 	this.timer.loop(gameOptions.tutorialTime*1000+999,this.timerFinished,this); //milisegons
+	//this.timer.loop(3*1000+999,this.timerFinished,this); 						//per fer proves
 	this.timer.start();
 	
 	Phaser.Sprite.call(this,game,x,y,'hud');

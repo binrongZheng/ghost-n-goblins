@@ -330,8 +330,11 @@ platformer.playerPrefab.prototype.PlayerDie = function (hero,water) {
 
 }
 platformer.playerPrefab.prototype.deadByTimer = function(){
+	//No entiendo muy bien que es cada variable... pero parece que funciona
 	if(!this.invincible){
-		console.log("no inv");
+		this.isKill=0;
+		this.with_cloth=false;
+		//this.animationStop=false;
 		lastLife=this.player_life;
         this.player_life--;
         if(this.player_life<lastLife&&this.player_life!=0) {
