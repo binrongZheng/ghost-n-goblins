@@ -83,11 +83,13 @@ platformer.playerPrefab.prototype.update = function () {
             this.onLadder=true;
     }
     else  this.onLadder=false;
+
+    console.log(this.player_life+"vida");
 /*
     if(this.onLadder){
       if(this.body.blocked.down)  this.onLadder=false;
     }*/
-      console.log(this.onLadder);
+
     //else this.onLadder=false;
 
     //colisions
@@ -305,27 +307,32 @@ platformer.playerPrefab.prototype.killPlayer = function (hero,enemy) {
 platformer.playerPrefab.prototype.PlayerDie = function (hero,water) {
     //setTimeout(endGame,1000);
   if(!this.invincible){
-    if(hero.body.touching.down&&water.body.touching.down){
+    //if(hero.body.touching.down&&water.body.touching.down){
         //play so of died
+
         lastLife=this.player_life;
         this.player_life--;
-        if(this.player_life<lastLife&&this.player_life!=0) {
+
+        if(this.player_life<lastLife&&this.player_life>0) {
             gameOptions.levelOption = this.player_life;
             this.level.themeMusic.stop();
             this.game.state.start('tutorial');
+
         }
         if(this.playerHaveLife){
-          if(this.player_life==0){
+          if(this.player_life<=0){
+              this.isKill=0;
               this.level.game_over.visible=true;
+              hero.kill();
               this.game.time.events.add(Phaser.Timer.SECOND * 4, this.gameover, this);
-              }
+
           }
-      }
-      else{
-        gameOptions.levelOption = gameOptions.lastOption;
-        this.level.themeMusic.stop();
-        this.game.state.start('tutorial');
-      }
+        }
+        else{
+          gameOptions.levelOption = gameOptions.lastOption;
+          this.level.themeMusic.stop();
+          this.game.state.start('tutorial');
+        }
   }
 
 }
