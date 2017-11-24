@@ -5,16 +5,16 @@ platformer.plantaPrefab=function(game,x,y){
     game.add.existing(this);
 	this.anchor.setTo(.5);
     
+    this.shot	= false;
+    this.aggro	= false;	//si ens pot atacar o no
+	
     //físiques
     game.physics.arcade.enable(this);
-    this.body.allowGravity = false;
-    this.body.immovable = true;
+    this.body.allowGravity	= false;
+    this.body.immovable		= true;
     
     this.animations.add('plantaAnim', [0,1,2,3],3,true);
     this.animations.play('plantaAnim');
-    
-    this.shot = false;
-    this.aggro = false; //si ens pot atacar o no
 };
 
 platformer.plantaPrefab.prototype=Object.create(Phaser.Sprite.prototype);

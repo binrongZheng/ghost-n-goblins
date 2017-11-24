@@ -81,7 +81,7 @@ platformer.tutorial = {
         //PLAYER SPRITE
         this.load.spritesheet('hero', 'img/arthur.png', 64, 64);
         //HUD SPRITE
-        this.load.spritesheet('hud', 'img/HUD-armes.png', 4, 4);
+        this.load.spritesheet('hud', 'img/HUD-armes.png', 60, 60);
         //armourAnimation
         this.load.spritesheet('armaduraGone', 'img/armourGone.png', 128, 128);
 
@@ -190,7 +190,7 @@ platformer.tutorial = {
 		//CAMERA
 		this.camera.follow(this.hero);
         //HUD
-        this.hud = new platformer.hudPrefab(this.game,0,0,this);
+        this.hud = new platformer.hudPrefab(this.game,this);
 		//MUSIC
         this.themeMusic=this.add.audio('theme_music');
         this.themeMusic.loop = true;
