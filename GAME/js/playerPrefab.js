@@ -263,7 +263,8 @@ platformer.playerPrefab.prototype.killPlayer = function (hero,enemy) {
             if(this.player_life<lastLife&&this.player_life!=0) {
                 gameOptions.levelOption = this.player_life;
                 this.level.themeMusic.stop();
-                this.game.state.start('tutorial');
+                  this.game.state.start('mapScreen');
+                //this.game.state.start('tutorial');
             }
         }
         if(this.playerHaveLife){
@@ -278,7 +279,8 @@ platformer.playerPrefab.prototype.killPlayer = function (hero,enemy) {
         else{
           gameOptions.levelOption = gameOptions.lastOption;
           this.level.themeMusic.stop();
-          this.game.state.start('tutorial');
+            this.game.state.start('mapScreen');
+          //this.game.state.start('tutorial');
         }
     }
 
@@ -295,7 +297,8 @@ platformer.playerPrefab.prototype.PlayerDie = function (hero,water) {
         if(this.player_life<lastLife&&this.player_life>0) {
             gameOptions.levelOption = this.player_life;
             this.level.themeMusic.stop();
-            this.game.state.start('tutorial');
+              this.game.state.start('mapScreen');
+            //this.game.state.start('tutorial');
 
         }
         if(this.playerHaveLife){
@@ -310,7 +313,8 @@ platformer.playerPrefab.prototype.PlayerDie = function (hero,water) {
         else{
           gameOptions.levelOption = gameOptions.lastOption;
           this.level.themeMusic.stop();
-          this.game.state.start('tutorial');
+            this.game.state.start('mapScreen');
+          //this.game.state.start('tutorial');
         }
   }
 
@@ -326,7 +330,9 @@ platformer.playerPrefab.prototype.deadByTimer = function(){
         if(this.player_life<lastLife&&this.player_life!=0) {
             gameOptions.levelOption = this.player_life;
             this.level.themeMusic.stop();
-            this.game.state.start('tutorial');
+
+            this.game.state.start('mapScreen');
+          //  this.game.state.start('tutorial');
         }
         if(this.playerHaveLife){
           if(this.player_life==0){

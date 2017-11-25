@@ -13,8 +13,8 @@ platformer.mapScreen={
     },
     create:function(){
         //BACKGROUND
-       	this.bg = this.game.add.sprite(gameOptions.gameWidth/2,gameOptions.gameHeight/2, 'bg');
-        this.bg.anchor.setTo(.5);
+       	this.bg = this.game.add.sprite(0,0, 'bg');
+        //this.bg.anchor.setTo(.5);
     },
     update:function(){
 
