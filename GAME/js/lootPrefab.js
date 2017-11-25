@@ -8,7 +8,7 @@ platformer.lootPrefab = function(game,x,y,_level, _hasPot){
         
     //TIPUS DE BOTÍ
     this.loopType = Math.floor(Math.random()*9);
-    console.log(this.loopType);
+   
     if (this.loopType == 0 || this.loopType == 1 || this.loopType == 2 || this.loopType == 3 ||this.loopType == 4){ // 50% possibilitats
         Phaser.Sprite.call(this,game,x,y,'coin');
         game.add.existing(this);    
@@ -47,6 +47,8 @@ platformer.lootPrefab.prototype.update = function(){
     
     this.game.physics.arcade.overlap (this, this.level.hero,function (boti, pj){
         //fer switch amb el que toqui
+        boti.level.hud.updateScore(boti.numPoints);
+        boti.level.hud.spawnPoints(boti.x-20, boti.y-20, boti.numPoints);
         boti.kill();                               
         
     });
