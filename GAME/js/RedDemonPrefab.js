@@ -77,7 +77,8 @@ platformer.RedDemonPrefab.prototype.update = function () {
 
         //MORT
         if (this.numHits == 0) {
-            this.kill();
+    		this.level.hud.spawnPoints(this.x,this.y,1000);
+			this.kill();
         }
 
         //RUTINA DE DISPAR-3 VOLS RASANTS

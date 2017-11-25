@@ -81,3 +81,11 @@ platformer.hudPrefab.prototype.changeWeapon = function(newWeapon){
 			break;
 	}
 }
+platformer.hudPrefab.prototype.spawnPoints = function(x,y,points){
+	var newPoints = platformer.game.add.bitmapText(x, y, 'gngFont', ''+points,  15);
+	newPoints.lifespan = 1000;
+	newPoints.kill = function(){
+		console.log("works");
+		this.destroy();
+	}
+}
