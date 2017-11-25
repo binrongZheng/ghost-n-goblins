@@ -352,10 +352,35 @@ if(this.onLadder) {
     this.climbingStopState=!this.climbingStopState;
     hero.body.x=ladder.x-6;
     this.climbing=true;
-    if(this.with_cloth) this.animations.play('climb');
-    else this.animations.play('climb_N');
+    if(this.y>240){
+      if(this.with_cloth) this.animations.play('climb');
+      else this.animations.play('climb_N');
+      this.body.velocity.y=-(gameOptions.playerSpeed-100);
+    }
+    else {
+      if(this.with_cloth) {
+        if(this.y>230)
+        this.animations.play('climbontop0');
+        else if(this.y<=220){
+          this.y=220;
+          this.animations.play('climbontop1');
+          this.game.time.events.add(Phaser.Timer.SECOND * 1, this.climbUp, this);
+        }
+        this.body.velocity.y=-(gameOptions.playerSpeed-130);
+      }
+      else {
+        if(this.y>230)
+          this.animations.play('climbontop0_N');
+        else if(this.y<=220){
+          this.y=220;
+          this.animations.play('climbontop1_N');
+          this.game.time.events.add(Phaser.Timer.SECOND * 1, this.climbUp, this);
+        }
+       this.body.velocity.y=-(gameOptions.playerSpeed-130);
+      }
+    }
     this.body.allowGravity=false;
-    this.body.velocity.y=-gameOptions.playerSpeed;
+
   }
   else if(this.cursors.down.isDown){
       this.climbingStopState=!this.climbingStopState;
@@ -427,4 +452,12 @@ if(this.onLadder) {
       }
     }
 */
+}
+platformer.playerPrefab.prototype.climbUp = function(){
+  this.y=190;
+  if(this.with_cloth)
+    this.animations.play('stand');
+  else
+    this.animations.play('stand_N');
+
 }
