@@ -10,10 +10,12 @@ platformer.playerPrefab = function (game,x,y, _level,_player_life,_cursors,_jump
     this.space = _space;
     this.with_cloth = _with_cloth;
     this.onLadder=false;
+    this.climbing=false;
+    this.climbingStopState=false;
     this.isKill=2;
     this.playerPos=[x,y];
     this.animationStop=false;
-    this.ladder;
+
     //SPRITE
 	  Phaser.Sprite.call(this,game,x,y,'hero');
 	  game.add.existing (this);
@@ -63,7 +65,7 @@ platformer.playerPrefab = function (game,x,y, _level,_player_life,_cursors,_jump
     this.shootWait = 250;
     //toca grave
     this.touchGrave=false;
-  
+
     this.invincible = false;
     this.invincibleKey = game.input.keyboard.addKey(Phaser.Keyboard.I);
 };
@@ -77,25 +79,21 @@ platformer.playerPrefab.prototype.update = function () {
 	  this.game.physics.arcade.collide(this, this.level.platform_collision);
     this.game.physics.arcade.collide(this, this.level.graves, this.touch, null, this);
     this.game.physics.arcade.collide (this, this.level.water, this.PlayerDie, null, this);
-    //this.game.physics.arcade.overlap(this,this.level.ladders,this.MoveOnLadder,null,this);
-    if(this.game.physics.arcade.overlap(this,this.level.ladders)){
+      //this.game.physics.arcade.overlap(this, thiss.level.ladders, this.climbLadders, null, this);
 
-            this.onLadder=true;
+
+
+
+    if(!this.onLadder&&this.y<=190) { this.climbing=false;this.body.allowGravity=true;}
+    if(this.y>190&&!this.cursors.down.isDown&&this.game.physics.arcade.overlap(this,this.level.ladders)){
+        this.game.physics.arcade.overlap(this,this.level.ladders,this.climbLadders, null, this);
+
+        if(this.cursors.down.isDown&&this.body.blocked.down&&this.y>200){this.onLadder=false;}
+        else  this.onLadder=true;
     }
-    else  this.onLadder=false;
+    else  {this.onLadder=false;this.body.allowGravity=true;}
 
-    console.log(this.player_life+"vida");
-/*
-    if(this.onLadder){
-      if(this.body.blocked.down)  this.onLadder=false;
-    }*/
-
-    //else this.onLadder=false;
-
-    //colisions
-	//this.game.physics.arcade.collide (this, this.level.enemies, this.killPlayer, null, this);
 	this.game.physics.arcade.collide (this, this.level.enemyProjectiles, this.killPlayer, null, this);
-
 
 	this.body.velocity.x = 0;
 
@@ -103,30 +101,10 @@ platformer.playerPrefab.prototype.update = function () {
 	if(this.invincibleKey.isDown){
         this.invincible = !this.invincible;
     }
-    if(this.onLadder){
-      if(this.cursors.up.isDown){
-        this.animations.play('climb');
-        //this.body.velocity.x=0;
-        this.body.allowGravity=false;
-        this.body.velocity.y=-gameOptions.playerSpeed;
-        console.log("sube");
-        if(this.body.blocked.down) this.body.velocity.x=0;
-      }
-      else if(this.cursors.down.isDown){
-        this.animations.play('climb');
-        //this.body.velocity.x=0;
-        this.body.allowGravity=false;
-        this.body.velocity.y=gameOptions.playerSpeed;
-        if(this.body.blocked.down) this.body.velocity.x=0;
-        console.log("baja");
-      }
-    }
-    else {
-      this.body.allowGravity=true;
-    }
 
+console.log(this.climbing);
     //WITH CLOTH ANIMATION
-        if(this.with_cloth==true){
+        if(this.with_cloth==true&&!this.climbing){
             //ATTACK
             if (this.space.isDown){
                 this.animations.play('attack');
@@ -179,7 +157,7 @@ platformer.playerPrefab.prototype.update = function () {
 
         }
 
-     else if(this.isKill!=0){
+     else if(this.isKill!=0&&!this.climbing){
             //ATTACK
             if (this.space.isDown && this.canShoot){
                 this.animations.play('attack_N');
@@ -366,9 +344,51 @@ platformer.playerPrefab.prototype.gameover = function () {
       gameOptions.levelOption=gameOptions.lastOption;
     }
 }
-platformer.playerPrefab.prototype.MoveOnLadder = function (hero,ladder) {
-  if(hero.body.touching.down&&ladder.body.touching.down){
-    this.onLadder=true;
-    console.log(this.onLadder);
-  }
+platformer.playerPrefab.prototype.climbLadders = function (hero,ladder) {
+    if(this.onLadder){
+      if(this.cursors.up.isDown){
+        this.climbingStopState=!this.climbingStopState;
+        hero.body.x=ladder.x-6
+        this.climbing=true;
+        if(this.with_cloth) this.animations.play('climb');
+        else this.animations.play('climb_N');
+        //this.body.velocity.x=0;
+        this.body.allowGravity=false;
+        this.body.velocity.y=-gameOptions.playerSpeed;
+        //console.log("sube");
+        //if(this.body.blocked.down) this.body.velocity.x=0;
+      }
+      else if(this.cursors.down.isDown){
+
+          this.climbingStopState=!this.climbingStopState;
+          hero.body.x=ladder.x-6
+          this.climbing=true
+          if(this.y>200)this.body.checkCollision.down=true;
+          else this.body.checkCollision.down=false;
+          if(this.with_cloth) this.animations.play('climb');
+          else this.animations.play('climb_N');
+          //this.body.velocity.x=0;
+          this.body.allowGravity=false;
+          this.body.velocity.y=gameOptions.playerSpeed;
+
+        //console.log("baja");
+      }
+      else if(!this.body.blocked.down){
+        this.climbing=true
+        if(this.with_cloth){
+          if(this.climbingStopState)   this.animations.play('climbstopleft');
+          else this.animations.play('climbstopright');
+        }
+        else {
+          if(this.climbingStopState)   this.animations.play('climbstopleft_N');
+          else this.animations.play('climbstopright_N');
+        }
+        this.body.velocity.y=0;
+      }
+      if(this.body.blocked.down){
+        this.onLadder=false;
+        this.climbing=false;
+      }
+    }
+
 }
