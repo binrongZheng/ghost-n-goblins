@@ -277,10 +277,12 @@ platformer.playerPrefab.prototype.killPlayer = function (hero,enemy) {
             }
         }
         else{
-          gameOptions.levelOption = gameOptions.lastOption;
-          this.level.themeMusic.stop();
-            this.game.state.start('mapScreen');
-          //this.game.state.start('tutorial');
+          if(this.player_life<=0){
+            gameOptions.levelOption = gameOptions.lastOption;
+            this.level.themeMusic.stop();
+              this.game.state.start('mapScreen');
+            //this.game.state.start('tutorial');
+          }
         }
     }
 
@@ -311,10 +313,12 @@ platformer.playerPrefab.prototype.PlayerDie = function (hero,water) {
           }
         }
         else{
-          gameOptions.levelOption = gameOptions.lastOption;
-          this.level.themeMusic.stop();
-            this.game.state.start('mapScreen');
-          //this.game.state.start('tutorial');
+          if(this.player_life<=0){
+            gameOptions.levelOption = gameOptions.lastOption;
+            this.level.themeMusic.stop();
+              this.game.state.start('mapScreen');
+            //this.game.state.start('tutorial');
+          }
         }
   }
 
@@ -339,7 +343,7 @@ platformer.playerPrefab.prototype.deadByTimer = function(){
               this.level.game_over.visible=true;
               this.game.time.events.add(Phaser.Timer.SECOND * 4, this.gameover, this);
               }
-          }
+        }
 	}
 }
 
