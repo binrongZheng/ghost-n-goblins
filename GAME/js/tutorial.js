@@ -129,7 +129,7 @@ platformer.tutorial = {
 		this.game.physics.arcade.gravity.y = gameOptions.playerGravity;
 	},
 	create:function(){
-        //GRAVES          
+        //GRAVES
         this.spawns = this.add.group();
         this.createGraves();
         //LADDERS
@@ -176,8 +176,8 @@ platformer.tutorial = {
 		    this.createCrows();
         //this.enemies.add (new platformer.zombiePrefab(this.game,200+gameOptions.gameWidth/2,350,this));
         this.redDevil = new platformer.RedDemonPrefab(this.game,2900,350,this);
-        
-        
+
+
         //SPAWNS DE ZOMBIES
         this.spawns.add(new platformer.spawnZombiePrefab(this.game,475,350,this));
         this.spawns.add(new platformer.spawnZombiePrefab(this.game,800,350,this));
@@ -186,7 +186,7 @@ platformer.tutorial = {
         this.spawns.add(new platformer.spawnZombiePrefab(this.game,1900,350,this));
         this.spawns.add(new platformer.spawnZombiePrefab(this.game,2200,350,this));
         this.spawns.add(new platformer.spawnZombiePrefab(this.game,2500,350,this));
-        
+
 		//CAMERA
 		this.camera.follow(this.hero);
         //HUD
@@ -203,19 +203,20 @@ platformer.tutorial = {
         //GAMEOVER screen
         this.game_over = this.add.sprite(this.camera.x+gameOptions.gameWidth/2,this.camera.y+gameOptions.gameHeight/2, 'game_over');
         this.game_over.anchor.setTo(0.5);
-        this.game_over.visible=false;        
-        
+        this.game_over.visible=false;
+        this.map.forEach(function(t){if (t) {t.collideDown=false;}},this.game,0,0,this.map.width,this.map.height,'platform_up');
+
 	},
     createGraves:function(){
       // Crar el grup
       this.graves = this.game.add.group();
       this.graves.enableBody = true;
-      this.graves.immovable = true;     
+      this.graves.immovable = true;
 
       // Crear la tumba
-      this.createGrave(0,64,324,0 );   
       this.createGrave(0,64,324,0 );
-      this.createGrave(0,474,324,1);        
+      this.createGrave(0,64,324,0 );
+      this.createGrave(0,474,324,1);
       this.createGrave(1,280,324,0);
       this.createGrave(2,-10,324,2);
       this.createGrave(2,442,324,0);
@@ -232,8 +233,8 @@ platformer.tutorial = {
       grave.body.immovable = true;
       grave.body.allowGravity = false;
       grave.body.checkCollision.down = false;
-      grave.body.setSize(32,36,16,28);      
-            
+      grave.body.setSize(32,36,16,28);
+
     },
     createLadders:function(){
       // Creo il gruppo per le scale

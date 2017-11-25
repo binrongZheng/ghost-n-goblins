@@ -63,8 +63,7 @@ platformer.playerPrefab = function (game,x,y, _level,_player_life,_cursors,_jump
     this.shootWait = 250;
     //toca grave
     this.touchGrave=false;
-    this.body.checkCollision.up = false;
-
+  
     this.invincible = false;
     this.invincibleKey = game.input.keyboard.addKey(Phaser.Keyboard.I);
 };
@@ -74,6 +73,7 @@ platformer.playerPrefab.prototype.constructor = platformer.playerPrefab;
 
 platformer.playerPrefab.prototype.update = function () {
     this.touchGrave=false;
+
 	  this.game.physics.arcade.collide(this, this.level.platform_collision);
     this.game.physics.arcade.collide(this, this.level.graves, this.touch, null, this);
     this.game.physics.arcade.collide (this, this.level.water, this.PlayerDie, null, this);
@@ -104,7 +104,6 @@ platformer.playerPrefab.prototype.update = function () {
         this.invincible = !this.invincible;
     }
     if(this.onLadder){
-
       if(this.cursors.up.isDown){
         this.animations.play('climb');
         //this.body.velocity.x=0;
