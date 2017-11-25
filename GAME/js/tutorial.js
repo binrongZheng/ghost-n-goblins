@@ -132,6 +132,8 @@ platformer.tutorial = {
         this.game.load.audio('devilHit','sounds/devilHit.wav');
         this.game.load.audio('hitGrave','sounds/hitGrave.mp3');
         this.game.load.audio('putArmour','sounds/putArmour.mp3');
+        this.game.load.audio('lootPickUp','sounds/lootPickUp.wav');
+        this.game.load.audio('weaponPickUp','sounds/weaponPickUp.wav');
         //ADD motor de physics
 		this.game.physics.startSystem(Phaser.Physics.ARCADE);
 		this.game.physics.arcade.gravity.y = gameOptions.playerGravity;

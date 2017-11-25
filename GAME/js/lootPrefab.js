@@ -8,7 +8,6 @@ platformer.lootPrefab = function(game,x,y,_level, _hasPot){
         
     //TIPUS DE BOTÍ
     this.loopType = Math.floor(Math.random()*50);
-    this.loopType = 0;
     if (this.loopType == 0){ //molt poques possibilitats de tenir armadura
         Phaser.Sprite.call(this,game,x,y,'armorPickUp');
         game.add.existing(this);    
@@ -21,7 +20,7 @@ platformer.lootPrefab = function(game,x,y,_level, _hasPot){
     else{
         this.isArmor = false;
         this.loopType = Math.floor(Math.random()*9);
-        if (this.loopType == 0 || this.loopType == 1 || this.loopType == 2 || this.loopType == 3 ||this.loopType == 4 ||this.loopType == 5 ||this.loopType == 6){ // 70% possibilitats
+        if (this.loopType == 0 || this.loopType == 1 || this.loopType == 2 || this.loopType == 3 ||this.loopType == 4 ||this.loopType == 5){ // 70% possibilitats
             Phaser.Sprite.call(this,game,x,y,'coin');
             game.add.existing(this);    
             this.anchor.setTo(.5);
@@ -29,6 +28,10 @@ platformer.lootPrefab = function(game,x,y,_level, _hasPot){
             this.animations.add('idle', [0,1,2,3],10,true);
             this.animations.play('idle');
             this.numPoints = 200;
+        }
+        else if (this.loopType == 6) {
+            //WEAPOOON            
+            this.kill();
         }
         else if (this.loopType == 7 || this.loopType == 8){ // 20% possibilitats
             Phaser.Sprite.call(this,game,x,y,'moneyBag');
@@ -54,6 +57,8 @@ platformer.lootPrefab = function(game,x,y,_level, _hasPot){
     
      //AUDIO
     this.putArmourSound = this.level.add.audio('putArmour');
+    this.lootPickUp = this.level.add.audio('lootPickUp');
+    this.weaponPickUp = this.level.add.audio('weaponPickUp');
 }
 platformer.lootPrefab.prototype=Object.create(Phaser.Sprite.prototype);
 platformer.lootPrefab.prototype.constructor=platformer.lootPrefab;
@@ -67,7 +72,8 @@ platformer.lootPrefab.prototype.update = function(){
         }
         else {
             boti.level.hud.updateScore(boti.numPoints);
-            boti.level.hud.spawnPoints(boti.x-20, boti.y-20, boti.numPoints);              
+            boti.level.hud.spawnPoints(boti.x-20, boti.y-20, boti.numPoints);
+            boti.lootPickUp.play();
         }
         boti.kill();
                                      
