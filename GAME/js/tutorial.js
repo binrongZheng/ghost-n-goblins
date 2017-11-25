@@ -179,11 +179,14 @@ platformer.tutorial = {
 
         //ENEMIES
         this.enemies = this.add.group();
-  		this.createPlants();
-		this.createCrows();
+  		//this.createPlants();
+		//this.createCrows();
         //this.enemies.add (new platformer.zombiePrefab(this.game,200+gameOptions.gameWidth/2,350,this));
-        this.redDevil = new platformer.RedDemonPrefab(this.game,2900,350,this);
-        var prova = new platformer.lootPrefab(this.game, 200, 350, this, false);
+        //this.redDevil = new platformer.RedDemonPrefab(this.game,2900,350,this);
+        
+        //BOTINS FIXES        
+        this.createFixedLoot();
+        
 
         //SPAWNS DE ZOMBIES
         /*this.spawns.add(new platformer.spawnZombiePrefab(this.game,475,350,this));
@@ -248,9 +251,9 @@ platformer.tutorial = {
       this.ladders = this.game.add.group();
       this.ladders.enableBody = true;
       this.ladders.immovable = true;
-      this.createLadder(512*2+388);
-      this.createLadder(512*3+262);
-      this.createLadder(512*4+70);
+      //this.createLadder(512*2+388);
+      //this.createLadder(512*3+262);
+      //this.createLadder(512*4+70);
 
     },
     createLadder:function(x){
@@ -279,4 +282,11 @@ platformer.tutorial.createCrows = function(){
 	this.enemies.add(new platformer.crowPrefab(this.game,2206,332,this));
 	this.enemies.add(new platformer.crowPrefab(this.game,2524,332,this));
 	this.enemies.add(new platformer.crowPrefab(this.game,3036,332,this));
+}
+platformer.tutorial.createFixedLoot = function(){
+    new platformer.lootPrefab(this.game, 700, 370, this, false);
+    new platformer.lootPrefab(this.game, 1250, 200, this, false);
+    new platformer.lootPrefab(this.game, 1650, 200, this, false);
+    new platformer.lootPrefab(this.game, 2200, 200, this, false);
+    new platformer.lootPrefab(this.game, 2800, 370, this, false);
 }
