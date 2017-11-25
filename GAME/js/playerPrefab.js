@@ -80,17 +80,17 @@ platformer.playerPrefab.prototype.update = function () {
     this.game.physics.arcade.collide(this, this.level.graves, this.touch, null, this);
     this.game.physics.arcade.collide (this, this.level.water, this.PlayerDie, null, this);
 
-    this.game.physics.arcade.overlap(this,this.level.ladders,this.climbLadders, null, this);
 
+    if(!this.onLadder&&this.y<=190||this.cursors.down.isDown&&this.body.blocked.down&&this.y>200) { this.climbing=false;this.body.allowGravity=true;}
 
-//    if(!this.onLadder&&this.y<=190) { this.climbing=false;this.body.allowGravity=true;}
-  /*  if(this.y>190&&!this.cursors.down.isDown&&this.game.physics.arcade.overlap(this,this.level.ladders)){
-
-        if(this.cursors.down.isDown&&this.body.blocked.down&&this.y>200){this.onLadder=false;}
-        else  this.onLadder=true;
+    if(this.game.physics.arcade.overlap(this,this.level.ladders)){
+      if(this.body.blocked.down&&this.cursors.down.isDown)        this.onLadder=false;
+      else  this.onLadder=true;
     }
     else  {this.onLadder=false;this.body.allowGravity=true;}
-*/
+
+    this.game.physics.arcade.overlap(this,this.level.ladders,this.climbLadders, null, this);
+
 	this.game.physics.arcade.collide (this, this.level.enemyProjectiles, this.killPlayer, null, this);
 
 	this.body.velocity.x = 0;
@@ -101,7 +101,7 @@ platformer.playerPrefab.prototype.update = function () {
     }
 
     //WITH CLOTH ANIMATION
-        if(this.with_cloth==true){
+        if(this.with_cloth==true&&!this.climbing){
             //ATTACK
             if (this.space.isDown){
                 this.animations.play('attack');
@@ -154,7 +154,7 @@ platformer.playerPrefab.prototype.update = function () {
 
         }
 
-     else if(this.isKill!=0){
+     else if(this.isKill!=0&&!this.climbing){
 
            //ATTACK
            if (this.space.isDown){
@@ -347,7 +347,41 @@ platformer.playerPrefab.prototype.gameover = function () {
     }
 }
 platformer.playerPrefab.prototype.climbLadders = function (hero,ladder) {
-/*    if(this.onLadder){
+if(this.onLadder) {
+  if(this.cursors.up.isDown){
+    this.climbingStopState=!this.climbingStopState;
+    hero.body.x=ladder.x-6;
+    this.climbing=true;
+    if(this.with_cloth) this.animations.play('climb');
+    else this.animations.play('climb_N');
+    this.body.allowGravity=false;
+    this.body.velocity.y=-gameOptions.playerSpeed;
+  }
+  else if(this.cursors.down.isDown){
+      this.climbingStopState=!this.climbingStopState;
+      hero.body.x=ladder.x-6;
+      if(this.y>200) this.body.checkCollision.down=true;
+      else this.body.checkCollision.down=false;
+      if(this.with_cloth) this.animations.play('climb');
+      else this.animations.play('climb_N');
+      this.body.allowGravity=false;
+      this.body.velocity.y=gameOptions.playerSpeed;
+  }
+  else if(!this.body.blocked.down){
+    this.climbing=true
+    if(this.with_cloth){
+      if(this.climbingStopState)   this.animations.play('climbstopleft');
+      else this.animations.play('climbstopright');
+    }
+    else {
+      if(this.climbingStopState)   this.animations.play('climbstopleft_N');
+      else this.animations.play('climbstopright_N');
+    }
+    this.body.velocity.y=0;
+  }
+}
+/*
+   if(this.onLadder){
       if(this.cursors.up.isDown){
         this.climbingStopState=!this.climbingStopState;
         hero.body.x=ladder.x-6
