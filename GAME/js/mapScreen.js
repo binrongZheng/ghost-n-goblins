@@ -14,10 +14,12 @@ platformer.mapScreen={
     create:function(){
         //BACKGROUND
        	this.bg = this.game.add.sprite(0,0, 'bg');
-        //this.bg.anchor.setTo(.5);
+        this.cameraMovement=-1;
     },
     update:function(){
-
+        if(this.bg.x <= -this.bg.width/2) this.cameraMovement=1;
+        if(this.bg.x>0) this.game.state.start('tutorial');
+        this.bg.x+=this.cameraMovement;
     }
 
 }
