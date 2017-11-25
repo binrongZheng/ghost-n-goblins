@@ -15,7 +15,7 @@ platformer.playerPrefab = function (game,x,y, _level,_player_life,_cursors,_jump
     this.isKill=2;
     this.playerPos=[x,y];
     this.animationStop=false;
-
+	
     //SPRITE
 	  Phaser.Sprite.call(this,game,x,y,'hero');
 	  game.add.existing (this);
@@ -257,6 +257,7 @@ platformer.playerPrefab.prototype.killPlayer = function (hero,enemy) {
         }
         this.with_cloth=false;
         this.isKill--;
+		this.game.time.events.repeat(Phaser.Timer.SECOND/27,28,this.invincibleBlink,this);	//evento para que se ponga a parpadear
         if(this.with_cloth==false&&this.isKill==0){
             lastLife=this.player_life;
             this.player_life--;
@@ -470,4 +471,13 @@ platformer.playerPrefab.prototype.climbUp = function(){
   else
     this.animations.play('stand_N');
 
+}
+platformer.playerPrefab.prototype.invincibleBlink = function(){
+	//hace que el jugador se ponga a parpadear (se llama des de un evento que se repite)
+	if(this.alpha == 0){
+		this.alpha = 1;
+	} 
+	else {
+		this.alpha = 0;
+	}
 }
