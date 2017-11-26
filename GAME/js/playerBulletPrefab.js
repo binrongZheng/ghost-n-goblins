@@ -40,9 +40,15 @@ platformer.playerBulletPrefab.prototype.update = function () {
     //Colisions
     this.game.physics.arcade.collide (this, this.level.enemies,function (bullet, enemy){
         bullet.kill();
-        enemy.kill();
-        //sumar punts al HUD                            
-        
+		if(!(enemy instanceof platformer.ghostPrefab)){		//si es un ghost, cridem el metode especial per saber d'on venia la bala
+			enemy.kill();
+		}else{
+			if(bullet.x>enemy.x){
+				enemy.kill(this.x);
+			}else{
+				//posar una explosió?
+			}
+		}
     });
     if (Phaser.Math.difference(this.position.x,platformer.tutorial.hero.position.x) > gameOptions.gameWidth/2){
         this.kill();

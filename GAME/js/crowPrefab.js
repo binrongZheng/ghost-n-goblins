@@ -13,6 +13,7 @@ platformer.crowPrefab=function(game,x,y,_level){
 	//físiques
     game.physics.arcade.enable(this);
     this.body.allowGravity 	= false;
+	this.body.immovable = true;
     
     this.animations.add('crowAggro', [0,1,2,3],3,true);
     this.animations.add('crowFly',	 [4,5,6,7],6,true);
