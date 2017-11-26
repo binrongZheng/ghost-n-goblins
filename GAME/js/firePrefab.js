@@ -35,7 +35,7 @@ platformer.firePrefab.prototype.update = function () {
     this.game.physics.arcade.overlap (this, this.level.enemies,function (bullet, enemy){
         console.log(enemy.hp);
         if(!(enemy instanceof platformer.ghostPrefab)){		//els fantasmes ni agua
-	       enemy.hp -= 1;
+	       enemy.hp -= 100 * bullet.level.game.time.elapsed/1000;
            if(enemy.hp <= 0)
             enemy.kill();
 		   }

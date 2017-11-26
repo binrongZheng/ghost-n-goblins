@@ -188,7 +188,7 @@ platformer.tutorial = {
         this.enemies = this.add.group();
   		this.createPlants();
 		this.createCrows();
-        //this.enemies.add (new platformer.zombiePrefab(this.game,200+gameOptions.gameWidth/2,350,this));
+        this.enemies.add (new platformer.zombiePrefab(this.game,200+gameOptions.gameWidth/2,350,this));
         //this.redDevil = new platformer.RedDemonPrefab(this.game,2900,350,this);
         //this.enemies.add(new platformer.ghostPrefab(this.game,500,350,this));
         
@@ -197,13 +197,13 @@ platformer.tutorial = {
         
 
         //SPAWNS DE ZOMBIES
-        this.spawns.add(new platformer.spawnZombiePrefab(this.game,475,350,this));
+        /*this.spawns.add(new platformer.spawnZombiePrefab(this.game,475,350,this));
         this.spawns.add(new platformer.spawnZombiePrefab(this.game,800,350,this));
         this.spawns.add(new platformer.spawnZombiePrefab(this.game,1100,350,this));
         this.spawns.add(new platformer.spawnZombiePrefab(this.game,1450,350,this));
         this.spawns.add(new platformer.spawnZombiePrefab(this.game,1900,350,this));
         this.spawns.add(new platformer.spawnZombiePrefab(this.game,2200,350,this));
-        this.spawns.add(new platformer.spawnZombiePrefab(this.game,2500,350,this));
+        this.spawns.add(new platformer.spawnZombiePrefab(this.game,2500,350,this));*/
 
 		//CAMERA
 		this.camera.follow(this.hero);

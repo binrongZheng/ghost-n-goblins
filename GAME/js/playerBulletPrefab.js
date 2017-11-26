@@ -6,7 +6,8 @@ platformer.playerBulletPrefab=function(game,x,y,_bullet_type, _level){
     this.dmg;
     this.level = _level;
     this.game = game;
-        
+    
+    this.bullet_type = 2;
     switch(this.bullet_type){
         case 0: Phaser.Sprite.call(this,game,x,y,'arma_lance');this.dmg = 100;this.speed = gameOptions.lanceSpeed;
             break;
