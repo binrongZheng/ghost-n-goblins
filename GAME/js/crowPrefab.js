@@ -7,6 +7,8 @@ platformer.crowPrefab=function(game,x,y,_level){
     game.add.existing(this);
 	this.anchor.setTo(.5);
     
+    this.hp = 80;
+    
     this.aggro	= false; 	//si el corb ens "ha vist"
     this.flying	= false; 	//si el corb està volant
 

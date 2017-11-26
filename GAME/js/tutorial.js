@@ -111,6 +111,8 @@ platformer.tutorial = {
         //BULLET SPRITES
         this.load.image('arma_lance','img/lance.png');
         this.load.image('arma_daga','img/daga.png');
+        this.load.spritesheet('arma_torcha','img/arma_foc.png',16,16);
+        this.load.spritesheet('foc','img/foc.png',32,32);
         //GRAVE
         this.load.image('grave0','img/grave0.png');
         this.load.image('grave1','img/grave1.png');
@@ -186,7 +188,7 @@ platformer.tutorial = {
         this.enemies = this.add.group();
   		this.createPlants();
 		this.createCrows();
-        this.enemies.add (new platformer.zombiePrefab(this.game,200+gameOptions.gameWidth/2,350,this));
+        //this.enemies.add (new platformer.zombiePrefab(this.game,200+gameOptions.gameWidth/2,350,this));
         //this.redDevil = new platformer.RedDemonPrefab(this.game,2900,350,this);
         this.enemies.add(new platformer.ghostPrefab(this.game,500,350,this));
         

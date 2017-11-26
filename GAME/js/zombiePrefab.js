@@ -6,6 +6,7 @@ platformer.zombiePrefab=function(game,x,y,_level){
 	this.anchor.setTo(.5);
     this.scale.setTo(2);
     
+    this.hp = 80;
     
     //LA DIRECCIO
     this.rng = game.rnd.integerInRange (0,5);
@@ -41,8 +42,7 @@ platformer.zombiePrefab=function(game,x,y,_level){
     
     //triar si tindrà boti
     this.dropsLoot = game.rnd.integerInRange(0,7);
-    this.dropsLoot = 0;
-    
+        
 };
 
 platformer.zombiePrefab.prototype=Object.create(Phaser.Sprite.prototype);
