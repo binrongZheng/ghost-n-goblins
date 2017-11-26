@@ -96,10 +96,10 @@ platformer.tutorial = {
         this.load.spritesheet('planta', 'img/Planta.png', 36, 64);
         this.load.spritesheet('crow', 'img/crow.png', 36, 32);
     		this.load.spritesheet('zombie', 'img/zombie.png', 32, 32);
-        
+
         //LOOT
         this.load.spritesheet('planta', 'img/Planta.png', 36, 64);
-        
+
         //RED DEVIL
         this.load.spritesheet('coin', 'img/item_coin.png', 16, 64);
         this.load.spritesheet('crown', 'img/item_crow.png', 16, 64);
@@ -200,7 +200,8 @@ platformer.tutorial = {
 		//MUSIC
         this.themeMusic=this.add.audio('theme_music');
         this.themeMusic.loop = true;
-        //this.themeMusic.play();
+
+        this.themeMusic.play();
         //MENU PAUSA
         this.inPlay=true;
 	},
