@@ -27,15 +27,16 @@ platformer.firePrefab=function(game,x,y, _level){
     this.body.allowGravity = false;
     this.body.immovable = true;
         
-        
+    this.prova = 0;    
 }
 platformer.firePrefab.prototype=Object.create(Phaser.Sprite.prototype);
 platformer.firePrefab.prototype.constructor=platformer.firePrefab;
 platformer.firePrefab.prototype.update = function () {
+  
     this.game.physics.arcade.overlap (this, this.level.enemies,function (bullet, enemy){
-        console.log(enemy.hp);
+        
         if(!(enemy instanceof platformer.ghostPrefab)){		//els fantasmes ni agua
-	       enemy.hp -= 100 * bullet.level.game.time.elapsed/1000;
+	       enemy.hp -= 80 * bullet.level.game.time.elapsed/1000; //triga un segon a matar el zombie
            if(enemy.hp <= 0)
             enemy.kill();
 		   }
