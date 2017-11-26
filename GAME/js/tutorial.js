@@ -95,30 +95,18 @@ platformer.tutorial = {
         //ENEMY SPRITES
         this.load.spritesheet('planta', 'img/Planta.png', 36, 64);
         this.load.spritesheet('crow', 'img/crow.png', 36, 32);
-<<<<<<< HEAD
-    		this.load.spritesheet('zombie', 'img/zombie.png', 32, 32);
-
-        //LOOT
-        this.load.spritesheet('planta', 'img/Planta.png', 36, 64);
+		this.load.spritesheet('zombie', 'img/zombie.png', 32, 32);
+        this.load.spritesheet('ghost', 'img/ghost.png', 34, 60);
 
         //RED DEVIL
-        this.load.spritesheet('coin', 'img/item_coin.png', 16, 64);
-        this.load.spritesheet('crown', 'img/item_crow.png', 16, 64);
-=======
-        this.load.spritesheet('zombie', 'img/zombie.png', 32, 32);
-        this.load.spritesheet('ghost', 'img/ghost.png', 34, 60);
+        this.load.spritesheet('redDevil', 'img/redDevil.png', 42, 42);        
         
         //LOOT
         this.load.spritesheet('coin', 'img/item_coin.png', 16, 16);
         this.load.spritesheet('crown', 'img/item_crown.png', 16, 16);
->>>>>>> 944238fb2ee73414ba573bb10d4f9a184af4a012
         this.load.image('armorPickUp', 'img/item_armor.png', 16, 16);
         this.load.image('moneyBag', 'img/item_moneyBag.png', 16, 16);
-                
-        //RED DEVIL
-        this.load.spritesheet('redDevil', 'img/redDevil.png', 42, 42);        
         
-
         //BULLET SPRITES
         this.load.image('arma_lance','img/lance.png');
         this.load.image('arma_daga','img/daga.png');
