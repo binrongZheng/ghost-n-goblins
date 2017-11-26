@@ -1,10 +1,13 @@
 var platformer = platformer || {};
 
+/*
+* Els fantasmes apareixen en series de 3. Un cop han aparegut els 3 fantasmes, s'espera 4 segons, i es repeteix el proces fins que el jugador avança el punt d'spawn.
+* El temps que hi ha entre que apareix cada fantasma és aleatori entre dos valors.
+*/
 platformer.ghostSpawnPrefab=function(game,x,y,_level){
+	//Modo discípulo de radev: ¡¡¡¡¡ACTIVADO!!!!!
 	Phaser.Sprite.call(this,game,x,y,'');
     game.add.existing(this);
-	//Modo discípulo de radev: ¡¡¡¡¡ACTIVADO!!!!!
-	
 	
     this.level			= _level;
 	this.game 			= game;
@@ -13,18 +16,12 @@ platformer.ghostSpawnPrefab=function(game,x,y,_level){
 	this.spawnPosX		= this.x+gameOptions.gameWidth;
 	this.spawnPosY		= 232;
 	
-    
-	//FALTA PER AFEGIR AL GAMEOPTIONS
-	this.timeForSpawn 	= 400;	//ms
-	this.spawnWaitTime 	= 2000;	//ms
 };
 
 platformer.ghostSpawnPrefab.prototype=Object.create(Phaser.Sprite.prototype);
 platformer.ghostSpawnPrefab.prototype.constructor=platformer.ghostSpawnPrefab;
 
 platformer.ghostSpawnPrefab.prototype.update = function () {
-    //if(Phaser.Math.difference(this.x,platformer.tutorial.hero.x) < gameOptions.gameWidth/2){}
-    
 	if(this.level.hero.x>this.x && !this.spawning){			//comença a espawnejar fantasmes
 		console.log("ghost spawn");
 		this.spawning = true;
@@ -44,11 +41,11 @@ platformer.ghostSpawnPrefab.prototype.spawnAghost = function(){
 		console.log("spawning");
 		
 		if(this.spawnedGhosts < 3){
-			this.level.game.time.events.add(this.timeForSpawn,this.spawnAghost,this);								//si encara no hem arribat a 3, espawnejarem un altre
+			this.level.game.time.events.add(this.game.rnd.integerInRange (gameOptions.minTimeGhostSpawn,gameOptions.maxTimeGhostSpawn),this.spawnAghost,this);								//si encara no hem arribat a 3, espawnejarem un altre
 		} else{
 			//cridem evento següent tongada
 			this.spawnedGhosts = 0;
-			this.level.game.time.events.add(this.spawnWaitTime,this.spawnAghost,this);
+			this.level.game.time.events.add(gameOptions.ghostWaitTime,this.spawnAghost,this);
 		}
 	}
 }
