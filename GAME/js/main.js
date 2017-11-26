@@ -16,6 +16,7 @@ var gameOptions = {
     crowSpeed:170,
     crowXoffset:20,
     crowYoffset:3,
+	ghostSpeed:170,
     zombieSpeed: 150,
     levelOption:3,
     lastOption:3,

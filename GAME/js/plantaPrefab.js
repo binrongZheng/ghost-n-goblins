@@ -1,10 +1,11 @@
 var platformer = platformer || {};
 
-platformer.plantaPrefab=function(game,x,y){
+platformer.plantaPrefab=function(game,x,y,_level){
     Phaser.Sprite.call(this,game,x,y,'planta');
     game.add.existing(this);
 	this.anchor.setTo(.5);
     
+	this.level	= _level;
     this.shot	= false;
     this.aggro	= false;	//si ens pot atacar o no
 	

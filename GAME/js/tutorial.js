@@ -188,7 +188,7 @@ platformer.tutorial = {
 		this.createCrows();
         this.enemies.add (new platformer.zombiePrefab(this.game,200+gameOptions.gameWidth/2,350,this));
         //this.redDevil = new platformer.RedDemonPrefab(this.game,2900,350,this);
-        //this.enemies.add(new platformer.ghostPrefab(this.game,500,350,this));
+        this.enemies.add(new platformer.ghostPrefab(this.game,500,350,this));
         
         //BOTINS FIXES        
         this.createFixedLoot();
@@ -202,7 +202,10 @@ platformer.tutorial = {
         this.spawns.add(new platformer.spawnZombiePrefab(this.game,1900,350,this));
         this.spawns.add(new platformer.spawnZombiePrefab(this.game,2200,350,this));
         this.spawns.add(new platformer.spawnZombiePrefab(this.game,2500,350,this));*/
-
+		
+		//SPAWNS DE GHOSTS
+		this.spawnGhost1 = new platformer.ghostSpawnPrefab(this.game,4769,350,this);
+		
 		//CAMERA
 		this.camera.follow(this.hero);
         //HUD
@@ -282,6 +285,7 @@ platformer.tutorial.createPlants = function(){
 	//var plantaTest = new platformer.plantaPrefab(this.game,400+gameOptions.gameWidth/2,350,this);
 	this.enemies.add(new platformer.plantaPrefab(this.game,1628,202,this));
 	this.enemies.add(new platformer.plantaPrefab(this.game,2210,202,this));
+	//falta una planta per posar
 };
 platformer.tutorial.createCrows = function(){
 	this.enemies.add(new platformer.crowPrefab(this.game,1498,332,this));

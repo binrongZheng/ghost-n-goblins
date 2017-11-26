@@ -3,6 +3,7 @@ var platformer = platformer || {};
 platformer.spawnZombiePrefab=function(game,x,y, _level){
     
     Phaser.Sprite.call(this,game,x,y,'');
+    game.add.existing(this);
     this.numZombies = game.rnd.integerInRange (2,3);
     this.instantiatedZombies = 0;
     

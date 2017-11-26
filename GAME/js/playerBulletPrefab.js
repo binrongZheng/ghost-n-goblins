@@ -44,7 +44,7 @@ platformer.playerBulletPrefab.prototype.update = function () {
 			enemy.kill();
 		}else{
 			if(bullet.x>enemy.x){
-				enemy.kill(this.x);
+				enemy.kill();
 			}else{
 				//posar una explosió?
 			}

@@ -10,7 +10,7 @@ platformer.ghostPrefab=function(game,x,y,_level){
 	//físiques
     game.physics.arcade.enable(this);
     this.body.allowGravity 	= false;
-	this.body.velocity.x = -gameOptions.crowSpeed; //TO DO-´-----------------------
+	this.body.velocity.x = -gameOptions.ghostSpeed;
 	this.body.immovable = true;
     
     this.animations.add('ghostFly', [0,1,2,3],5,true);
@@ -39,6 +39,7 @@ platformer.ghostPrefab.prototype.ghostPoints = function () {
 	this.level.explosions.add(new platformer.explosionPrefab(this.level.game,this.x,this.y,1));
 };
 platformer.ghostPrefab.prototype.killGhostFrom = function (xBulletPosition) {
+	//no l'he pogut utilitzar des del playerBullet :(
     if(xBulletPosition > this.x){
 	   this.kill();
 	}
