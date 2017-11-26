@@ -8,14 +8,14 @@ platformer.playerPrefab = function (game,x,y, _level,_player_life,_cursors,_jump
     this.cursors = _cursors;
     this.jump_key = _jump_key;
     this.space = _space;
-    this.with_cloth = _with_cloth;    
+    this.with_cloth = _with_cloth;
     this.onLadder=false;
     this.climbing=false;
     this.climbingStopState=false;
     this.isKill=2;
     this.playerPos=[x,y];
     this.animationStop=false;
-	
+
     //SPRITE
 	  Phaser.Sprite.call(this,game,x,y,'hero');
 	  game.add.existing (this);
@@ -265,9 +265,12 @@ platformer.playerPrefab.prototype.killPlayer = function (hero,enemy) {
             lastLife=this.player_life;
             this.player_life--;
             if(this.player_life<lastLife&&this.player_life!=0) {
-                gameOptions.levelOption = this.player_life;
-                this.level.themeMusic.stop();
-                  this.game.state.start('mapScreen');
+                this.isKill=0;
+                this.body.checkCollision.left=false;
+                this.body.checkCollision.right=false;
+                this.game.time.events.add(Phaser.Timer.SECOND * 1.5, this.map_Screen, this);
+
+
                 //this.game.state.start('tutorial');
             }
         }
@@ -282,9 +285,12 @@ platformer.playerPrefab.prototype.killPlayer = function (hero,enemy) {
         }
         else{
           if(this.player_life<=0){
+            this.isKill=0;
+            this.body.checkCollision.left=false;
+            this.body.checkCollision.right=false;
             gameOptions.levelOption = gameOptions.lastOption;
             this.level.themeMusic.stop();
-              this.game.state.start('mapScreen');
+            this.game.state.start('mapScreen');
             //this.game.state.start('tutorial');
           }
         }
@@ -350,7 +356,15 @@ platformer.playerPrefab.prototype.deadByTimer = function(){
         }
 	}
 }
-
+platformer.playerPrefab.prototype.map_Screen = function () {
+    platformer.tutorial.game_over.destroy();
+    this.killOnComplete=true;
+    if(this.killOnComplete){
+      gameOptions.levelOption = this.player_life;
+      this.level.themeMusic.stop();
+      this.game.state.start('mapScreen');
+    }
+}
 platformer.playerPrefab.prototype.gameover = function () {
     platformer.tutorial.game_over.destroy();
     this.killOnComplete=true;
@@ -479,7 +493,7 @@ platformer.playerPrefab.prototype.invincibleBlink = function(){
 	//hace que el jugador se ponga a parpadear (se llama des de un evento que se repite)
 	if(this.alpha == 0){
 		this.alpha = 0.7;
-	} 
+	}
 	else {
 		this.alpha = 0;
 	}
