@@ -141,6 +141,14 @@ platformer.tutorial = {
         //ADD motor de physics
 		this.game.physics.startSystem(Phaser.Physics.ARCADE);
 		this.game.physics.arcade.gravity.y = gameOptions.playerGravity;
+        
+        //CHECKPOINT
+        this.checkpoints = [];
+        var c1 = new Phaser.Point(gameOptions.gameWidth/2,350);
+        var c2 = new Phaser.Point(500,350);
+        this.checkpoints.push(c1);
+        this.checkpoints.push(c2);
+        
 	},
 	create:function(){
         //GRAVES
@@ -170,7 +178,7 @@ platformer.tutorial = {
         this.playKey = this.game.input.keyboard.addKey(Phaser.Keyboard.P);
 
         //PLAYER ->(game,x,y, _level,_player_life,_cursors,_jump_key,_space,_with_cloth)
-        this.hero = new platformer.playerPrefab(this.game,gameOptions.gameWidth/2,350,this,this.player_life,this.cursors,this.jump_key,this.space,this.with_cloth,this.playerHaveLife );
+        this.hero = new platformer.playerPrefab(this.game,this.checkpoints[gameOptions.currentCheckpoint].x,this.checkpoints[gameOptions.currentCheckpoint].y,this,this.player_life,this.cursors,this.jump_key,this.space,this.with_cloth,this.playerHaveLife );
 
         //BALES DEL PERSONATGE
         this.projectiles = this.add.group();
@@ -186,11 +194,11 @@ platformer.tutorial = {
 
         //ENEMIES
         this.enemies = this.add.group();
-  		this.createPlants();
-		this.createCrows();
+  		//this.createPlants();
+		//this.createCrows();
         //this.enemies.add (new platformer.zombiePrefab(this.game,200+gameOptions.gameWidth/2,350,this));
         //this.redDevil = new platformer.RedDemonPrefab(this.game,2900,350,this);
-        this.enemies.add(new platformer.ghostPrefab(this.game,500,350,this));
+        //this.enemies.add(new platformer.ghostPrefab(this.game,500,350,this));
         
         //BOTINS FIXES        
         this.createFixedLoot();
