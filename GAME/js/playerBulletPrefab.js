@@ -5,7 +5,7 @@ platformer.playerBulletPrefab=function(game,x,y,_bullet_type, _level){
     
     this.dmg;
     this.level = _level;
-    
+    this.game = game;
     
     this.bullet_type = 2;
     switch(this.bullet_type){
@@ -30,7 +30,7 @@ platformer.playerBulletPrefab=function(game,x,y,_bullet_type, _level){
     game.physics.arcade.enable(this);
 	//this.body.collideWorldBounds = true;
     if (this.bullet_type == 2) {
-        this.body.velocity.y = -300;                
+        this.body.velocity.y = -350;                
     }else this.body.allowGravity = false;
     
     this.checkWorldBounds = true;
@@ -46,9 +46,15 @@ platformer.playerBulletPrefab.prototype.constructor=platformer.playerBulletPrefa
 platformer.playerBulletPrefab.prototype.update = function () {
     //MOVIMENT
     this.body.velocity.x = this.speed * this.direction;
-    
-    
+        
     //Colisions
+    if (this.bullet_type == 2){
+        this.game.physics.arcade.collide (this, this.level.platform_collision,function (bullet, platform){
+            new platformer.firePrefab(bullet.game, bullet.x, bullet.y-15);  
+            bullet.kill();
+        });
+    }
+    
     this.game.physics.arcade.collide (this, this.level.enemies,function (bullet, enemy){
         bullet.kill();
 		if(!(enemy instanceof platformer.ghostPrefab)){		//si es un ghost, cridem el metode especial per saber d'on venia la bala

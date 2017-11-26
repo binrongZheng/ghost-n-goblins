@@ -11,7 +11,7 @@ var gameOptions = {
 		playerJumpForce:350,
     lanceSpeed:500,
     dagaSpeed:600,
-    torchaSpeed:100,
+    torchaSpeed:75,
     eyeSpeed:200,
     crowSpeed:170,
     crowXoffset:20,
