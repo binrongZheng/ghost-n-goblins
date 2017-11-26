@@ -266,6 +266,7 @@ platformer.playerPrefab.prototype.killPlayer = function (hero,enemy) {
             this.player_life--;
             if(this.player_life<lastLife&&this.player_life!=0) {
                 this.isKill=0;
+                this.body.checkCollision.up=false;
                 this.body.checkCollision.left=false;
                 this.body.checkCollision.right=false;
                 this.game.time.events.add(Phaser.Timer.SECOND * 1.5, this.map_Screen, this);
@@ -278,6 +279,7 @@ platformer.playerPrefab.prototype.killPlayer = function (hero,enemy) {
           if(this.player_life==0&&this.with_cloth==false){
             this.isKill=0;
             this.level.game_over.visible=true;
+            this.body.checkCollision.up=false;
             this.body.checkCollision.left=false;
             this.body.checkCollision.right=false;
             this.game.time.events.add(Phaser.Timer.SECOND * 4, this.gameover);
@@ -286,6 +288,7 @@ platformer.playerPrefab.prototype.killPlayer = function (hero,enemy) {
         else{
           if(this.player_life<=0){
             this.isKill=0;
+            this.body.checkCollision.up=false;
             this.body.checkCollision.left=false;
             this.body.checkCollision.right=false;
             gameOptions.levelOption = gameOptions.lastOption;
