@@ -6,8 +6,7 @@ platformer.playerBulletPrefab=function(game,x,y,_bullet_type, _level){
     this.dmg;
     this.level = _level;
     this.game = game;
-    
-    this.bullet_type = 2;
+        
     switch(this.bullet_type){
         case 0: Phaser.Sprite.call(this,game,x,y,'arma_lance');this.dmg = 100;this.speed = gameOptions.lanceSpeed;
             break;
@@ -30,7 +29,7 @@ platformer.playerBulletPrefab=function(game,x,y,_bullet_type, _level){
     game.physics.arcade.enable(this);
 	//this.body.collideWorldBounds = true;
     if (this.bullet_type == 2) {
-        this.body.velocity.y = -350;                
+        this.body.velocity.y = -300;                
     }else this.body.allowGravity = false;
     
     this.checkWorldBounds = true;
@@ -50,7 +49,7 @@ platformer.playerBulletPrefab.prototype.update = function () {
     //Colisions
     if (this.bullet_type == 2){
         this.game.physics.arcade.collide (this, this.level.platform_collision,function (bullet, platform){
-            new platformer.firePrefab(bullet.game, bullet.x, bullet.y-15);  
+            new platformer.firePrefab(bullet.game, bullet.x, 360, bullet.level);  
             bullet.kill();
         });
     }
@@ -59,8 +58,11 @@ platformer.playerBulletPrefab.prototype.update = function () {
         bullet.kill();
 		if(!(enemy instanceof platformer.ghostPrefab)){		//si es un ghost, cridem el metode especial per saber d'on venia la bala
 			enemy.hp -= bullet.dmg;
-            if(enemy.hp <= 0)
+            if(enemy.hp <= 0){
+                if(bullet.bullet_type == 2)
+                    new platformer.firePrefab(bullet.game, bullet.x, 360, bullet.level);  
                 enemy.kill();
+            }
 		}else{
 			if(bullet.x>enemy.x){
 				enemy.kill(this.x);

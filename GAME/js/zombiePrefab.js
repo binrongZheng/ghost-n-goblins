@@ -42,8 +42,7 @@ platformer.zombiePrefab=function(game,x,y,_level){
     
     //triar si tindrà boti
     this.dropsLoot = game.rnd.integerInRange(0,7);
-    this.dropsLoot = 0;
-    
+        
 };
 
 platformer.zombiePrefab.prototype=Object.create(Phaser.Sprite.prototype);
