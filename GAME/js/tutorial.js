@@ -109,6 +109,7 @@ platformer.tutorial = {
 
         //BULLET SPRITES
         this.load.image('arma_lance','img/lance.png');
+        this.load.image('arma_daga','img/daga.png');
         //GRAVE
         this.load.image('grave0','img/grave0.png');
         this.load.image('grave1','img/grave1.png');

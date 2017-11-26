@@ -5,7 +5,10 @@ platformer.lootPrefab = function(game,x,y,_level, _hasPot){
     game.add.existing(this);
     
     this.level = _level;
-        
+    
+    this.isWeapon = false;
+    this.isArmor = false;
+    
     //TIPUS DE BOTÍ
     this.loopType = Math.floor(Math.random()*50);
     if (this.loopType == 0){ //molt poques possibilitats de tenir armadura
@@ -17,9 +20,8 @@ platformer.lootPrefab = function(game,x,y,_level, _hasPot){
         
         this.isArmor = true;
     }
-    else{
-        this.isArmor = false;
-        this.loopType = Math.floor(Math.random()*9);
+    else{        
+        this.loopType = Math.floor(Math.random()*9);        
         if (this.loopType == 0 || this.loopType == 1 || this.loopType == 2 || this.loopType == 3 ||this.loopType == 4 ||this.loopType == 5){ // 70% possibilitats
             Phaser.Sprite.call(this,game,x,y,'coin');
             game.add.existing(this);    
@@ -30,8 +32,19 @@ platformer.lootPrefab = function(game,x,y,_level, _hasPot){
             this.numPoints = 200;
         }
         else if (this.loopType == 6) {
-            //WEAPOOON            
-            this.kill();
+            this.randomWeapon = Math.floor(Math.random()*1); //pq el foc no esta fet de moment            
+            switch(this.randomWeapon){
+                case 0: Phaser.Sprite.call(this,game,x,y-10,'arma_lance');
+                        game.add.existing(this);
+                        break;
+                case 1: Phaser.Sprite.call(this,game,x,y-10,'arma_daga');
+                        game.add.existing(this);
+                        break;
+                case 2: Phaser.Sprite.call(this,game,x,y-10,'arma_torcha');
+                        game.add.existing(this);
+                        break;
+            }
+            this.isWeapon = true;
         }
         else if (this.loopType == 7 || this.loopType == 8){ // 20% possibilitats
             Phaser.Sprite.call(this,game,x,y,'moneyBag');
@@ -69,6 +82,10 @@ platformer.lootPrefab.prototype.update = function(){
         if (boti.isArmor && !boti.level.hero.with_cloth){
             boti.level.hero.with_cloth = true;
             boti.putArmourSound.play();
+        }
+        else if (boti.isWeapon){
+            boti.level.hero.weaponType = boti.randomWeapon;
+            boti.weaponPickUp.play();
         }
         else {
             boti.level.hud.updateScore(boti.numPoints);
