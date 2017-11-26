@@ -28,7 +28,7 @@ platformer.doorPrefab.prototype.update = function(){
     if (this.open){
         this.game.physics.arcade.overlap (this, this.level.hero,function (porta, heroi){
             porta.game.time.events.add(250, function() {
-                porta.game.state.start('mainMenu');
+                porta.game.state.start('finalLevel');
             }.bind(porta),porta);
         });
     }
