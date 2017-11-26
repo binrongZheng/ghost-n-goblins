@@ -8,14 +8,14 @@ platformer.playerPrefab = function (game,x,y, _level,_player_life,_cursors,_jump
     this.cursors = _cursors;
     this.jump_key = _jump_key;
     this.space = _space;
-    this.with_cloth = _with_cloth;
+    this.with_cloth = _with_cloth;    
     this.onLadder=false;
     this.climbing=false;
     this.climbingStopState=false;
     this.isKill=2;
     this.playerPos=[x,y];
     this.animationStop=false;
-
+	
     //SPRITE
 	  Phaser.Sprite.call(this,game,x,y,'hero');
 	  game.add.existing (this);
@@ -59,7 +59,8 @@ platformer.playerPrefab = function (game,x,y, _level,_player_life,_cursors,_jump
 	  game.physics.arcade.enable(this);
   	this.body.collideWorldBounds = true;
 
-    //Timer del dispar
+    //Timer del dispar i tipus d'arma
+    this.weaponType = 0;
     this.canShoot = true;
     this.timeCheck;
     this.shootWait = 250;
@@ -222,7 +223,7 @@ platformer.playerPrefab.prototype.update = function () {
 }
 platformer.playerPrefab.prototype.shoot = function () {
     //crear arma
-    this.newProjectile = new platformer.playerBulletPrefab(platformer.game,platformer.tutorial.hero.position.x+20,platformer.tutorial.hero.position.y,0, this.level);
+    this.newProjectile = new platformer.playerBulletPrefab(platformer.game,platformer.tutorial.hero.position.x+20,platformer.tutorial.hero.position.y,this.weaponType, this.level);
     //afegir a l'array d'armes
     platformer.tutorial.projectiles.add(this.newProjectile);
     //posem el contador al temps actual per no deixar disparar a lo loco
@@ -252,11 +253,14 @@ platformer.playerPrefab.prototype.showArmourGone = function(hero,enemy){
 }
 platformer.playerPrefab.prototype.killPlayer = function (hero,enemy) {
     if(!this.invincible){
-        if(this.with_cloth==true&&this.kill==2) {
-          this.showArmourGone(hero,enemy);
+        if(this.with_cloth==true && this.isKill==2) {
+			this.invincible = true;
+		  	this.game.time.events.add(1060,this.stopInvincible,this);	//para dejar de ser invencible
+          	//this.showArmourGone(hero,enemy);							//da error (no puede conseguir la x del enemigo)
         }
         this.with_cloth=false;
         this.isKill--;
+		this.game.time.events.repeat(Phaser.Timer.SECOND/27,28,this.invincibleBlink,this);	//evento para que se ponga a parpadear
         if(this.with_cloth==false&&this.isKill==0){
             lastLife=this.player_life;
             this.player_life--;
@@ -470,4 +474,17 @@ platformer.playerPrefab.prototype.climbUp = function(){
   else
     this.animations.play('stand_N');
 
+}
+platformer.playerPrefab.prototype.invincibleBlink = function(){
+	//hace que el jugador se ponga a parpadear (se llama des de un evento que se repite)
+	if(this.alpha == 0){
+		this.alpha = 0.7;
+	} 
+	else {
+		this.alpha = 0;
+	}
+}
+platformer.playerPrefab.prototype.stopInvincible = function(){
+	this.alpha = 1;
+	this.invincible = false;
 }

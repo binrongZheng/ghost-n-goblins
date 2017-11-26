@@ -23,7 +23,11 @@ platformer.hudPrefab=function(game,_level){
 	this.scoreText		= platformer.game.add.bitmapText(10, 17,  'gngFont', '0', 		  18); 
 	this.topScoreText 	= platformer.game.add.bitmapText(200,17,  'gngFont', '1000', 	  18);
 	this.timeText 		= platformer.game.add.bitmapText(10, 34,  'gngFont', 'TIME', 	  18);
-	this.timerText 		= platformer.game.add.bitmapText(10, 51,  'gngFont', '2:00', 	  18);
+	this.timerText 		= platformer.game.add.bitmapText(10, 51,  'gngFont', '2.00', 	  18);
+	//Cambiamos los colores
+	this.topScore.tint		= '0xc40f0f';
+	this.timeText.tint		= '0xffb7c9';
+	this.timerText.tint		= '0x62fced';
 	//Ponemos el anchor a la derecha
 	this.scoreText.anchor.x 	= 1;
 	this.topScoreText.anchor.x 	= 1;
@@ -85,7 +89,6 @@ platformer.hudPrefab.prototype.spawnPoints = function(x,y,points){
 	var newPoints = platformer.game.add.bitmapText(x, y, 'gngFont', ''+points,  15);
 	newPoints.lifespan = 1000;
 	newPoints.kill = function(){
-		console.log("works");
 		this.destroy();
 	}
 }

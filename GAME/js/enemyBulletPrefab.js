@@ -32,14 +32,6 @@ platformer.enemyBulletPrefab=function(game,x,y,_enemyBullet_type,velX,velY){
     //velocitat constant
     this.body.velocity.x = velX;
     this.body.velocity.y = velY;
-    //col·lisió amb jugador
-
-
-    //this.bulletHitsPlayer = function(){ //aclarar en quin lloc es gestionen les col·lisions
-
-      //  this.kill();
-    //};
-
 };
 
 

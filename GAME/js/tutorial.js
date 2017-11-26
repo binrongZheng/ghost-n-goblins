@@ -95,6 +95,7 @@ platformer.tutorial = {
         //ENEMY SPRITES
         this.load.spritesheet('planta', 'img/Planta.png', 36, 64);
         this.load.spritesheet('crow', 'img/crow.png', 36, 32);
+<<<<<<< HEAD
     		this.load.spritesheet('zombie', 'img/zombie.png', 32, 32);
 
         //LOOT
@@ -103,11 +104,23 @@ platformer.tutorial = {
         //RED DEVIL
         this.load.spritesheet('coin', 'img/item_coin.png', 16, 64);
         this.load.spritesheet('crown', 'img/item_crow.png', 16, 64);
+=======
+        this.load.spritesheet('zombie', 'img/zombie.png', 32, 32);
+        
+        //LOOT
+        this.load.spritesheet('coin', 'img/item_coin.png', 16, 16);
+        this.load.spritesheet('crown', 'img/item_crown.png', 16, 16);
+>>>>>>> 944238fb2ee73414ba573bb10d4f9a184af4a012
         this.load.image('armorPickUp', 'img/item_armor.png', 16, 16);
         this.load.image('moneyBag', 'img/item_moneyBag.png', 16, 16);
+                
+        //RED DEVIL
+        this.load.spritesheet('redDevil', 'img/redDevil.png', 42, 42);        
+        
 
         //BULLET SPRITES
         this.load.image('arma_lance','img/lance.png');
+        this.load.image('arma_daga','img/daga.png');
         //GRAVE
         this.load.image('grave0','img/grave0.png');
         this.load.image('grave1','img/grave1.png');
@@ -130,6 +143,9 @@ platformer.tutorial = {
         this.game.load.audio('enemyDeath','sounds/enemyDeath.wav');
         this.game.load.audio('devilHit','sounds/devilHit.wav');
         this.game.load.audio('hitGrave','sounds/hitGrave.mp3');
+        this.game.load.audio('putArmour','sounds/putArmour.mp3');
+        this.game.load.audio('lootPickUp','sounds/lootPickUp.wav');
+        this.game.load.audio('weaponPickUp','sounds/weaponPickUp.wav');
         //ADD motor de physics
 		this.game.physics.startSystem(Phaser.Physics.ARCADE);
 		this.game.physics.arcade.gravity.y = gameOptions.playerGravity;
@@ -179,19 +195,22 @@ platformer.tutorial = {
         //ENEMIES
         this.enemies = this.add.group();
   		this.createPlants();
-		this.createCrows();
+		//this.createCrows();
         //this.enemies.add (new platformer.zombiePrefab(this.game,200+gameOptions.gameWidth/2,350,this));
-        this.redDevil = new platformer.RedDemonPrefab(this.game,2900,350,this);
-
+        //this.redDevil = new platformer.RedDemonPrefab(this.game,2900,350,this);
+        
+        //BOTINS FIXES        
+        this.createFixedLoot();
+        
 
         //SPAWNS DE ZOMBIES
-        this.spawns.add(new platformer.spawnZombiePrefab(this.game,475,350,this));
+        /*this.spawns.add(new platformer.spawnZombiePrefab(this.game,475,350,this));
         this.spawns.add(new platformer.spawnZombiePrefab(this.game,800,350,this));
         this.spawns.add(new platformer.spawnZombiePrefab(this.game,1100,350,this));
         this.spawns.add(new platformer.spawnZombiePrefab(this.game,1450,350,this));
         this.spawns.add(new platformer.spawnZombiePrefab(this.game,1900,350,this));
         this.spawns.add(new platformer.spawnZombiePrefab(this.game,2200,350,this));
-        this.spawns.add(new platformer.spawnZombiePrefab(this.game,2500,350,this));
+        this.spawns.add(new platformer.spawnZombiePrefab(this.game,2500,350,this));*/
 
 		//CAMERA
 		this.camera.follow(this.hero);
@@ -248,9 +267,9 @@ platformer.tutorial = {
       this.ladders = this.game.add.group();
       this.ladders.enableBody = true;
       this.ladders.immovable = true;
-      this.createLadder(512*2+388);
-      this.createLadder(512*3+262);
-      this.createLadder(512*4+70);
+      //this.createLadder(512*2+388);
+      //this.createLadder(512*3+262);
+      //this.createLadder(512*4+70);
 
     },
     createLadder:function(x){
@@ -279,4 +298,11 @@ platformer.tutorial.createCrows = function(){
 	this.enemies.add(new platformer.crowPrefab(this.game,2206,332,this));
 	this.enemies.add(new platformer.crowPrefab(this.game,2524,332,this));
 	this.enemies.add(new platformer.crowPrefab(this.game,3036,332,this));
+}
+platformer.tutorial.createFixedLoot = function(){
+    new platformer.lootPrefab(this.game, 700, 370, this, false);
+    new platformer.lootPrefab(this.game, 1250, 200, this, false);
+    new platformer.lootPrefab(this.game, 1650, 200, this, false);
+    new platformer.lootPrefab(this.game, 2200, 200, this, false);
+    new platformer.lootPrefab(this.game, 2800, 370, this, false);
 }
