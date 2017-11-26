@@ -106,6 +106,7 @@ platformer.tutorial = {
         this.load.spritesheet('crown', 'img/item_crow.png', 16, 64);
 =======
         this.load.spritesheet('zombie', 'img/zombie.png', 32, 32);
+        this.load.spritesheet('ghost', 'img/ghost.png', 34, 60);
         
         //LOOT
         this.load.spritesheet('coin', 'img/item_coin.png', 16, 16);
@@ -198,6 +199,7 @@ platformer.tutorial = {
 		//this.createCrows();
         //this.enemies.add (new platformer.zombiePrefab(this.game,200+gameOptions.gameWidth/2,350,this));
         //this.redDevil = new platformer.RedDemonPrefab(this.game,2900,350,this);
+        //this.provaGhost = new platformer.ghostPrefab(this.game,500,350,this);
         
         //BOTINS FIXES        
         this.createFixedLoot();
