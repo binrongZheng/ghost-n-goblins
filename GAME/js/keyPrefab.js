@@ -7,7 +7,7 @@ platformer.keyPrefab = function(game,x,y,_level){
     this.level = _level;
     
     //MOVIMENT
-    this.game.add.tween(this).to( { y: 350}, 10000, "Linear" , true, 0);
+    this.game.add.tween(this).to( { y: 350}, 6000, "Linear" , true, 0);
     
     //FISIQUES
     game.physics.arcade.enable(this);
@@ -19,6 +19,7 @@ platformer.keyPrefab.prototype.update = function(){
     
     this.game.physics.arcade.overlap (this, this.level.hero,function (key, pj){
         //activar animacio de la porta, segurament l'haurem de crear nosaltres
+        pj.hasKey = true;
         key.kill();                               
         
     });

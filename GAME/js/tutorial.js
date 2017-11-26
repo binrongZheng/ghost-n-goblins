@@ -125,8 +125,9 @@ platformer.tutorial = {
         this.load.image('menu_pausa', 'img/menu pausa.png');
         //GAME OVER
         this.load.image('game_over', 'img/game_over.png');
-        //KEY
+        //KEY AND DOOR
         this.load.image('key', 'img/key.png');
+        this.load.spritesheet('door', 'img/door_open.png',101,130);
 
         //SO
         this.game.load.audio('theme_music','sounds/gngTheme.mp3');
@@ -176,9 +177,14 @@ platformer.tutorial = {
 		this.space = this.game.input.keyboard.addKey(Phaser.Keyboard.X);
         this.escKey = this.game.input.keyboard.addKey(Phaser.Keyboard.ESC);
         this.playKey = this.game.input.keyboard.addKey(Phaser.Keyboard.P);
-
+        
+        //PORTA I CLAU
+        this.door = new platformer.doorPrefab(this.game, 6962, 256, this);
+        this.key = new platformer.keyPrefab(this.game,6800,0,this);
+        
         //PLAYER ->(game,x,y, _level,_player_life,_cursors,_jump_key,_space,_with_cloth)
         this.hero = new platformer.playerPrefab(this.game,this.checkpoints[gameOptions.currentCheckpoint].x,this.checkpoints[gameOptions.currentCheckpoint].y,this,this.player_life,this.cursors,this.jump_key,this.space,this.with_cloth,this.playerHaveLife );
+        
 
         //BALES DEL PERSONATGE
         this.projectiles = this.add.group();
@@ -186,9 +192,7 @@ platformer.tutorial = {
         this.enemyProjectiles = this.add.group();
         //EXPLOSIONS
         this.explosions = this.add.group();
-
-        //KEY - la instanciara el cyborg al morir
-        new platformer.keyPrefab(this.game,7000,0,this);
+        
         //WATER
         this.createWater();
 
@@ -216,6 +220,8 @@ platformer.tutorial = {
 		//SPAWNS DE GHOSTS
 		this.spawnGhost1 = new platformer.ghostSpawnPrefab(this.game,4769,350,this);
 		
+        
+        
 		//CAMERA
 		this.camera.follow(this.hero);
         //HUD

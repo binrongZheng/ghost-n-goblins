@@ -15,6 +15,7 @@ platformer.playerPrefab = function (game,x,y, _level,_player_life,_cursors,_jump
     this.isKill=2;
     this.playerPos=[x,y];
     this.animationStop=false;
+    this.hasKey = false;
         
     //SPRITE
 	  Phaser.Sprite.call(this,game,x,y,'hero');
