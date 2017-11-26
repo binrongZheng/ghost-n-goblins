@@ -11,11 +11,12 @@ platformer.ghostPrefab=function(game,x,y,_level){
     game.physics.arcade.enable(this);
     this.body.allowGravity 	= false;
 	this.body.velocity.x = -gameOptions.crowSpeed; //TO DO-´-----------------------
+	this.body.immovable = true;
     
     this.animations.add('ghostFly', [0,1,2,3],5,true);
     this.animations.play('ghostFly');
     //Quan mor, sumem punts i afegim una explosió
-    this.events.onKilled.add(platformer.ghostPrefab.ghostPoints, this);
+    this.events.onKilled.add(this.ghostPoints, this);
 };
 
 platformer.ghostPrefab.prototype=Object.create(Phaser.Sprite.prototype);
@@ -33,7 +34,12 @@ platformer.ghostPrefab.prototype.update = function () {
         }
     }
 };
-platformer.ghostPrefab.ghostPoints = function () {
+platformer.ghostPrefab.prototype.ghostPoints = function () {
     this.level.hud.updateScore(100);
 	this.level.explosions.add(new platformer.explosionPrefab(this.level.game,this.x,this.y,1));
+};
+platformer.ghostPrefab.prototype.killGhostFrom = function (xBulletPosition) {
+    if(xBulletPosition > this.x){
+	   this.kill();
+	}
 };
