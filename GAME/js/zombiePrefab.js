@@ -38,6 +38,11 @@ platformer.zombiePrefab=function(game,x,y,_level){
     
     //quan mor
     this.events.onKilled.add(this.die, this);
+    
+    //triar si tindrà boti
+    this.dropsLoot = game.rnd.integerInRange(0,7);
+    this.dropsLoot = 0;
+    
 };
 
 platformer.zombiePrefab.prototype=Object.create(Phaser.Sprite.prototype);
@@ -65,5 +70,8 @@ platformer.zombiePrefab.prototype.die = function () {
     this.deathSound.play();
     this.level.hud.updateScore(100);
 	this.level.explosions.add(new platformer.explosionPrefab(this.level.game,this.x,this.y,0));
+    if (this.dropsLoot == 0){
+        new platformer.lootPrefab(this.game, this.x, this.y, this.level, true);
+    }
     
 };

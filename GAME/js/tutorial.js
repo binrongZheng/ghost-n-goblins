@@ -106,6 +106,7 @@ platformer.tutorial = {
         this.load.spritesheet('crown', 'img/item_crown.png', 16, 16);
         this.load.image('armorPickUp', 'img/item_armor.png', 16, 16);
         this.load.image('moneyBag', 'img/item_moneyBag.png', 16, 16);
+        this.load.image('jar', 'img/jar.png', 32, 32);
         
         //BULLET SPRITES
         this.load.image('arma_lance','img/lance.png');
@@ -185,9 +186,9 @@ platformer.tutorial = {
         this.enemies = this.add.group();
   		this.createPlants();
 		this.createCrows();
-        //this.enemies.add (new platformer.zombiePrefab(this.game,200+gameOptions.gameWidth/2,350,this));
+        this.enemies.add (new platformer.zombiePrefab(this.game,200+gameOptions.gameWidth/2,350,this));
         //this.redDevil = new platformer.RedDemonPrefab(this.game,2900,350,this);
-        this.enemies.add(new platformer.ghostPrefab(this.game,500,350,this));
+        //this.enemies.add(new platformer.ghostPrefab(this.game,500,350,this));
         
         //BOTINS FIXES        
         this.createFixedLoot();
@@ -210,7 +211,7 @@ platformer.tutorial = {
         this.themeMusic=this.add.audio('theme_music');
         this.themeMusic.loop = true;
 
-        this.themeMusic.play();
+        //this.themeMusic.play();
         //MENU PAUSA
         this.inPlay=true;
 	},
