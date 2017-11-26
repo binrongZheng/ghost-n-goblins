@@ -9,13 +9,13 @@ platformer.playerBulletPrefab=function(game,x,y,_bullet_type, _level){
     
     this.bullet_type = 2;
     switch(this.bullet_type){
-        case 0: Phaser.Sprite.call(this,game,x,y,'arma_lance');dmg = 100;this.speed = gameOptions.lanceSpeed;
+        case 0: Phaser.Sprite.call(this,game,x,y,'arma_lance');this.dmg = 100;this.speed = gameOptions.lanceSpeed;
             break;
-        case 1: Phaser.Sprite.call(this,game,x,y,'arma_daga'); dmg = 80;this.speed = gameOptions.dagaSpeed;
+        case 1: Phaser.Sprite.call(this,game,x,y,'arma_daga'); this.dmg = 80;this.speed = gameOptions.dagaSpeed;
             break;
         case 2: 
             Phaser.Sprite.call(this,game,x,y,'arma_torcha'); 
-            dmg = 100;
+            this.dmg = 100;
             this.speed = gameOptions.torchaSpeed; 
             this.animations.add('idle', [0,1,2,3],10,true);
             this.animations.play('idle');
@@ -58,7 +58,9 @@ platformer.playerBulletPrefab.prototype.update = function () {
     this.game.physics.arcade.collide (this, this.level.enemies,function (bullet, enemy){
         bullet.kill();
 		if(!(enemy instanceof platformer.ghostPrefab)){		//si es un ghost, cridem el metode especial per saber d'on venia la bala
-			enemy.kill();
+			enemy.hp -= bullet.dmg;
+            if(enemy.hp <= 0)
+                enemy.kill();
 		}else{
 			if(bullet.x>enemy.x){
 				enemy.kill(this.x);

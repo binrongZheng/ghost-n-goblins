@@ -6,6 +6,7 @@ platformer.zombiePrefab=function(game,x,y,_level){
 	this.anchor.setTo(.5);
     this.scale.setTo(2);
     
+    this.hp = 80;
     
     //LA DIRECCIO
     this.rng = game.rnd.integerInRange (0,5);

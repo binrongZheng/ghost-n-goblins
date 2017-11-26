@@ -8,6 +8,8 @@ platformer.plantaPrefab=function(game,x,y){
     this.shot	= false;
     this.aggro	= false;	//si ens pot atacar o no
 	
+    this.hp = 80;
+    
     //físiques
     game.physics.arcade.enable(this);
     this.body.allowGravity	= false;
