@@ -253,8 +253,10 @@ platformer.playerPrefab.prototype.showArmourGone = function(hero,enemy){
 }
 platformer.playerPrefab.prototype.killPlayer = function (hero,enemy) {
     if(!this.invincible){
-        if(this.with_cloth==true&&this.kill==2) {
-          this.showArmourGone(hero,enemy);
+        if(this.with_cloth==true && this.isKill==2) {
+			this.invincible = true;
+		  	this.game.time.events.add(1060,this.stopInvincible,this);	//para dejar de ser invencible
+          	//this.showArmourGone(hero,enemy);							//da error (no puede conseguir la x del enemigo)
         }
         this.with_cloth=false;
         this.isKill--;
@@ -476,9 +478,13 @@ platformer.playerPrefab.prototype.climbUp = function(){
 platformer.playerPrefab.prototype.invincibleBlink = function(){
 	//hace que el jugador se ponga a parpadear (se llama des de un evento que se repite)
 	if(this.alpha == 0){
-		this.alpha = 1;
+		this.alpha = 0.7;
 	} 
 	else {
 		this.alpha = 0;
 	}
+}
+platformer.playerPrefab.prototype.stopInvincible = function(){
+	this.alpha = 1;
+	this.invincible = false;
 }

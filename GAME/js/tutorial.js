@@ -183,7 +183,7 @@ platformer.tutorial = {
 
         //ENEMIES
         this.enemies = this.add.group();
-  		//this.createPlants();
+  		this.createPlants();
 		//this.createCrows();
         //this.enemies.add (new platformer.zombiePrefab(this.game,200+gameOptions.gameWidth/2,350,this));
         //this.redDevil = new platformer.RedDemonPrefab(this.game,2900,350,this);
