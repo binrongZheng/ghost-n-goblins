@@ -15,6 +15,9 @@ platformer.plantaPrefab=function(game,x,y){
     
     this.animations.add('plantaAnim', [0,1,2,3],3,true);
     this.animations.play('plantaAnim');
+
+	//Quan mor, sumem punts i afegim una explosió
+    this.events.onKilled.add(platformer.plantaPrefab.plantaPoints, this);
 };
 
 platformer.plantaPrefab.prototype=Object.create(Phaser.Sprite.prototype);
@@ -51,4 +54,8 @@ platformer.plantaPrefab.prototype.update = function () {
 };
 platformer.plantaPrefab.prototype.die = function () {
     this.kill();
+};
+platformer.plantaPrefab.plantaPoints = function () {
+    this.level.hud.updateScore(100);
+	this.level.explosions.add(new platformer.explosionPrefab(this.level.game,this.x,this.y,1));
 };

@@ -76,7 +76,7 @@ platformer.tutorial = {
 	preload:function(){
         //MAPA
         this.load.image('bg','img/mapa_level1.png');
-		    this.load.tilemap('map','TileMaps/mapa_level.json',null,Phaser.Tilemap.TILED_JSON);
+		this.load.tilemap('map','TileMaps/mapa_level.json',null,Phaser.Tilemap.TILED_JSON);
         this.load.image('platform_collision','img/platform_collision.png');
         //PLAYER SPRITE
         this.load.spritesheet('hero', 'img/arthur.png', 64, 64);
@@ -149,20 +149,20 @@ platformer.tutorial = {
         this.bg = this.game.add.tileSprite(0,0,gameOptions.level1Width, gameOptions.level1Height, 'bg');
 
 		      //MAP
-		    this.map = this.game.add.tilemap('map');
+		this.map = this.game.add.tilemap('map');
         this.map.addTilesetImage('platform_collision');
 
         this.platform_collision = this.map.createLayer('platform_up');
 
         this.map.setCollisionBetween(2,5,true,'platform_up');
 
-		    this.map.createLayer('platform_up');
+		this.map.createLayer('platform_up');
         this.map.createLayer('ladder');
 
 		      //CONTROLS
-		    this.cursors = this.game.input.keyboard.createCursorKeys();
+		this.cursors = this.game.input.keyboard.createCursorKeys();
         this.jump_key=this.game.input.keyboard.addKey(Phaser.Keyboard.Z);
-		    this.space = this.game.input.keyboard.addKey(Phaser.Keyboard.X);
+		this.space = this.game.input.keyboard.addKey(Phaser.Keyboard.X);
         this.escKey = this.game.input.keyboard.addKey(Phaser.Keyboard.ESC);
         this.playKey = this.game.input.keyboard.addKey(Phaser.Keyboard.P);
 
@@ -184,10 +184,10 @@ platformer.tutorial = {
         //ENEMIES
         this.enemies = this.add.group();
   		this.createPlants();
-		//this.createCrows();
+		this.createCrows();
         //this.enemies.add (new platformer.zombiePrefab(this.game,200+gameOptions.gameWidth/2,350,this));
         //this.redDevil = new platformer.RedDemonPrefab(this.game,2900,350,this);
-        //this.provaGhost = new platformer.ghostPrefab(this.game,500,350,this);
+        this.enemies.add(new platformer.ghostPrefab(this.game,500,350,this));
         
         //BOTINS FIXES        
         this.createFixedLoot();
@@ -288,7 +288,7 @@ platformer.tutorial.createCrows = function(){
 	this.enemies.add(new platformer.crowPrefab(this.game,2206,332,this));
 	this.enemies.add(new platformer.crowPrefab(this.game,2524,332,this));
 	this.enemies.add(new platformer.crowPrefab(this.game,3036,332,this));
-}
+};
 platformer.tutorial.createFixedLoot = function(){
     new platformer.lootPrefab(this.game, 700, 370, this, false);
     new platformer.lootPrefab(this.game, 1250, 200, this, false);

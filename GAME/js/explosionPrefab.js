@@ -1,6 +1,6 @@
 var platformer = platformer || {};
 
-//explosion_type: 0-> zombies/crows, 1-> plantes/, 2->
+//explosion_type: 0-> zombies/crows, 1-> plantes/ghosts, 2->
 platformer.explosionPrefab=function(game,x,y,explosion_type){
 	switch(explosion_type){
 		case 0:

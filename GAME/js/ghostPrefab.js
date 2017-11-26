@@ -14,25 +14,26 @@ platformer.ghostPrefab=function(game,x,y,_level){
     
     this.animations.add('ghostFly', [0,1,2,3],5,true);
     this.animations.play('ghostFly');
-    //si el corb mor, sumem punts i afegim una explosio
-    //this.events.onKilled.add(platformer.crowPrefab.ghostPoints, this);
+    //Quan mor, sumem punts i afegim una explosió
+    this.events.onKilled.add(platformer.ghostPrefab.ghostPoints, this);
 };
 
 platformer.ghostPrefab.prototype=Object.create(Phaser.Sprite.prototype);
 platformer.ghostPrefab.prototype.constructor=platformer.ghostPrefab;
 
 platformer.ghostPrefab.prototype.update = function () {
-    if(Phaser.Math.difference(this.x,platformer.tutorial.hero.x) < gameOptions.gameWidth/2 && this.aggro == false){ //només mirem la distancia horitzontal
-        this.aggro = true;
-        this.animations.play('crowAggro');
+    if(Phaser.Math.difference(this.x,platformer.tutorial.hero.x) < gameOptions.gameWidth/2){
     }
     
     if(this.alive){
-        //Si s'ha acabat l'animació, volarà
         this.y += Math.sin((this.x-this.startX)/gameOptions.crowXoffset)*gameOptions.crowYoffset;
         //Si surt de la pantalla, es mor
         if(this.x < (platformer.tutorial.hero.x-gameOptions.gameWidth/2)){
             this.destroy();
         }
     }
+};
+platformer.ghostPrefab.ghostPoints = function () {
+    this.level.hud.updateScore(100);
+	this.level.explosions.add(new platformer.explosionPrefab(this.level.game,this.x,this.y,1));
 };
