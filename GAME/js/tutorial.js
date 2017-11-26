@@ -145,7 +145,7 @@ platformer.tutorial = {
         //CHECKPOINT
         this.checkpoints = [];
         var c1 = new Phaser.Point(gameOptions.gameWidth/2,350);
-        var c2 = new Phaser.Point(500,350);
+        var c2 = new Phaser.Point(3100,350);
         this.checkpoints.push(c1);
         this.checkpoints.push(c2);
         
@@ -235,6 +235,15 @@ platformer.tutorial = {
         this.game_over.anchor.setTo(0.5);
         this.game_over.visible=false;
         this.map.forEach(function(t){if (t) {t.collideDown=false;}},this.game,0,0,this.map.width,this.map.height,'platform_up');
+        
+        //NO SEGUIR AL PERSONATGE LA CAMERA SI INTENTES TIRAR ENRERE DEL CHECKPOINT
+        if (this.hero.position.x < this.checkpoints[gameOptions.currentCheckpoint].x && this.camera.target != null){
+            this.camera.target = null;
+        }
+        else if (this.hero.position.x >= this.checkpoints[gameOptions.currentCheckpoint].x && this.camera.target == null){
+            this.camera.follow(this.hero);
+        }
+        
 
 	},
     createGraves:function(){
