@@ -105,8 +105,8 @@ platformer.playerPrefab.prototype.update = function () {
                 hud.timer = this.level.game.time.create(false);
 	            hud.timer.loop(gameOptions.tutorialTime*1000+999,hud.timerFinished,hud); 	
 				hud.timer.start();
-            }
-            gameOptions.currentCheckpoint = i;
+                gameOptions.currentCheckpoint = i;
+            }           
             
         }
     }
@@ -404,6 +404,7 @@ platformer.playerPrefab.prototype.gameover = function () {
       platformer.game.state.start('mainMenu');
       platformer.tutorial.themeMusic.stop();
       gameOptions.levelOption=gameOptions.lastOption;
+      gameOptions.currentCheckpoint = 0;
     }
 }
 platformer.playerPrefab.prototype.climbLadders = function (hero,ladder) {
