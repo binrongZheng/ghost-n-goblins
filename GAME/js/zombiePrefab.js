@@ -31,7 +31,7 @@ platformer.zombiePrefab=function(game,x,y,_level){
     
     //FISIQUES
     game.physics.arcade.enable(this);
-    
+       
     //AUDIO
     this.bornSound = this.level.add.audio('zombieBorn');
     this.deathSound = this.level.add.audio('enemyDeath');

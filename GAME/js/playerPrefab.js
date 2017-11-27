@@ -15,7 +15,8 @@ platformer.playerPrefab = function (game,x,y, _level,_player_life,_cursors,_jump
     this.isKill=2;
     this.playerPos=[x,y];
     this.animationStop=false;
-
+    this.hasKey = false;
+        
     //SPRITE
 	  Phaser.Sprite.call(this,game,x,y,'hero');
 	  game.add.existing (this);
@@ -95,12 +96,27 @@ platformer.playerPrefab.prototype.update = function () {
 	this.game.physics.arcade.collide (this, this.level.enemyProjectiles, this.killPlayer, null, this);
 
 	this.body.velocity.x = 0;
+    
+    //COMPROVAR CHECKPOINTS I SETEJAR SI CAL
+    for (var i = 0; i < this.level.checkpoints.length;i++){
+        if (Phaser.Math.difference(this.position.x,this.level.checkpoints[i].x) < 10){
+            if (i > gameOptions.currentCheckpoint){ //aixi nomes ho fa un cop
+                var hud = this.level.hud;
+                hud.timer = this.level.game.time.create(false);
+	            hud.timer.loop(gameOptions.tutorialTime*1000+999,hud.timerFinished,hud); 	
+				hud.timer.start();
+            }
+            gameOptions.currentCheckpoint = i;
+            
+        }
+    }
+   
 
 	//INVENCIBILITAT
 	if(this.invincibleKey.isDown){
         this.invincible = !this.invincible;
     }
-
+    
     //WITH CLOTH ANIMATION
         if(this.with_cloth==true&&!this.climbing){
             //ATTACK
@@ -115,17 +131,24 @@ platformer.playerPrefab.prototype.update = function () {
                 //this.body.setSize(0,32,64,32);
                 //this.body.setSize(0,);
             }
-            //MOVEMENT LEFT/RIGHT with or without JUMP
+            //MOVEMENT LEFT/RIGHT with or without JUMP            
             else if (this.cursors.left.isDown){
+                
                 if(this.body.blocked.down||this.touchGrave==true){
-                    this.body.velocity.x = -gameOptions.playerSpeed;
+                    if ((this.x+this.width/2) > (this.level.checkpoints[gameOptions.currentCheckpoint].x - gameOptions.gameWidth/2))
+                        this.body.velocity.x = -gameOptions.playerSpeed;
+                    else
+                        this.body.velocity.x = 0;
                     this.animations.play('walk');
                     this.scale.x = -1;
                 }
                 if(this.jump_key.isDown&&!this.body.blocked.down&&this.touchGrave==false){
                     this.animations.play('jump_throw');
                     this.scale.x = -1;
-                    this.body.velocity.x = -gameOptions.playerSpeed;
+                    if ((this.x+this.width/2) > (this.level.checkpoints[gameOptions.currentCheckpoint].x - gameOptions.gameWidth/2))
+                        this.body.velocity.x = -gameOptions.playerSpeed;
+                    else
+                        this.body.velocity.x = 0;
                 }
             }
             else if (this.cursors.right.isDown ){
@@ -172,14 +195,20 @@ platformer.playerPrefab.prototype.update = function () {
            //MOVEMENT LEFT/RIGHT with or without JUMP
            else if (this.cursors.left.isDown){
                if(this.body.blocked.down||this.touchGrave==true){
-                   this.body.velocity.x = -gameOptions.playerSpeed;
+                   if ((this.x+this.width/2) > (this.level.checkpoints[gameOptions.currentCheckpoint].x - gameOptions.gameWidth/2))
+                        this.body.velocity.x = -gameOptions.playerSpeed;
+                   else
+                       this.body.velocity.x = 0;
                    this.animations.play('walk_N');
                    this.scale.x = -1;
                }
                if(this.jump_key.isDown&&!this.body.blocked.down&&this.touchGrave==false){
                    this.animations.play('jump_throw_N');
                    this.scale.x = -1;
-                   this.body.velocity.x = -gameOptions.playerSpeed;
+                   if ((this.x+this.width/2) > (this.level.checkpoints[gameOptions.currentCheckpoint].x - gameOptions.gameWidth/2))
+                        this.body.velocity.x = -gameOptions.playerSpeed;
+                   else
+                       this.body.velocity.x = 0;
                }
            }
            else if (this.cursors.right.isDown ){
@@ -271,7 +300,6 @@ platformer.playerPrefab.prototype.killPlayer = function (hero,enemy) {
                 this.body.checkCollision.right=false;
                 this.game.time.events.add(Phaser.Timer.SECOND * 1.5, this.map_Screen, this);
 
-
                 //this.game.state.start('tutorial');
             }
         }
@@ -283,6 +311,7 @@ platformer.playerPrefab.prototype.killPlayer = function (hero,enemy) {
             this.body.checkCollision.left=false;
             this.body.checkCollision.right=false;
             this.game.time.events.add(Phaser.Timer.SECOND * 4, this.gameover);
+            this.level.currentCheckpoint = 0; //posem el respawn al inici un altre cop
             }
         }
         else{
