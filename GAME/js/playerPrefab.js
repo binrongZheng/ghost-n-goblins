@@ -116,7 +116,9 @@ platformer.playerPrefab.prototype.update = function () {
 	if(this.invincibleKey.isDown){
         this.invincible = !this.invincible;
     }
-    
+    //POSAR TAMANY COLISIO A NORMAL SI NO HO ESTA
+    if (this.body.height != this.height)
+        this.body.setSize(this.width, this.height, 0,0);    
     //WITH CLOTH ANIMATION
         if(this.with_cloth==true&&!this.climbing){
             //ATTACK
@@ -127,9 +129,8 @@ platformer.playerPrefab.prototype.update = function () {
             }
             //AJUPIR
             else if (this.cursors.down.isDown && this.body.blocked.down||this.cursors.down.isDown && this.touchGrave==true ){
-                this.animations.play('ajupir');
-                //this.body.setSize(0,32,64,32);
-                //this.body.setSize(0,);
+                this.animations.play('ajupir');                
+                this.body.setSize(this.width, this.height/2, 0, this.height/2);               
             }
             //MOVEMENT LEFT/RIGHT with or without JUMP            
             else if (this.cursors.left.isDown){
@@ -189,8 +190,7 @@ platformer.playerPrefab.prototype.update = function () {
            //AJUPIR
            else if (this.cursors.down.isDown && this.body.blocked.down||this.cursors.down.isDown && this.touchGrave==true ){
                this.animations.play('ajupir_N');
-               //this.body.setSize(0,32,64,32);
-               //this.body.setSize(0,);
+               this.body.setSize(this.width, this.height/2, 0, this.height/2);
            }
            //MOVEMENT LEFT/RIGHT with or without JUMP
            else if (this.cursors.left.isDown){
@@ -248,7 +248,7 @@ platformer.playerPrefab.prototype.update = function () {
     if (!this.canShoot && platformer.tutorial.game.time.now - this.timeCheck > this.shootWait){
         this.canShoot = true;
     }
-
+    
 }
 platformer.playerPrefab.prototype.shoot = function () {
     //crear arma
