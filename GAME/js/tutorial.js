@@ -190,7 +190,7 @@ platformer.tutorial = {
 		this.createCrows();
         //this.enemies.add (new platformer.zombiePrefab(this.game,200+gameOptions.gameWidth/2,350,this));
         //this.redDevil = new platformer.RedDemonPrefab(this.game,2900,350,this);
-        this.enemies.add(new platformer.ghostPrefab(this.game,500,350,this));
+        //this.myghost = new platformer.ghostPrefab(this.game,500,350,this);
         
         //BOTINS FIXES        
         this.createFixedLoot();
@@ -207,6 +207,7 @@ platformer.tutorial = {
 		
 		//SPAWNS DE GHOSTS
 		this.spawnGhost1 = new platformer.ghostSpawnPrefab(this.game,4769,350,this);
+		this.spawnGhost2 = new platformer.ghostSpawnPrefab(this.game,5406,350,this);
 		
 		//CAMERA
 		this.camera.follow(this.hero);

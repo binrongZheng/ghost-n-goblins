@@ -21,9 +21,10 @@ var gameOptions = {
     levelOption:3,
     lastOption:3,
 	tutorialTime:120,
-	minTimeGhostSpawn:150,		//minim de temps entre ghost i ghost
-	maxTimeGhostSpawn:700,	
-	ghostWaitTime:4000			//temps entre cada serie de 3 fantasmes que apareixen
+	minTimeGhostSpawn:250,		//minim de temps entre ghost i ghost
+	maxTimeGhostSpawn:1000,		//màxim  "  "  "
+	ghostWaitTime:4000,			//temps entre cada serie de 3 fantasmes que apareixen
+	ghostSpawnPosY:330
 };
 
 platformer.game = new Phaser.Game(gameOptions.gameWidth,gameOptions.gameHeight,Phaser.AUTO,null,this,false,false);
