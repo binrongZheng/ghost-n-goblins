@@ -40,6 +40,7 @@ window.onkeydown = function(event) {
             case 1:
                 this.cursor.x=platformer.tutorial.camera.x+gameOptions.gameWidth/2-100;
                 if (event.keyCode == 13&&platformer.game.paused==true){
+                    gameOptions.currentCheckpoint = 0;
                     platformer.game.paused = false;
                     this.menuPause.kill();
                     this.cursor.kill();
@@ -100,15 +101,15 @@ platformer.tutorial = {
         this.load.spritesheet('ghost', 'img/ghost.png', 34, 60);
 
         //RED DEVIL
-        this.load.spritesheet('redDevil', 'img/redDevil.png', 42, 42);        
-        
+        this.load.spritesheet('redDevil', 'img/redDevil.png', 42, 42);
+
         //LOOT
         this.load.spritesheet('coin', 'img/item_coin.png', 16, 16);
         this.load.spritesheet('crown', 'img/item_crown.png', 16, 16);
         this.load.image('armorPickUp', 'img/item_armor.png', 16, 16);
         this.load.image('moneyBag', 'img/item_moneyBag.png', 16, 16);
         this.load.image('jar', 'img/jar.png', 32, 32);
-        
+
         //BULLET SPRITES
         this.load.image('arma_lance','img/lance.png');
         this.load.image('arma_daga','img/daga.png');
@@ -143,14 +144,14 @@ platformer.tutorial = {
         //ADD motor de physics
 		this.game.physics.startSystem(Phaser.Physics.ARCADE);
 		this.game.physics.arcade.gravity.y = gameOptions.playerGravity;
-        
+
         //CHECKPOINT
         this.checkpoints = [];
         var c1 = new Phaser.Point(gameOptions.gameWidth/2,350);
         var c2 = new Phaser.Point(3100,350);
         this.checkpoints.push(c1);
         this.checkpoints.push(c2);
-        
+
 	},
 	create:function(){
         //GRAVES
@@ -178,14 +179,14 @@ platformer.tutorial = {
 		this.space = this.game.input.keyboard.addKey(Phaser.Keyboard.X);
         this.escKey = this.game.input.keyboard.addKey(Phaser.Keyboard.ESC);
         this.playKey = this.game.input.keyboard.addKey(Phaser.Keyboard.P);
-        
+
         //PORTA I CLAU
         this.door = new platformer.doorPrefab(this.game, 6962, 256, this);
         this.key = new platformer.keyPrefab(this.game,6800,0,this);
-        
+
         //PLAYER ->(game,x,y, _level,_player_life,_cursors,_jump_key,_space,_with_cloth)
         this.hero = new platformer.playerPrefab(this.game,this.checkpoints[gameOptions.currentCheckpoint].x,this.checkpoints[gameOptions.currentCheckpoint].y,this,this.player_life,this.cursors,this.jump_key,this.space,this.with_cloth,this.playerHaveLife );
-        
+
 
         //BALES DEL PERSONATGE
         this.projectiles = this.add.group();
@@ -193,7 +194,7 @@ platformer.tutorial = {
         this.enemyProjectiles = this.add.group();
         //EXPLOSIONS
         this.explosions = this.add.group();
-        
+
         //WATER
         this.createWater();
 
@@ -204,10 +205,10 @@ platformer.tutorial = {
         //this.enemies.add (new platformer.zombiePrefab(this.game,200+gameOptions.gameWidth/2,350,this));
         //this.redDevil = new platformer.RedDemonPrefab(this.game,2900,350,this);
         //this.myghost = new platformer.ghostPrefab(this.game,500,350,this);
-        
-        //BOTINS FIXES        
+
+        //BOTINS FIXES
         this.createFixedLoot();
-        
+
 
         //SPAWNS DE ZOMBIES
         /*this.spawns.add(new platformer.spawnZombiePrefab(this.game,475,350,this));
@@ -217,13 +218,13 @@ platformer.tutorial = {
         this.spawns.add(new platformer.spawnZombiePrefab(this.game,1900,350,this));
         this.spawns.add(new platformer.spawnZombiePrefab(this.game,2200,350,this));
         this.spawns.add(new platformer.spawnZombiePrefab(this.game,2500,350,this));*/
-		
+
 		//SPAWNS DE GHOSTS
 		this.spawnGhost1 = new platformer.ghostSpawnPrefab(this.game,4769,350,this);
 		this.spawnGhost2 = new platformer.ghostSpawnPrefab(this.game,5406,350,this);
-		
-        
-        
+
+
+
 		//CAMERA
 		this.camera.follow(this.hero);
         //HUD
@@ -243,7 +244,7 @@ platformer.tutorial = {
         this.game_over.anchor.setTo(0.5);
         this.game_over.visible=false;
         this.map.forEach(function(t){if (t) {t.collideDown=false;}},this.game,0,0,this.map.width,this.map.height,'platform_up');
-        
+
         //NO SEGUIR AL PERSONATGE LA CAMERA SI INTENTES TIRAR ENRERE DEL CHECKPOINT
         if (this.hero.position.x < this.checkpoints[gameOptions.currentCheckpoint].x && this.camera.target != null){
             this.camera.target = null;
@@ -251,7 +252,7 @@ platformer.tutorial = {
         else if (this.hero.position.x >= this.checkpoints[gameOptions.currentCheckpoint].x && this.camera.target == null){
             this.camera.follow(this.hero);
         }
-        
+
 
 	},
     createGraves:function(){
