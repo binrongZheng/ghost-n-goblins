@@ -88,6 +88,7 @@ platformer.tutorial = {
         //EXPLOSION SPRITES
         this.load.spritesheet('explosion_medium', 'img/mediumExplosion.png', 64, 64);
         this.load.spritesheet('explosion_normal', 'img/normalExplosion.png', 64, 64);
+        this.load.spritesheet('spark', 'img/spark.png', 88, 64);
 
         //ENEMY BULLET SPRITES
         this.load.spritesheet('ull', 'img/ull.png', 18, 18);

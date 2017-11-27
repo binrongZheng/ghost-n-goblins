@@ -13,6 +13,11 @@ platformer.explosionPrefab=function(game,x,y,explosion_type){
 			this.animations.add('medium_anim', [0,1,2,3,4,5,6,7,8],10,false);
 			this.animations.play('medium_anim',17,false,true);
 			break;
+        case 2:
+			Phaser.Sprite.call(this,game,x,y,'spark');
+			this.animations.add('spark_anim', [0,1,2],10,false);
+			this.animations.play('spark_anim',17,false,true);
+			break;
 	}
 	
     game.add.existing(this);
