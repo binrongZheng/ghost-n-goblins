@@ -33,8 +33,7 @@ platformer.zombiePrefab=function(game,x,y,_level){
     game.physics.arcade.enable(this);
        
     //AUDIO
-    this.bornSound = this.level.add.audio('zombieBorn');
-    this.deathSound = this.level.add.audio('enemyDeath');
+    this.bornSound = this.level.add.audio('zombieBorn');    
     this.bornSound.play();
     
     //quan mor
@@ -66,8 +65,7 @@ platformer.zombiePrefab.prototype.update = function () {
     
         
 };
-platformer.zombiePrefab.prototype.die = function () {
-    this.deathSound.play();
+platformer.zombiePrefab.prototype.die = function () {    
     this.level.hud.updateScore(100);
 	this.level.explosions.add(new platformer.explosionPrefab(this.level.game,this.x,this.y,0));
     if (this.dropsLoot == 0){

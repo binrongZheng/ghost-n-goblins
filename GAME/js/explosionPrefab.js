@@ -22,6 +22,10 @@ platformer.explosionPrefab=function(game,x,y,explosion_type){
 	
     game.add.existing(this);
     this.anchor.setTo(.5);
+	
+	//AUDIO
+	this.deathSound = this.level.add.audio('enemyDeath');
+	this.deathSound.play();
 };
 
 
