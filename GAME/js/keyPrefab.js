@@ -4,6 +4,9 @@ platformer.keyPrefab = function(game,x,y,_level){
     Phaser.Sprite.call(this,game,x,y,'key');
     game.add.existing(this);
     
+    this.animations.add('brillo', [0,1], 10, true);
+    this.animations.play('brillo');
+    
     this.level = _level;
     
     //MOVIMENT

@@ -126,7 +126,7 @@ platformer.tutorial = {
         //GAME OVER
         this.load.image('game_over', 'img/game_over.png');
         //KEY AND DOOR
-        this.load.image('key', 'img/key.png');
+        this.load.spritesheet('key', 'img/key.png', 32, 32);
         this.load.spritesheet('door', 'img/door_open.png',101,130);
 
         //SO
