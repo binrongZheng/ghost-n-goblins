@@ -15,10 +15,7 @@ platformer.ghostPrefab=function(game,x,y,_level){
     this.body.allowGravity 	= false;
 	this.body.velocity.x 	= -gameOptions.ghostSpeed;
 	this.body.immovable 	= true;
-    
-	//Audio
-    this.deathSound = this.level.add.audio('enemyDeath');
-	
+    		
     this.animations.add('ghostFly', [0,1,2,3],5,true);
     this.animations.play('ghostFly');
     //Quan mor, sumem punts i afegim una explosió
@@ -38,8 +35,7 @@ platformer.ghostPrefab.prototype.update = function () {
     }
 };
 platformer.ghostPrefab.prototype.ghostPoints = function () {
-	this.deathSound.play();
-    this.level.hud.updateScore(100);
+	this.level.hud.updateScore(100);
 	this.level.explosions.add(new platformer.explosionPrefab(this.level.game,this.x,this.y,1));
 };
 platformer.ghostPrefab.prototype.killGhostFrom = function (xBulletPosition) {
