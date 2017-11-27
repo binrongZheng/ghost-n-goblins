@@ -79,6 +79,7 @@ platformer.tutorial = {
         this.load.image('bg','img/mapa_level1.png');
 		this.load.tilemap('map','TileMaps/mapa_level.json',null,Phaser.Tilemap.TILED_JSON);
         this.load.image('platform_collision','img/platform_collision.png');
+        this.load.image('moving_platform','img/movingPlatform.png');
         //PLAYER SPRITE
         this.load.spritesheet('hero', 'img/arthur.png', 64, 64);
         //HUD SPRITE
