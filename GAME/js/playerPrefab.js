@@ -136,6 +136,7 @@ platformer.playerPrefab.prototype.update = function () {
 if(this.onLadder)  this.game.physics.arcade.overlap(this,this.level.ladders,this.climbLadders, null, this);
 //si esta pujant no hay gravetat
 if(this.climbing) this.body.allowGravity=false;
+
 else this.body.allowGravity=true;
 
   this.game.physics.arcade.collide (this, this.level.enemyProjectiles, this.killPlayer, null, this);
@@ -156,7 +157,7 @@ else this.body.allowGravity=true;
         }
     }
 
-    
+
 	//INVENCIBILITAT
 	if(this.invincibleKey.isDown){
         this.invincible = !this.invincible;
@@ -164,7 +165,7 @@ else this.body.allowGravity=true;
     //POSAR TAMANY COLISIO A NORMAL SI NO HO ESTA
     if (this.body.height != this.height)
         this.body.setSize(this.width*this.scale.x, this.height, 0,0);
-   
+
     //WITH CLOTH ANIMATION
         if(this.with_cloth==true&&!this.climbing){
             //ATTACK
@@ -294,8 +295,8 @@ else this.body.allowGravity=true;
     if (!this.canShoot && platformer.tutorial.game.time.now - this.timeCheck > this.shootWait){
         this.canShoot = true;
     }
-    
-     
+
+
 
 }
 platformer.playerPrefab.prototype.shoot = function () {
@@ -471,7 +472,7 @@ platformer.playerPrefab.prototype.climbLadders = function (hero,ladder) {
     this.body.velocity.y=-(gameOptions.playerSpeed-100);
   }
   //si baja
-  if(this.cursors.down.isDown){
+  else if(this.cursors.down.isDown){
     //climbing es true
     this.climbing=true;
     //desactivar collision amb plataforma
@@ -487,6 +488,23 @@ platformer.playerPrefab.prototype.climbLadders = function (hero,ladder) {
     //moviment vertical
     this.body.velocity.y=(gameOptions.playerSpeed-100);
   }
+  else if(this.y>192&&this.y<352) {
+    this.climbing=true
+    //amb roba o no
+    if(this.with_cloth){
+      if(this.climbingStopState)   this.animations.play('climbstopleft');
+      else this.animations.play('climbstopright');
+    }
+    else {
+      if(this.climbingStopState)   this.animations.play('climbstopleft_N');
+      else this.animations.play('climbstopright_N');
+    }
+    this.body.velocity.y=0;
+  }
+  //si salt no fa res
+  if(this.jump_key.isDown)  this.body.velocity.y=0;
+  //si para
+
   /*
 if(this.onLadder) {
   if(this.cursors.up.isDown){
