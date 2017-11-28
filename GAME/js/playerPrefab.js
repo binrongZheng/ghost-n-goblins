@@ -124,7 +124,8 @@ platformer.playerPrefab.prototype.update = function () {
 
 
 */
-//this.game.physics.arcade.overlap(this,this.level.ladders,this.climbLadders, null, this);
+//si esta moure en ladder
+if(this.onLadder)  this.game.physics.arcade.overlap(this,this.level.ladders,this.climbLadders, null, this);
 	this.game.physics.arcade.collide (this, this.level.enemyProjectiles, this.killPlayer, null, this);
 
 	this.body.velocity.x = 0;
@@ -440,6 +441,15 @@ platformer.playerPrefab.prototype.gameover = function () {
     }
 }
 platformer.playerPrefab.prototype.climbLadders = function (hero,ladder) {
+  //si sube
+  if(this.cursors.up.isDown){
+    //posicio en ladder
+    hero.body.x=ladder.x-6;
+    //moviment vertical
+    this.body.velocity.y=-(gameOptions.playerSpeed-130);
+    //ladder nivell diferet que 0
+    this.climbingLevel++;
+  }
   console.log("ok");
   /*
 if(this.onLadder) {
