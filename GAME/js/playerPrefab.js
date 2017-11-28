@@ -462,12 +462,26 @@ platformer.playerPrefab.prototype.climbLadders = function (hero,ladder) {
     //climbing es true
     this.climbing=true;
     //posicio en ladder
-    hero.body.x=ladder.x-6;
+    hero.body.x=ladder.x-7;
     //ladder nivell diferet que 0
     this.climbingLevel+=0.1;
     //activa animacio amb armadura o no (hasta un distancia limit)
-    if(this.with_cloth) this.animations.play('climb');
-    else this.animations.play('climb_N');
+    if(this.y>253){
+      if(this.with_cloth) this.animations.play('climb');
+      else this.animations.play('climb_N');
+    }
+    else if(this.y<228&&this.y>210){//top anim
+      if(this.with_cloth) this.animations.play('climbontop0');
+      else this.animations.play('climbontop0_N');
+    }
+    else if(this.y<246&&this.y>228){//secon anim
+      if(this.with_cloth) this.animations.play('climbontop1');
+      else this.animations.play('climbontop1_N');
+    }
+    else if(this.y<210&&this.y>192){
+      if(this.with_cloth) this.animations.play('stand');
+      else this.animations.play('stand_N');
+    }
     //moviment vertical
     this.body.velocity.y=-(gameOptions.playerSpeed-100);
   }
@@ -479,16 +493,30 @@ platformer.playerPrefab.prototype.climbLadders = function (hero,ladder) {
     if(this.y>250) this.body.checkCollision.down=true;
     else this.body.checkCollision.down=false;
     //posicio en ladder
-    hero.body.x=ladder.x-6;
+    hero.body.x=ladder.x-7;
     //ladder nivell diferet que 0
     this.climbingLevel-=0.1;
     //activa animacio amb armadura o no (hasta un distancia limit)
-    if(this.with_cloth) this.animations.play('climb');
-    else this.animations.play('climb_N');
+    if(this.y>253){
+      if(this.with_cloth) this.animations.play('climb');
+      else this.animations.play('climb_N');
+    }
+    else if(this.y<228&&this.y>210){//top anim
+      if(this.with_cloth) this.animations.play('climbontop0');
+      else this.animations.play('climbontop0_N');
+    }
+    else if(this.y<246&&this.y>228){//secon anim
+      if(this.with_cloth) this.animations.play('climbontop1');
+      else this.animations.play('climbontop1_N');
+    }
+    else if(this.y<210&&this.y>192){
+      if(this.with_cloth) this.animations.play('stand');
+      else this.animations.play('stand_N');
+    }
     //moviment vertical
     this.body.velocity.y=(gameOptions.playerSpeed-100);
   }
-  else if(this.y>192&&this.y<352) {
+  else if(this.y>246&&this.y<352) {
     this.climbing=true
     //amb roba o no
     if(this.with_cloth){
@@ -501,119 +529,24 @@ platformer.playerPrefab.prototype.climbLadders = function (hero,ladder) {
     }
     this.body.velocity.y=0;
   }
+  else if(this.y<228&&this.y>210){//top anim
+    if(this.with_cloth) this.animations.play('climbontop0');
+    else this.animations.play('climbontop0_N');
+  }
+  else if(this.y<246&&this.y>228){//secon anim
+    if(this.with_cloth) this.animations.play('climbontop1');
+    else this.animations.play('climbontop1_N');
+  }
+  else if(this.y<210&&this.y>192){
+    if(this.with_cloth) this.animations.play('stand');
+    else this.animations.play('stand_N');
+  }
+
   //si salt no fa res
-  if(this.jump_key.isDown){
+  else if(this.jump_key.isDown){
     if(this.y>192){
      this.body.velocity.y=0;}
    }
-  //si para
-
-  /*
-if(this.onLadder) {
-  if(this.cursors.up.isDown){
-    this.climbingStopState=!this.climbingStopState;
-    hero.body.x=ladder.x-6;
-    this.climbing=true;
-    if(this.y>240){
-      if(this.with_cloth) this.animations.play('climb');
-      else this.animations.play('climb_N');
-      this.body.velocity.y=-(gameOptions.playerSpeed-100);
-    }
-    else {
-      if(this.with_cloth) {
-        if(this.y>230)
-        this.animations.play('climbontop0');
-        else if(this.y<=220){
-          this.y=220;
-          this.animations.play('climbontop1');
-          this.game.time.events.add(Phaser.Timer.SECOND * 1, this.climbUp, this);
-        }
-        this.body.velocity.y=-(gameOptions.playerSpeed-130);
-      }
-      else {
-        if(this.y>230)
-          this.animations.play('climbontop0_N');
-        else if(this.y<=220){
-          this.y=220;
-          this.animations.play('climbontop1_N');
-          this.game.time.events.add(Phaser.Timer.SECOND * 1, this.climbUp, this);
-        }
-       this.body.velocity.y=-(gameOptions.playerSpeed-130);
-      }
-    }
-    this.body.allowGravity=false;
-
-  }
-  else if(this.cursors.down.isDown){
-      this.climbingStopState=!this.climbingStopState;
-      hero.body.x=ladder.x-6;
-      if(this.y>200) this.body.checkCollision.down=true;
-      else this.body.checkCollision.down=false;
-      if(this.with_cloth) this.animations.play('climb');
-      else this.animations.play('climb_N');
-      this.body.allowGravity=false;
-      this.body.velocity.y=gameOptions.playerSpeed;
-  }
-  else if(!this.body.blocked.down){
-    this.climbing=true
-    if(this.with_cloth){
-      if(this.climbingStopState)   this.animations.play('climbstopleft');
-      else this.animations.play('climbstopright');
-    }
-    else {
-      if(this.climbingStopState)   this.animations.play('climbstopleft_N');
-      else this.animations.play('climbstopright_N');
-    }
-    this.body.velocity.y=0;
-  }
-}*/
-/*
-   if(this.onLadder){
-      if(this.cursors.up.isDown){
-        this.climbingStopState=!this.climbingStopState;
-        hero.body.x=ladder.x-6
-        this.climbing=true;
-        if(this.with_cloth) this.animations.play('climb');
-        else this.animations.play('climb_N');
-        //this.body.velocity.x=0;
-        this.body.allowGravity=false;
-        this.body.velocity.y=-gameOptions.playerSpeed;
-        //console.log("sube");
-        //if(this.body.blocked.down) this.body.velocity.x=0;
-      }
-      else if(this.cursors.down.isDown){
-          this.climbingStopState=!this.climbingStopState;
-          hero.body.x=ladder.x-6
-          //this.climbing=true
-          if(this.y>200) this.body.checkCollision.down=true;
-          else this.body.checkCollision.down=false;
-
-          if(this.with_cloth) this.animations.play('climb');
-          else this.animations.play('climb_N');
-          //this.body.velocity.x=0;
-          this.body.allowGravity=false;
-          this.body.velocity.y=gameOptions.playerSpeed;
-
-        //console.log("baja");
-      }
-      else if(!this.body.blocked.down){
-        this.climbing=true
-        if(this.with_cloth){
-          if(this.climbingStopState)   this.animations.play('climbstopleft');
-          else this.animations.play('climbstopright');
-        }
-        else {
-          if(this.climbingStopState)   this.animations.play('climbstopleft_N');
-          else this.animations.play('climbstopright_N');
-        }
-        this.body.velocity.y=0;
-      }
-      if(this.body.blocked.down){
-        this.onLadder=false;
-        this.climbing=false;
-      }
-    }
-*/
 }/*
 platformer.playerPrefab.prototype.climbUp = function(){
   this.y=190;
