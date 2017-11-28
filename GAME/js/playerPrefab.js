@@ -80,8 +80,8 @@ platformer.playerPrefab.prototype.update = function () {
 
 	  this.game.physics.arcade.collide(this, this.level.platform_collision);
     this.game.physics.arcade.collide(this, this.level.graves, this.touch, null, this);
+    this.game.physics.arcade.collide(this, this.level.movingPlatform, this.touch, null, this);	//utilizo lo mismo para la movingPlatform
     this.game.physics.arcade.collide (this, this.level.water, this.PlayerDie, null, this);
-
 
     if(!this.onLadder&&this.y<=190||this.cursors.down.isDown&&this.body.blocked.down&&this.y>200) { this.climbing=false;this.body.allowGravity=true;}
 

@@ -173,6 +173,8 @@ platformer.tutorial = {
 
 		this.map.createLayer('platform_up');
         this.map.createLayer('ladder');
+		
+		this.movingPlatform = new platformer.platformPrefab(this.game,3433,410,this,3338,3528);
 
 		      //CONTROLS
 		this.cursors = this.game.input.keyboard.createCursorKeys();
