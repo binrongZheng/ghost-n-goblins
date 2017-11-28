@@ -117,21 +117,7 @@ platformer.playerPrefab.prototype.update = function () {
     //si esta adalt
     if(this.y<=190){this.climbingLevel=162;      this.onLadder=false;      this.climbing=false;}
   }
-  //if(this.game.physics.arcade.overlap(this,this.level.ladders)){
-    console.log(this.y+" "+this.onLadder+" "+this.climbing);
-  //}
 
-/*
-    if(!this.onLadder&&this.y<=190||this.cursors.down.isDown&&this.body.blocked.down&&this.y>200) { this.climbing=false;this.body.allowGravity=true;}
-
-    if(this.game.physics.arcade.overlap(this,this.level.ladders)){
-      if(this.body.blocked.down&&this.cursors.down.isDown)        this.onLadder=false;
-      else  this.onLadder=true;
-    }
-    else  {this.onLadder=false;this.body.allowGravity=true;}
-
-
-*/
 //si esta moure en ladder
 if(this.onLadder)  this.game.physics.arcade.overlap(this,this.level.ladders,this.climbLadders, null, this);
 //si esta pujant no hay gravetat
@@ -372,16 +358,13 @@ platformer.playerPrefab.prototype.killPlayer = function (hero,enemy) {
             gameOptions.levelOption = gameOptions.lastOption;
             this.level.themeMusic.stop();
             this.game.state.start('mapScreen');
-            //this.game.state.start('tutorial');
           }
         }
     }
 
 }
 platformer.playerPrefab.prototype.PlayerDie = function (hero,water) {
-    //setTimeout(endGame,1000);
   if(!this.invincible){
-    //if(hero.body.touching.down&&water.body.touching.down){
         //play so of died
 
         lastLife=this.player_life;
@@ -408,7 +391,6 @@ platformer.playerPrefab.prototype.PlayerDie = function (hero,water) {
             gameOptions.levelOption = gameOptions.lastOption;
             this.level.themeMusic.stop();
               this.game.state.start('mapScreen');
-            //this.game.state.start('tutorial');
           }
         }
   }
@@ -457,8 +439,9 @@ platformer.playerPrefab.prototype.gameover = function () {
     }
 }
 platformer.playerPrefab.prototype.climbLadders = function (hero,ladder) {
+  var area = hero.x-ladder.x;
   //si sube
-  if(this.cursors.up.isDown){
+  if(this.cursors.up.isDown&&area>10&area<38){
     //climbing es true
     this.climbing=true;
     //posicio en ladder
@@ -486,7 +469,7 @@ platformer.playerPrefab.prototype.climbLadders = function (hero,ladder) {
     this.body.velocity.y=-(gameOptions.playerSpeed-100);
   }
   //si baja
-  else if(this.cursors.down.isDown){
+  else if(this.cursors.down.isDown&&area>10&area<38){
     //climbing es true
     this.climbing=true;
     //desactivar collision amb plataforma
@@ -547,15 +530,7 @@ platformer.playerPrefab.prototype.climbLadders = function (hero,ladder) {
     if(this.y>192){
      this.body.velocity.y=0;}
    }
-}/*
-platformer.playerPrefab.prototype.climbUp = function(){
-  this.y=190;
-  if(this.with_cloth)
-    this.animations.play('stand');
-  else
-    this.animations.play('stand_N');
 }
-*/
 platformer.playerPrefab.prototype.invincibleBlink = function(){
 	//hace que el jugador se ponga a parpadear (se llama des de un evento que se repite)
 	if(this.alpha == 0){
