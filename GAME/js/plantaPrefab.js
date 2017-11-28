@@ -60,5 +60,5 @@ platformer.plantaPrefab.prototype.die = function () {
 };
 platformer.plantaPrefab.plantaPoints = function () {
     this.level.hud.updateScore(100);
-	this.level.explosions.add(new platformer.explosionPrefab(this.level.game,this.x,this.y,1));
+	this.level.explosions.add(new platformer.explosionPrefab(this.level.game,this.x,this.y,1, this.level));
 };

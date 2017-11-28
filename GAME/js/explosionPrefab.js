@@ -1,7 +1,7 @@
 var platformer = platformer || {};
 
 //explosion_type: 0-> zombies/crows, 1-> plantes/ghosts, 2->
-platformer.explosionPrefab=function(game,x,y,explosion_type){
+platformer.explosionPrefab=function(game,x,y,explosion_type, _level){
 	switch(explosion_type){
 		case 0:
 			Phaser.Sprite.call(this,game,x,y,'explosion_normal');
@@ -23,6 +23,8 @@ platformer.explosionPrefab=function(game,x,y,explosion_type){
     game.add.existing(this);
     this.anchor.setTo(.5);
 	
+    this.level = _level;
+    
 	//AUDIO
 	this.deathSound = this.level.add.audio('enemyDeath');
 	this.deathSound.play();

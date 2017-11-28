@@ -162,5 +162,5 @@ platformer.RedDemonPrefab.prototype.die = function () {
     this.dead = true;
     this.numHits = -1;
     this.level.hud.updateScore(500);
-	this.level.explosions.add(new platformer.explosionPrefab(this.level.game,this.x,this.y,0));
+	this.level.explosions.add(new platformer.explosionPrefab(this.level.game,this.x,this.y,0, this.level));
 }

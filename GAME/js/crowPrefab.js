@@ -54,5 +54,5 @@ platformer.crowPrefab.prototype.update = function () {
 
 platformer.crowPrefab.crowPoints = function () {
     this.level.hud.updateScore(50);
-	this.level.explosions.add(new platformer.explosionPrefab(this.level.game,this.x,this.y,0));
+	this.level.explosions.add(new platformer.explosionPrefab(this.level.game,this.x,this.y,0, this.level));
 };
