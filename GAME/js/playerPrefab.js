@@ -87,33 +87,38 @@ platformer.playerPrefab.prototype.update = function () {
 //collide with ladders
   //xoca amb ladders
   if(this.game.physics.arcade.overlap(this,this.level.ladders)){
+    //si esta adalt
+    if(this.y<=192){
+      //si esta caminant
+      if(this.body.blocked.down&&!this.cursors.down.isDown){  this.onLadder=true; this.climbing=false; }
+      if(this.body.blocked.down&&this.cursors.down.isDown){   this.onLadder=true;  this.climbing=true; }
+    }
     //si esta abaix
-    if(this.y>190){
+    else if(this.y>190){
+      //collision down es true
+      if(this.y>250) this.body.checkCollision.down=true;
       //si esta saltant no pujar
       if(!this.body.blocked.down&&this.climbingLevel==0){  this.onLadder=false; this.climbing=false;}
       //si esta pujant
-      if(!this.body.blocked.down&&this.climbingLevel!=0){  this.onLadder=true; this.climbingLevel=true;}
+      if(!this.body.blocked.down&&this.climbingLevel!=0){  this.onLadder=true; this.climbing=true;}
+      //si esta baixant
+      if(!this.body.blocked.down&&this.climbingLevel!=0&&this.cursors.down.isDown){  this.onLadder=true; this.climbing=true;}
       //si esta caminant i no pujar
       if(this.body.blocked.down&&!this.cursors.up.isDown){   this.onLadder=true; this.climbing=false;}
       //si esta ajupir
       if(this.body.blocked.down&&this.cursors.down.isDown){   this.climbingLevel=0; this.onLadder=false; this.climbing=false;}
     }
-    //si esta adalt
-    if(this.y<=190){
-      //si esta caminant
-      this.climbingLevel=162;
-      if(this.body.blocked.down&&!this.cursors.down.isDown){  this.onLadder=true; this.climbing=false; }
-      if(this.body.blocked.down&&this.cursors.down.isDown){   this.onLadder=true;  this.climbing=true; }
-    }
   }
   else {
+    //collision es true
+    this.body.checkCollision.down=true;
     //si esta abaix
     if(this.y<=352){this.climbingLevel=0;      this.onLadder=false;      this.climbing=false;}
     //si esta adalt
-    if(this.y<190){this.climbingLevel=162;      this.onLadder=false;      this.climbing=false;}
+    if(this.y<=190){this.climbingLevel=162;      this.onLadder=false;      this.climbing=false;}
   }
   //if(this.game.physics.arcade.overlap(this,this.level.ladders)){
-    console.log(this.game.physics.arcade.overlap(this,this.level.ladders)+" "+this.onLadder+" "+this.climbing);
+    console.log(this.y+" "+this.onLadder+" "+this.climbing);
   //}
 
 /*
@@ -467,7 +472,7 @@ platformer.playerPrefab.prototype.climbLadders = function (hero,ladder) {
     //climbing es true
     this.climbing=true;
     //desactivar collision amb plataforma
-    if(this.y>200) this.body.checkCollision.down=true;
+    if(this.y>250) this.body.checkCollision.down=true;
     else this.body.checkCollision.down=false;
     //posicio en ladder
     hero.body.x=ladder.x-6;
