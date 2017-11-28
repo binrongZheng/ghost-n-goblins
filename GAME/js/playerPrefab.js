@@ -502,7 +502,10 @@ platformer.playerPrefab.prototype.climbLadders = function (hero,ladder) {
     this.body.velocity.y=0;
   }
   //si salt no fa res
-  if(this.jump_key.isDown)  this.body.velocity.y=0;
+  if(this.jump_key.isDown){
+    if(this.y>192){
+     this.body.velocity.y=0;}
+   }
   //si para
 
   /*
