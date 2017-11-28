@@ -156,15 +156,15 @@ else this.body.allowGravity=true;
         }
     }
 
-
+    
 	//INVENCIBILITAT
 	if(this.invincibleKey.isDown){
         this.invincible = !this.invincible;
     }
     //POSAR TAMANY COLISIO A NORMAL SI NO HO ESTA
     if (this.body.height != this.height)
-        this.body.setSize(this.width, this.height, 0,0);
-    
+        this.body.setSize(this.width*this.scale.x, this.height, 0,0);
+   
     //WITH CLOTH ANIMATION
         if(this.with_cloth==true&&!this.climbing){
             //ATTACK
@@ -176,7 +176,7 @@ else this.body.allowGravity=true;
             //AJUPIR
             else if (this.cursors.down.isDown && this.body.blocked.down||this.cursors.down.isDown && this.touchGrave==true ){
                 this.animations.play('ajupir');
-                //this.body.setSize(this.width, this.height/2, 0, this.height/2);
+                this.body.setSize(this.width*this.scale.x, this.height/2, 0, this.height/2);
             }
             //MOVEMENT LEFT/RIGHT with or without JUMP
             else if (this.cursors.left.isDown){
@@ -236,7 +236,7 @@ else this.body.allowGravity=true;
            //AJUPIR
            else if (this.cursors.down.isDown && this.body.blocked.down||this.cursors.down.isDown && this.touchGrave==true ){
                this.animations.play('ajupir_N');
-               //this.body.setSize(this.width, this.height/2, 0, this.height/2);
+               this.body.setSize(this.width*this.scale.x, this.height/2, 0, this.height/2);
            }
            //MOVEMENT LEFT/RIGHT with or without JUMP
            else if (this.cursors.left.isDown){
@@ -294,6 +294,8 @@ else this.body.allowGravity=true;
     if (!this.canShoot && platformer.tutorial.game.time.now - this.timeCheck > this.shootWait){
         this.canShoot = true;
     }
+    
+     
 
 }
 platformer.playerPrefab.prototype.shoot = function () {
