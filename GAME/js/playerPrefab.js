@@ -83,22 +83,34 @@ platformer.playerPrefab.prototype.update = function () {
     this.game.physics.arcade.collide(this, this.level.graves, this.touch, null, this);
     this.game.physics.arcade.collide(this, this.level.movingPlatform, this.touch, null, this);	//utilizo lo mismo para la movingPlatform
     this.game.physics.arcade.collide (this, this.level.water, this.PlayerDie, null, this);
-    this.game.physics.arcade.collide(this,this.level.ladders,this.climbLadders,null,this);
+
 //collide with ladders
   //xoca amb ladders
-//  if(this.game.physics.arcade.overlap(this,this.level.ladders)){
-  //   this.climbing=true;
-
-    /*//si esta abaix
+  if(this.game.physics.arcade.overlap(this,this.level.ladders)){
+    //si esta abaix
     if(this.y>190){
       //si esta saltant no pujar
-      if(!this.body.blocked.down&&this.climbingLevel==0)  this.climbing=false;
+      if(!this.body.blocked.down&&this.climbingLevel==0){  this.onLadder=false; this.climbing=false;}
+      //si esta pujant
+      if(!this.body.blocked.down&&this.climbingLevel!=0){  this.onLadder=true; this.climbingLevel=true;}
+      //si esta caminant i no pujar
+      if(this.body.blocked.down&&!this.cursors.up.isDown){   this.onLadder=true; this.climbing=false;}
+    }
+    //si esta adalt
+    if(this.y<=190){
       //si esta caminant
-      if(this.body.blocked.down)  this.climbing=true;
-    }*/
-//  }
+      if(this.body.blocked.down&&!this.cursors.down.isDown){  this.onLadder=true; this.climbing=false;}
+      if(this.body.blocked.down&&!this.cursors.down.isDown){   this.onLadder=true;  this.climbing=true;}
+    }
+  }
+  else {
+    //si esta abaix
+    if(this.y>190){this.climbingLevel=0;      this.onLadder=false;      this.climbing=false;}
+    //si esta adalt
+    if(this.y<=190){this.climbingLevel=162;      this.onLadder=false;      this.climbing=false;}
+  }
   //if(this.game.physics.arcade.overlap(this,this.level.ladders)){
-  //  console.log("ok");
+    console.log(this.onLadder+" "+this.climbing);
   //}
 
 /*
