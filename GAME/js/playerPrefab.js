@@ -9,14 +9,15 @@ platformer.playerPrefab = function (game,x,y, _level,_player_life,_cursors,_jump
     this.jump_key = _jump_key;
     this.space = _space;
     this.with_cloth = _with_cloth;
-    this.onLadder=false;
-    this.climbing=false;
-    this.climbingStopState=false;
+    this.onLadder=false; //esta xoca amb ladder
+    this.climbing=false; //no esta pujant
+    this.climbingStopState=false;//esta stop de climb
+    this.climbingLevel=0;//altura de ladder donde esta
     this.isKill=2;
     this.playerPos=[x,y];
     this.animationStop=false;
     this.hasKey = false;
-        
+
     //SPRITE
 	  Phaser.Sprite.call(this,game,x,y,'hero');
 	  game.add.existing (this);
@@ -82,7 +83,25 @@ platformer.playerPrefab.prototype.update = function () {
     this.game.physics.arcade.collide(this, this.level.graves, this.touch, null, this);
     this.game.physics.arcade.collide(this, this.level.movingPlatform, this.touch, null, this);	//utilizo lo mismo para la movingPlatform
     this.game.physics.arcade.collide (this, this.level.water, this.PlayerDie, null, this);
+    this.game.physics.arcade.collide(this,this.level.ladders,this.climbLadders,null,this);
+//collide with ladders
+  //xoca amb ladders
+//  if(this.game.physics.arcade.overlap(this,this.level.ladders)){
+  //   this.climbing=true;
 
+    /*//si esta abaix
+    if(this.y>190){
+      //si esta saltant no pujar
+      if(!this.body.blocked.down&&this.climbingLevel==0)  this.climbing=false;
+      //si esta caminant
+      if(this.body.blocked.down)  this.climbing=true;
+    }*/
+//  }
+  //if(this.game.physics.arcade.overlap(this,this.level.ladders)){
+  //  console.log("ok");
+  //}
+
+/*
     if(!this.onLadder&&this.y<=190||this.cursors.down.isDown&&this.body.blocked.down&&this.y>200) { this.climbing=false;this.body.allowGravity=true;}
 
     if(this.game.physics.arcade.overlap(this,this.level.ladders)){
@@ -91,26 +110,27 @@ platformer.playerPrefab.prototype.update = function () {
     }
     else  {this.onLadder=false;this.body.allowGravity=true;}
 
-    this.game.physics.arcade.overlap(this,this.level.ladders,this.climbLadders, null, this);
 
+*/
+//this.game.physics.arcade.overlap(this,this.level.ladders,this.climbLadders, null, this);
 	this.game.physics.arcade.collide (this, this.level.enemyProjectiles, this.killPlayer, null, this);
 
 	this.body.velocity.x = 0;
-    
+
     //COMPROVAR CHECKPOINTS I SETEJAR SI CAL
     for (var i = 0; i < this.level.checkpoints.length;i++){
         if (Phaser.Math.difference(this.position.x,this.level.checkpoints[i].x) < 10){
             if (i > gameOptions.currentCheckpoint){ //aixi nomes ho fa un cop
                 var hud = this.level.hud;
                 hud.timer = this.level.game.time.create(false);
-	            hud.timer.loop(gameOptions.tutorialTime*1000+999,hud.timerFinished,hud); 	
+	            hud.timer.loop(gameOptions.tutorialTime*1000+999,hud.timerFinished,hud);
 				hud.timer.start();
                 gameOptions.currentCheckpoint = i;
-            }           
-            
+            }
+
         }
     }
-   
+
 
 	//INVENCIBILITAT
 	if(this.invincibleKey.isDown){
@@ -118,7 +138,7 @@ platformer.playerPrefab.prototype.update = function () {
     }
     //POSAR TAMANY COLISIO A NORMAL SI NO HO ESTA
     if (this.body.height != this.height)
-        this.body.setSize(this.width, this.height, 0,0);    
+        this.body.setSize(this.width, this.height, 0,0);
     //WITH CLOTH ANIMATION
         if(this.with_cloth==true&&!this.climbing){
             //ATTACK
@@ -129,12 +149,12 @@ platformer.playerPrefab.prototype.update = function () {
             }
             //AJUPIR
             else if (this.cursors.down.isDown && this.body.blocked.down||this.cursors.down.isDown && this.touchGrave==true ){
-                this.animations.play('ajupir');                
-                this.body.setSize(this.width, this.height/2, 0, this.height/2);               
+                this.animations.play('ajupir');
+                this.body.setSize(this.width, this.height/2, 0, this.height/2);
             }
-            //MOVEMENT LEFT/RIGHT with or without JUMP            
+            //MOVEMENT LEFT/RIGHT with or without JUMP
             else if (this.cursors.left.isDown){
-                
+
                 if(this.body.blocked.down||this.touchGrave==true){
                     if ((this.x+this.width/2) > (this.level.checkpoints[gameOptions.currentCheckpoint].x - gameOptions.gameWidth/2))
                         this.body.velocity.x = -gameOptions.playerSpeed;
@@ -248,7 +268,7 @@ platformer.playerPrefab.prototype.update = function () {
     if (!this.canShoot && platformer.tutorial.game.time.now - this.timeCheck > this.shootWait){
         this.canShoot = true;
     }
-    
+
 }
 platformer.playerPrefab.prototype.shoot = function () {
     //crear arma
@@ -408,6 +428,8 @@ platformer.playerPrefab.prototype.gameover = function () {
     }
 }
 platformer.playerPrefab.prototype.climbLadders = function (hero,ladder) {
+  console.log("ok");
+  /*
 if(this.onLadder) {
   if(this.cursors.up.isDown){
     this.climbingStopState=!this.climbingStopState;
@@ -465,7 +487,7 @@ if(this.onLadder) {
     }
     this.body.velocity.y=0;
   }
-}
+}*/
 /*
    if(this.onLadder){
       if(this.cursors.up.isDown){
@@ -513,15 +535,15 @@ if(this.onLadder) {
       }
     }
 */
-}
+}/*
 platformer.playerPrefab.prototype.climbUp = function(){
   this.y=190;
   if(this.with_cloth)
     this.animations.play('stand');
   else
     this.animations.play('stand_N');
-
 }
+*/
 platformer.playerPrefab.prototype.invincibleBlink = function(){
 	//hace que el jugador se ponga a parpadear (se llama des de un evento que se repite)
 	if(this.alpha == 0){

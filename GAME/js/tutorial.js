@@ -173,7 +173,7 @@ platformer.tutorial = {
 
 		this.map.createLayer('platform_up');
         this.map.createLayer('ladder');
-		
+
 		this.movingPlatform = new platformer.platformPrefab(this.game,3433,410,this,3338,3528);
 
 		      //CONTROLS
@@ -292,9 +292,9 @@ platformer.tutorial = {
       this.ladders = this.game.add.group();
       this.ladders.enableBody = true;
       this.ladders.immovable = true;
-      //this.createLadder(512*2+388);
-      //this.createLadder(512*3+262);
-      //this.createLadder(512*4+70);
+      this.createLadder(512*2+388);
+      this.createLadder(512*3+262);
+      this.createLadder(512*4+70);
 
     },
     createLadder:function(x){
