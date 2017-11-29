@@ -26,7 +26,8 @@ var gameOptions = {
 	ghostWaitTime:4000,			//temps entre cada serie de 3 fantasmes que apareixen
 	ghostSpawnPosY:330,
     currentCheckpoint:0,
-	platformSpeed:120
+	platformSpeed:120,
+	ciclopWalkSpeed:110
 };
 
 platformer.game = new Phaser.Game(gameOptions.gameWidth,gameOptions.gameHeight,Phaser.AUTO,null,this,false,false);
