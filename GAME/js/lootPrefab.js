@@ -51,6 +51,7 @@ platformer.lootPrefab.prototype.update = function(){
             }
             else if (boti.isWeapon){
                 boti.level.hero.weaponType = boti.randomWeapon;
+				boti.level.hud.changeWeapon(boti.level.hero.weaponType); //actualitzem el hud amb la nova arma
                 boti.weaponPickUp.play();
             }
             else {

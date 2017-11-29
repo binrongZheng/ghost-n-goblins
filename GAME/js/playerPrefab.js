@@ -286,8 +286,8 @@ else this.body.allowGravity=true;
 
 }
 platformer.playerPrefab.prototype.shoot = function () {
-    //crear arma
-    this.newProjectile = new platformer.playerBulletPrefab(platformer.game,platformer.tutorial.hero.position.x+20,platformer.tutorial.hero.position.y,this.weaponType, this.level);
+    //crear arma-----------TODO: FALTA PER MIRAR SI EL PLAYER ESTÀ AJUPIT O NO (surt més amunt o avall)
+    this.newProjectile = new platformer.playerBulletPrefab(platformer.game,platformer.tutorial.hero.position.x+20,platformer.tutorial.hero.position.y-7,this.weaponType, this.level);
     //afegir a l'array d'armes
     platformer.tutorial.projectiles.add(this.newProjectile);
     //posem el contador al temps actual per no deixar disparar a lo loco
