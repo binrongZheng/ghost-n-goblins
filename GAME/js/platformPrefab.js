@@ -22,7 +22,7 @@ platformer.platformPrefab.prototype.constructor=platformer.platformPrefab;
 
 platformer.platformPrefab.prototype.update = function () {
 	this.game.physics.arcade.collide(this, this.level.hero);
-	//this.game.physics.arcade.collide(this, this.level.platform_collision, this.changeDir, null, this);
+	
 	if(this.x <= this.marginLeft){
 		this.body.velocity.x = gameOptions.platformSpeed;
 	}

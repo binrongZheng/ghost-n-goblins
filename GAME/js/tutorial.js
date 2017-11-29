@@ -103,6 +103,9 @@ platformer.tutorial = {
 
         //RED DEVIL
         this.load.spritesheet('redDevil', 'img/redDevil.png', 42, 42);
+		
+		//CICLOP
+        this.load.spritesheet('ciclop', 'img/ciclop.png', 48, 48);
 
         //LOOT
         this.load.spritesheet('coin', 'img/item_coin.png', 16, 16);
