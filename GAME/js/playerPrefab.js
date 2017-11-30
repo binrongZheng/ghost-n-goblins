@@ -129,8 +129,10 @@ if(this.climbing) this.body.allowGravity=false;
 else this.body.allowGravity=true;
 
   this.game.physics.arcade.overlap (this, this.level.enemies,function (pj, enemy){
-      if(!(enemy instanceof platformer.zombiePrefab) || enemy.frame < 4)  //si no es zombie o ja esta casi spawnejat del tot treu vida
-            pj.killPlayer(pj,enemy);
+      
+      if(pj.isKill > 0 && (!(enemy instanceof platformer.zombiePrefab) || enemy.frame < 4))  //si no es zombie o ja esta casi spawnejat del tot treu vida
+          pj.killPlayer(pj,enemy);
+      
     });
 
 	this.body.velocity.x = 0;
@@ -327,18 +329,16 @@ platformer.playerPrefab.prototype.showArmourGone = function(hero,enemy){
     this.with_cloth=false;
 }, this);*/
 }
-platformer.playerPrefab.prototype.killPlayer = function (hero,enemy) {
-    console.log(this.isKill);
+platformer.playerPrefab.prototype.killPlayer = function (hero,enemy) {    
     if(!this.invincible){
         if(this.with_cloth==true && this.isKill==2) {
 			this.invincible = true;
 		  	this.game.time.events.add(1060,this.stopInvincible,this);	//para dejar de ser invencible
           	//this.showArmourGone(hero,enemy);							//da error (no puede conseguir la x del enemigo)
-            
+            this.game.time.events.repeat(Phaser.Timer.SECOND/27,28,this.invincibleBlink,this);	//evento para que se ponga a parpadear
         }
         this.with_cloth=false;
-        this.isKill--;
-        this.game.time.events.repeat(Phaser.Timer.SECOND/27,28,this.invincibleBlink,this);	//evento para que se ponga a parpadear
+        this.isKill--;        
         if(this.with_cloth==false&&this.isKill==0){
             lastLife=this.player_life;
             this.player_life--;
