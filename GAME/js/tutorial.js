@@ -84,6 +84,7 @@ platformer.tutorial = {
         this.load.spritesheet('hero', 'img/arthur.png', 64, 64);
         //HUD SPRITE
         this.load.spritesheet('hud', 'img/HUD-armes.png', 60, 60);
+        this.load.spritesheet('lives', 'img/lives.png', 56, 26);
         //armourAnimation
         this.load.spritesheet('armaduraGone', 'img/armourGone.png', 128, 128);
 
