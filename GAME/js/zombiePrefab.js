@@ -9,8 +9,8 @@ platformer.zombiePrefab=function(game,x,y,_level){
     this.hp = 80;
     
     //LA DIRECCIO
-    this.rng = game.rnd.integerInRange (0,5);
-    if (this.rng == 5)
+    this.rng = game.rnd.integerInRange (0,9);
+    if (this.rng == 0)
         this.direction = 1;
     else
         this.direction = -1;

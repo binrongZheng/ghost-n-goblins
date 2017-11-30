@@ -45,5 +45,5 @@ platformer.enemyBulletPrefab.prototype.update = function () {
       bullet.kill();      
   });
     
-    this.game.debug.body(this);
+    
 }

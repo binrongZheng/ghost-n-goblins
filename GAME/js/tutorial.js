@@ -220,11 +220,11 @@ platformer.tutorial = {
         //SPAWNS DE ZOMBIES
         this.spawns.add(new platformer.spawnZombiePrefab(this.game,475,350,this));
         this.spawns.add(new platformer.spawnZombiePrefab(this.game,800,350,this));
-        this.spawns.add(new platformer.spawnZombiePrefab(this.game,1100,350,this));
+        this.spawns.add(new platformer.spawnZombiePrefab(this.game,1200,350,this));
         this.spawns.add(new platformer.spawnZombiePrefab(this.game,1450,350,this));
         this.spawns.add(new platformer.spawnZombiePrefab(this.game,1900,350,this));
         this.spawns.add(new platformer.spawnZombiePrefab(this.game,2200,350,this));
-        this.spawns.add(new platformer.spawnZombiePrefab(this.game,2500,350,this));
+        this.spawns.add(new platformer.spawnZombiePrefab(this.game,2300,350,this));
 
 		//SPAWNS DE GHOSTS
 		this.spawnGhost1 = new platformer.ghostSpawnPrefab(this.game,4769,350,this);
