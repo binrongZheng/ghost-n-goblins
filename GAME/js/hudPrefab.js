@@ -13,6 +13,7 @@ platformer.hudPrefab=function(game,_level){
     this.anchor.setTo(.5);
 	this.fixedToCamera = true;
 	//TODO: FALTA POSAR LES VIDES GLOBALS
+	
 	//Arma
 	this.weapon = game.add.sprite(gameOptions.gameWidth/2,13*gameOptions.gameHeight/14,'hud',3); 	//Per defecte és la llança
 	this.weapon.anchor.setTo(.5);
@@ -48,7 +49,6 @@ platformer.hudPrefab=function(game,_level){
 	this.timer.loop(gameOptions.tutorialTime*1000+999,this.timerFinished,this); 	//milisegons
 	//this.timer.loop(3*1000+999,this.timerFinished,this); 							//per fer proves
 	this.timer.start();
-	
 };
 
 platformer.hudPrefab.prototype=Object.create(Phaser.Sprite.prototype);

@@ -6,7 +6,7 @@ var platformer = platformer || {};
 */
 platformer.ghostSpawnPrefab=function(game,x,y,_level){
 	//Modo discípulo de radev: ¡¡¡¡¡ACTIVADO!!!!!
-	Phaser.Sprite.call(this,game,x,y,'');
+	Phaser.Sprite.call(this,game,x,y,'');		//unexisting sprite because yeas
     game.add.existing(this);
 	
     this.level			= _level;
