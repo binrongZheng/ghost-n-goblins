@@ -73,7 +73,7 @@ platformer.zombiePrefab.prototype.update = function () {
     }
     
     
-     this.level.game.debug.body(this);   
+     //this.level.game.debug.body(this);   
 };
 platformer.zombiePrefab.prototype.die = function () {    
     this.level.hud.updateScore(100);
