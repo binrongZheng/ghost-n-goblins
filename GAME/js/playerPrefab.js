@@ -334,11 +334,11 @@ platformer.playerPrefab.prototype.killPlayer = function (hero,enemy) {
 			this.invincible = true;
 		  	this.game.time.events.add(1060,this.stopInvincible,this);	//para dejar de ser invencible
           	//this.showArmourGone(hero,enemy);							//da error (no puede conseguir la x del enemigo)
-            this.game.time.events.repeat(Phaser.Timer.SECOND/27,28,this.invincibleBlink,this);	//evento para que se ponga a parpadear
+            
         }
         this.with_cloth=false;
         this.isKill--;
-		
+        this.game.time.events.repeat(Phaser.Timer.SECOND/27,28,this.invincibleBlink,this);	//evento para que se ponga a parpadear
         if(this.with_cloth==false&&this.isKill==0){
             lastLife=this.player_life;
             this.player_life--;
