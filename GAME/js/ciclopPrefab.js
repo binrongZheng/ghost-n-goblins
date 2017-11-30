@@ -73,11 +73,11 @@ platformer.ciclopPrefab.prototype.getAngry = function () {
 platformer.ciclopPrefab.prototype.pursue = function () {
 	//walk
 	if(Phaser.Math.difference(this.x,platformer.tutorial.hero.x) > 150){
-		this.body.velocity.x = -gameOptions.ciclopWalkSpeed;
+		this.body.velocity.x = this.scale.x*gameOptions.ciclopWalkSpeed;		//scale-> la direcció cap on ha d'anar
 		this.animations.play('walk1');
 		console.log("walk");
 	} else { //jump
-		this.body.velocity.x = -gameOptions.ciclopWalkSpeed/2;
+		this.body.velocity.x = this.scale.x*gameOptions.ciclopWalkSpeed/2;		
 		this.body.velocity.y = -500;
 		this.animations.play('jump');
 		this.jumping = true;
