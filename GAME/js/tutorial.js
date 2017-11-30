@@ -105,7 +105,7 @@ platformer.tutorial = {
         this.load.spritesheet('redDevil', 'img/redDevil.png', 42, 42);
 		
 		//CICLOP
-        this.load.spritesheet('ciclop', 'img/ciclop.png', 48, 48);
+        this.load.spritesheet('ciclop', 'img/ciclop.png', 96, 96);
 
         //LOOT
         this.load.spritesheet('coin', 'img/item_coin.png', 16, 16);
@@ -211,6 +211,7 @@ platformer.tutorial = {
         //this.enemies.add (new platformer.zombiePrefab(this.game,200+gameOptions.gameWidth/2,350,this));
         this.redDevil = new platformer.RedDemonPrefab(this.game,2900,350,this);
         //this.myghost = new platformer.ghostPrefab(this.game,500,350,this);
+		this.enemies.add(new platformer.ciclopPrefab(this.game,6975,250,this));
 
         //BOTINS FIXES
         this.createFixedLoot();
@@ -228,7 +229,6 @@ platformer.tutorial = {
 		//SPAWNS DE GHOSTS
 		this.spawnGhost1 = new platformer.ghostSpawnPrefab(this.game,4769,350,this);
 		this.spawnGhost2 = new platformer.ghostSpawnPrefab(this.game,5406,350,this);
-
 
 
 		//CAMERA
