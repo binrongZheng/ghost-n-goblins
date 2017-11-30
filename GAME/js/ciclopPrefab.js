@@ -34,7 +34,7 @@ platformer.ciclopPrefab.prototype.update = function () {
 	if(!this.aggro && Phaser.Math.difference(this.x,platformer.tutorial.hero.x) < (gameOptions.gameWidth/2)-this.width/2){
 		this.aggro = true;
 		this.level.game.time.events.add(500,this.getAngry,this);
-		console.log("aggro");
+		//console.log("aggro");
 	}
 	if(this.aggro){
 		//girem el ciclop si fa falta
@@ -48,9 +48,8 @@ platformer.ciclopPrefab.prototype.update = function () {
 
 //canvia el frame per després del salt
 platformer.ciclopPrefab.prototype.changeFrameAfterJump = function () {
-	console.log("COLLISION");
 	if(this.frame ==8){
-		console.log("frame");
+		//console.log("frame");
 	   
 	   }
 	if(this.aggro && this.jumping){
@@ -67,7 +66,7 @@ platformer.ciclopPrefab.prototype.getAngry = function () {
 	this.frame = 9;
 	this.level.game.time.events.add(900,function(){this.frame=0},this);
 	this.level.game.time.events.add(1600,this.pursue,this);
-	console.log("getting angry");
+	//console.log("getting angry");
 };
 
 platformer.ciclopPrefab.prototype.pursue = function () {
@@ -75,13 +74,13 @@ platformer.ciclopPrefab.prototype.pursue = function () {
 	if(Phaser.Math.difference(this.x,platformer.tutorial.hero.x) > 150){
 		this.body.velocity.x = this.scale.x*gameOptions.ciclopWalkSpeed;		//scale-> la direcció cap on ha d'anar
 		this.animations.play('walk1');
-		console.log("walk");
+		//console.log("walk");
 	} else { //jump
 		this.body.velocity.x = this.scale.x*gameOptions.ciclopWalkSpeed/2;		
 		this.body.velocity.y = -500;
 		this.animations.play('jump');
 		this.jumping = true;
-		console.log("jump");
+		//console.log("jump");
 	}
 	this.level.game.time.events.add(1500,this.pursue,this);
 };
