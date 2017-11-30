@@ -36,6 +36,14 @@ platformer.ciclopPrefab.prototype.update = function () {
 		this.level.game.time.events.add(500,this.getAngry,this);
 		console.log("aggro");
 	}
+	if(this.aggro){
+		//girem el ciclop si fa falta
+		if(this.scale.x==-1 && platformer.tutorial.hero.x>this.x){
+		   this.scale.x =1;
+		} else if(this.scale.x==1 && platformer.tutorial.hero.x<this.x){
+		   this.scale.x =-1;
+		}
+	}
 };
 
 //canvia el frame per després del salt
