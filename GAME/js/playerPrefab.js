@@ -69,9 +69,6 @@ platformer.playerPrefab = function (game,x,y, _level,_player_life,_cursors,_jump
     //toca grave
     this.touchGrave=false;
     
-    //TAMANY COLISIO
-    this.body.setSize(this.width/2, this.height, this.width/4, 0);
-
     this.invincible = false;
     this.invincibleKey = game.input.keyboard.addKey(Phaser.Keyboard.I);
     
@@ -161,7 +158,8 @@ else this.body.allowGravity=true;
     }
     //POSAR TAMANY COLISIO A NORMAL SI NO HO ESTA
     if (this.body.height != this.height)
-        this.body.setSize(this.width/2*this.scale.x, this.height, this.width/4*this.scale.x,0);
+        this.body.setSize(this.width*this.scale.x, this.height, 0,0);
+        //this.body.setSize(this.width/2*this.scale.x, this.height, this.width/4*this.scale.x,0);
 
     //WITH CLOTH ANIMATION
         if(this.with_cloth==true&&!this.climbing){

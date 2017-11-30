@@ -93,7 +93,7 @@ platformer.lootPrefab.prototype.chooseType = function (posX,posY) {
         else if (this.loopType == 6) {
             this.randomWeapon = this.level.hero.weaponType;
             while (this.randomWeapon == this.level.hero.weaponType)
-                this.randomWeapon = Math.floor(Math.random()*2); //pq el foc no esta fet de moment            
+                this.randomWeapon = Math.floor(Math.random()*3);          
             switch(this.randomWeapon){
                 case 0: Phaser.Sprite.call(this,this.game,posX,posY-10,'arma_lance');
                         this.game.add.existing(this);
