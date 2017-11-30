@@ -295,9 +295,7 @@ else this.body.allowGravity=true;
     //timer del dispar
     if (!this.canShoot && platformer.tutorial.game.time.now - this.timeCheck > this.shootWait){
         this.canShoot = true;
-    }
-
-    
+    }    
 
 }
 platformer.playerPrefab.prototype.shoot = function () {
