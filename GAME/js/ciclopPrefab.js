@@ -71,11 +71,11 @@ platformer.ciclopPrefab.prototype.pursue = function () {
 		this.animations.play('walk1');
 		this.level.game.time.events.add(500,this.pursue,this);
 	} else { 																	//saltar
-		this.body.velocity.x = this.scale.x*gameOptions.ciclopWalkSpeed/2;		
+		this.body.velocity.x = this.scale.x*gameOptions.ciclopWalkSpeed;		
 		this.body.velocity.y = -580;
 		this.animations.play('jump');
 		this.jumping = true;
-		this.level.game.time.events.add(1500,this.pursue,this);
+		this.level.game.time.events.add(1300,this.pursue,this);
 	}
 };
 
