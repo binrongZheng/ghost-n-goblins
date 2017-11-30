@@ -147,11 +147,11 @@ platformer.RedDemonPrefab.prototype.VueltoRasante = function () {
     this.game.add.tween(this).to( { x: cX + r*this.direction}, 250, "Linear" , true, 0);
 
     //VolRasant
-    var xMov = this.game.add.tween(this).to( { x: cX }, 1500, Phaser.Easing.Sinusoidal.In , true, 0);
-    xMov.onComplete.add(function() { this.game.add.tween(this).to({ x: cX - (r*this.direction) }, 1500, Phaser.Easing.Sinusoidal.Out , true, 0); }, this);
-    var yMov = this.game.add.tween(this).to( { y: cY + r }, 1500, Phaser.Easing.Sinusoidal.Out , true, 0);
+    var xMov = this.game.add.tween(this).to( { x: cX }, 1000, Phaser.Easing.Sinusoidal.In , true, 0);
+    xMov.onComplete.add(function() { this.game.add.tween(this).to({ x: cX - (r*this.direction) }, 1000, Phaser.Easing.Sinusoidal.Out , true, 0); }, this);
+    var yMov = this.game.add.tween(this).to( { y: cY + r }, 1000, Phaser.Easing.Sinusoidal.Out , true, 0);
     yMov.onComplete.add(function() {
-        var yMov2 = this.game.add.tween(this).to({ y: cY }, 1500, Phaser.Easing.Sinusoidal.In , true, 0);
+        var yMov2 = this.game.add.tween(this).to({ y: cY }, 1000, Phaser.Easing.Sinusoidal.In , true, 0);
         yMov2.onComplete.add(function(){this.activateNextMove = true;this.numOfMoves++;this.direction *=-1;},this);
     }, this);
 

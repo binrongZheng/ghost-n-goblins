@@ -68,6 +68,9 @@ platformer.playerPrefab = function (game,x,y, _level,_player_life,_cursors,_jump
     this.shootWait = 250;
     //toca grave
     this.touchGrave=false;
+    
+    //TAMANY COLISIO
+    this.body.setSize(this.width/2, this.height, this.width/4, 0);
 
     this.invincible = false;
     this.invincibleKey = game.input.keyboard.addKey(Phaser.Keyboard.I);
@@ -158,7 +161,7 @@ else this.body.allowGravity=true;
     }
     //POSAR TAMANY COLISIO A NORMAL SI NO HO ESTA
     if (this.body.height != this.height)
-        this.body.setSize(this.width*this.scale.x, this.height, 0,0);
+        this.body.setSize(this.width/2*this.scale.x, this.height, this.width/4*this.scale.x,0);
 
     //WITH CLOTH ANIMATION
         if(this.with_cloth==true&&!this.climbing){
@@ -172,7 +175,7 @@ else this.body.allowGravity=true;
             else if (this.cursors.down.isDown && this.body.blocked.down||this.cursors.down.isDown && this.touchGrave==true ){
                 this.animations.play('ajupir');
                 this.shootOffset = 3;
-                this.body.setSize(this.width*this.scale.x, this.height/2, 0, this.height/2);
+                this.body.setSize(this.width/2*this.scale.x, this.height/2, this.width/3*this.scale.x, this.height/2);
             }
             //MOVEMENT LEFT/RIGHT with or without JUMP
             else if (this.cursors.left.isDown){
@@ -296,7 +299,7 @@ else this.body.allowGravity=true;
         this.canShoot = true;
     }
 
-
+    
 
 }
 platformer.playerPrefab.prototype.shoot = function () {
