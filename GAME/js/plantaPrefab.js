@@ -51,7 +51,7 @@ platformer.plantaPrefab.prototype.update = function () {
         //mirar la velocitat que pilla
         var bulletDir = new Phaser.Point(platformer.tutorial.hero.x-this.x,platformer.tutorial.hero.y-this.y);
         bulletDir.normalize().multiply(gameOptions.eyeSpeed,gameOptions.eyeSpeed);
-        var bala = new platformer.enemyBulletPrefab(this.game,this.x,this.y,0,bulletDir.x,bulletDir.y);
+        var bala = new platformer.enemyBulletPrefab(this.game,this.x,this.y-10,0,bulletDir.x,bulletDir.y);
         
     }
 };
