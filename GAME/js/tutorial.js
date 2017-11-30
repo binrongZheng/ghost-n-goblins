@@ -191,7 +191,7 @@ platformer.tutorial = {
         this.key = new platformer.keyPrefab(this.game,6800,0,this);
 
         //PLAYER ->(game,x,y, _level,_player_life,_cursors,_jump_key,_space,_with_cloth)
-        this.hero = new platformer.playerPrefab(this.game,2500/*this.checkpoints[gameOptions.currentCheckpoint].x*/,this.checkpoints[gameOptions.currentCheckpoint].y,this,this.player_life,this.cursors,this.jump_key,this.space,this.with_cloth,this.playerHaveLife );
+        this.hero = new platformer.playerPrefab(this.game,this.checkpoints[gameOptions.currentCheckpoint].x,this.checkpoints[gameOptions.currentCheckpoint].y,this,this.player_life,this.cursors,this.jump_key,this.space,this.with_cloth,this.playerHaveLife );
 
 
         //BALES DEL PERSONATGE
