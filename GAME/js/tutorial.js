@@ -235,7 +235,7 @@ platformer.tutorial = {
 		//CAMERA
 		this.camera.follow(this.hero);
         //HUD
-        this.hud = new platformer.hudPrefab(this.game,this);
+        this.hud = new platformer.hudPrefab(this.game,this,this.hero.player_life);
 		//MUSIC
         this.themeMusic=this.add.audio('theme_music');
         this.themeMusic.loop = true;

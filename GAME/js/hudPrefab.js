@@ -1,7 +1,7 @@
 var platformer = platformer || {};
 
 
-platformer.hudPrefab=function(game,_level){
+platformer.hudPrefab=function(game,_level,lives){
 	this.level = _level;
     this.score = 0;
     this.vides = 0;
@@ -19,6 +19,7 @@ platformer.hudPrefab=function(game,_level){
 	//Vides globals (per pantalla surt una o dues, quan no surt res és que no te'n queden)
 	this.lives = game.add.sprite(5,gameOptions.gameHeight-30,'lives',1);
 	this.lives.fixedToCamera = true;
+	this.changeLives(lives);
 	
 	/*---TEXTOS---*/
 	this.playerName		= platformer.game.add.bitmapText(10,  0,  'gngFont', 'PLAYER 1',  18);		//Enjoy the OCD :D
