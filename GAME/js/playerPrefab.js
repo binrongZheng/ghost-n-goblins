@@ -71,6 +71,9 @@ platformer.playerPrefab = function (game,x,y, _level,_player_life,_cursors,_jump
 
     this.invincible = false;
     this.invincibleKey = game.input.keyboard.addKey(Phaser.Keyboard.I);
+    
+    //LA POSICIO DEL DISPAR
+    this.shootOffset = 7;
 };
 
 platformer.playerPrefab.prototype = Object.create(Phaser.Sprite.prototype);
@@ -158,11 +161,12 @@ else this.body.allowGravity=true;
             if (this.space.isDown){
                 this.animations.play('attack');
                 if (this.canShoot)
-                    this.shoot();
-            }
+                    this.shoot();                
+            }           
             //AJUPIR
             else if (this.cursors.down.isDown && this.body.blocked.down||this.cursors.down.isDown && this.touchGrave==true ){
                 this.animations.play('ajupir');
+                this.shootOffset = 4;
                 this.body.setSize(this.width*this.scale.x, this.height/2, 0, this.height/2);
             }
             //MOVEMENT LEFT/RIGHT with or without JUMP
@@ -209,6 +213,10 @@ else this.body.allowGravity=true;
             if (this.jump_key.isDown && this.body.blocked.down && this.jump_key.downDuration(250)||this.jump_key.isDown && this.touchGrave==true && this.jump_key.downDuration(250)){
                 this.body.velocity.y = -gameOptions.playerJumpForce;
             }
+            //QUAN NO ESTEM AJUPITS POSEM L'ALÇADA DEL DISPAR AL NORMAL
+            if (!this.cursors.down.isDown && this.shootOffset != 7){
+                this.shootOffset = 7;
+            }
 
         }
 
@@ -219,10 +227,11 @@ else this.body.allowGravity=true;
                this.animations.play('attack_N');
                if (this.canShoot)
                    this.shoot();
-           }
+           }           
            //AJUPIR
            else if (this.cursors.down.isDown && this.body.blocked.down||this.cursors.down.isDown && this.touchGrave==true ){
                this.animations.play('ajupir_N');
+               this.shootOffset = 4;
                this.body.setSize(this.width*this.scale.x, this.height/2, 0, this.height/2);
            }
            //MOVEMENT LEFT/RIGHT with or without JUMP
@@ -287,7 +296,7 @@ else this.body.allowGravity=true;
 }
 platformer.playerPrefab.prototype.shoot = function () {
     //crear arma-----------TODO: FALTA PER MIRAR SI EL PLAYER ESTÀ AJUPIT O NO (surt més amunt o avall)
-    this.newProjectile = new platformer.playerBulletPrefab(platformer.game,platformer.tutorial.hero.position.x+20,platformer.tutorial.hero.position.y-7,this.weaponType, this.level);
+    this.newProjectile = new platformer.playerBulletPrefab(platformer.game,platformer.tutorial.hero.position.x+20,platformer.tutorial.hero.position.y-this.shootOffset,this.weaponType, this.level);
     //afegir a l'array d'armes
     platformer.tutorial.projectiles.add(this.newProjectile);
     //posem el contador al temps actual per no deixar disparar a lo loco
