@@ -41,7 +41,7 @@ platformer.enemyBulletPrefab.prototype.constructor=platformer.enemyBulletPrefab;
 
 platformer.enemyBulletPrefab.prototype.update = function () {
   this.game.physics.arcade.collide (this, platformer.tutorial.hero,function (bullet, hero){
-      bullet.kill();
-      hero.killPlayer();
+      hero.killPlayer(hero, bullet);      
+      bullet.kill();      
   });
 }

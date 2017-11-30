@@ -128,9 +128,8 @@ if(this.climbing) this.body.allowGravity=false;
 
 else this.body.allowGravity=true;
 
-  this.game.physics.arcade.collide (this, this.level.enemyProjectiles, this.killPlayer, null, this);
   this.game.physics.arcade.overlap (this, this.level.enemies,function (pj, enemy){
-      if(!(enemy instanceof platformer.zombiePrefab) || enemy.frame < 5)  //si no es zombie o ja esta casi spawnejat del tot treu vida
+      if(!(enemy instanceof platformer.zombiePrefab) || enemy.frame < 4)  //si no es zombie o ja esta casi spawnejat del tot treu vida
             pj.killPlayer(pj,enemy);
     });
 
@@ -283,7 +282,7 @@ else this.body.allowGravity=true;
            }
 
         }
-    else if(this.isKill==0&&this.animationStop==false) {
+    if(this.isKill<=0&&this.animationStop==false &&this.player_life <= 0) {
         this.animations.play('die');
         this.animations.currentAnim.onComplete.add(function () {
           this.animationStop=true;
@@ -329,6 +328,7 @@ platformer.playerPrefab.prototype.showArmourGone = function(hero,enemy){
 }, this);*/
 }
 platformer.playerPrefab.prototype.killPlayer = function (hero,enemy) {
+    console.log(this.isKill);
     if(!this.invincible){
         if(this.with_cloth==true && this.isKill==2) {
 			this.invincible = true;
@@ -371,6 +371,7 @@ platformer.playerPrefab.prototype.killPlayer = function (hero,enemy) {
             this.body.checkCollision.right=false;
             gameOptions.levelOption = gameOptions.lastOption;
             this.level.themeMusic.stop();
+            this.level.currentCheckpoint = 0;
             this.game.state.start('mapScreen');
           }
         }
