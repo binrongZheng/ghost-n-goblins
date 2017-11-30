@@ -141,10 +141,11 @@ else this.body.allowGravity=true;
     for (var i = 0; i < this.level.checkpoints.length;i++){
         if (Phaser.Math.difference(this.position.x,this.level.checkpoints[i].x) < 10){
             if (i > gameOptions.currentCheckpoint){ //aixi nomes ho fa un cop
-                var hud = this.level.hud;
+				this.level.hud.resetTimer();		//vaig crear la funcio per algo.... >.<
+                /*var hud = this.level.hud;
                 hud.timer = this.level.game.time.create(false);
 	            hud.timer.loop(gameOptions.tutorialTime*1000+999,hud.timerFinished,hud);
-				hud.timer.start();
+				hud.timer.start();*/
                 gameOptions.currentCheckpoint = i;
             }
 
@@ -374,6 +375,7 @@ platformer.playerPrefab.prototype.killPlayer = function (hero,enemy) {
             this.game.state.start('mapScreen');
           }
         }
+		this.level.hud.changeLives(this.player_life);
     }
 
 }

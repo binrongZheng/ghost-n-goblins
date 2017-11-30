@@ -76,7 +76,7 @@ platformer.hudPrefab.prototype.resetTimer = function(){
 	this.timer.start();
 };
 
-//Per canviar l'arma del hud, newWeapon: 0-> llança, 1-> daga, 2-> antorcha
+//Actualitzar l'arma del hud, newWeapon: 0-> llança, 1-> daga, 2-> antorcha
 platformer.hudPrefab.prototype.changeWeapon = function(newWeapon){
 	switch(newWeapon){
 		case 0: this.weapon.frame = 3;	//Llança
@@ -86,11 +86,27 @@ platformer.hudPrefab.prototype.changeWeapon = function(newWeapon){
 		case 2: this.weapon.frame = 1;	//Foc
 			break;
 	}
-}
+};
+
+//Actualitzar nº de vides que es mostren al hud
+platformer.hudPrefab.prototype.changeLives = function(newLives){
+	switch(newLives){
+		case 0:	//(no s'utilitza, és gameOver)
+			break;
+		case 1: this.lives.alpha	= 0;	//1 vida restant
+			break;
+		case 2: this.lives.frame 	= 0;	//2 vides
+			break;
+		case 3: this.lives.frame 	= 1;	//3 vides
+			break;
+	}
+};
+
+//Mostra punts aconseguits per pantalla (quan mates certs enemics, els botins...)
 platformer.hudPrefab.prototype.spawnPoints = function(x,y,points){
 	var newPoints = platformer.game.add.bitmapText(x, y, 'gngFont', ''+points,  15);
 	newPoints.lifespan = 1000;
 	newPoints.kill = function(){
 		this.destroy();
 	}
-}
+};
