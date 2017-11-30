@@ -32,6 +32,7 @@ platformer.zombiePrefab=function(game,x,y,_level){
     //FISIQUES
     game.physics.arcade.enable(this);
     this.body.immovable = true;
+    this.body.setSize(this.width/4*this.direction, this.height/6, this.direction*this.width/8, this.height/3);
        
     //AUDIO
     this.bornSound = this.level.add.audio('zombieBorn');    
@@ -50,7 +51,7 @@ platformer.zombiePrefab.prototype.constructor=platformer.zombiePrefab;
 platformer.zombiePrefab.prototype.update = function () {
     
     //colisions terra
-    this.game.physics.arcade.collide(this, platformer.tutorial.platform_collision); 
+    this.level.game.physics.arcade.collide(this, platformer.tutorial.platform_collision); 
     
     //MOVIMENT
     if (!this.isSpawning){        
@@ -64,7 +65,15 @@ platformer.zombiePrefab.prototype.update = function () {
        this.animations.currentAnim.onComplete.add (function(){this.kill();},this);
     }
     
-        
+    if (this.frame == 6 || this.frame == 5) {
+        this.body.setSize(this.width/4*this.direction, this.height/4, this.direction*this.width/8, this.height/4);
+    }
+    if (this.frame == 4){
+        this.body.setSize(this.width/4*this.direction, this.height/2, this.direction*this.width/8, 0);
+    }
+    
+    
+     this.level.game.debug.body(this);   
 };
 platformer.zombiePrefab.prototype.die = function () {    
     this.level.hud.updateScore(100);

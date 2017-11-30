@@ -56,17 +56,13 @@ platformer.playerBulletPrefab.prototype.update = function () {
     
     this.game.physics.arcade.overlap (this, this.level.enemies,function (bullet, enemy){
         
-		if(!(enemy instanceof platformer.ghostPrefab)){		//si es un ghost, cridem el metode especial per saber d'on venia la bala
-			if (!enemy instanceof platformer.zombiePrefab || enemy.frame < 3){ //si no es zombie o si que ho es pero no esta spawnejant
-                enemy.hp -= bullet.dmg;
-                if(enemy.hp <= 0){
-                    if(bullet.bullet_type == 2)
-                        new platformer.firePrefab(bullet.game, bullet.x, 360, bullet.level);  
-                    enemy.kill();
-                }
-            }
-            else
-                return false;
+		if(!(enemy instanceof platformer.ghostPrefab)){		//si es un ghost, cridem el metode especial per saber d'on venia la bala			
+            enemy.hp -= bullet.dmg;
+            if(enemy.hp <= 0){
+                if(bullet.bullet_type == 2)
+                    new platformer.firePrefab(bullet.game, bullet.x, 360, bullet.level);  
+                enemy.kill();
+             }         
 		}else{
 			if(bullet.x>enemy.x){
 				enemy.kill();

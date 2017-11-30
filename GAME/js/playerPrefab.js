@@ -166,7 +166,7 @@ else this.body.allowGravity=true;
             //AJUPIR
             else if (this.cursors.down.isDown && this.body.blocked.down||this.cursors.down.isDown && this.touchGrave==true ){
                 this.animations.play('ajupir');
-                this.shootOffset = 4;
+                this.shootOffset = 3;
                 this.body.setSize(this.width*this.scale.x, this.height/2, 0, this.height/2);
             }
             //MOVEMENT LEFT/RIGHT with or without JUMP
@@ -231,7 +231,7 @@ else this.body.allowGravity=true;
            //AJUPIR
            else if (this.cursors.down.isDown && this.body.blocked.down||this.cursors.down.isDown && this.touchGrave==true ){
                this.animations.play('ajupir_N');
-               this.shootOffset = 4;
+               this.shootOffset = 3;
                this.body.setSize(this.width*this.scale.x, this.height/2, 0, this.height/2);
            }
            //MOVEMENT LEFT/RIGHT with or without JUMP
