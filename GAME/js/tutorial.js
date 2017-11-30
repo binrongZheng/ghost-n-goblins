@@ -240,7 +240,7 @@ platformer.tutorial = {
         this.themeMusic=this.add.audio('theme_music');
         this.themeMusic.loop = true;
 
-        //this.themeMusic.play();
+        this.themeMusic.play();
         //MENU PAUSA
         this.inPlay=true;
 	},

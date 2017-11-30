@@ -108,7 +108,7 @@ platformer.RedDemonPrefab.prototype.update = function () {
                 heroe.killPlayer(devil,heroe);
         });
         
-        this.game.debug.body(this);
+        //this.game.debug.body(this);
     }
 };
 platformer.RedDemonPrefab.prototype.goUp = function () { //es posa a volar i després de 1s comença el seguent moviment
