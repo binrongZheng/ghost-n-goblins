@@ -27,7 +27,8 @@ var gameOptions = {
 	ghostSpawnPosY:330,
     currentCheckpoint:0,
 	platformSpeed:120,
-	ciclopWalkSpeed:110
+	ciclopWalkSpeed:110,
+	ciclopPoints:2000
 };
 
 platformer.game = new Phaser.Game(gameOptions.gameWidth,gameOptions.gameHeight,Phaser.AUTO,null,this,false,false);
