@@ -7,7 +7,7 @@ platformer.ghostPrefab=function(game,x,y,_level){
     game.add.existing(this);
 	this.anchor.setTo(.5);
     
-	this.yOffset = game.rnd.integerInRange(3,9);	//com més yOffset, més recorregut vertical farà
+	this.yOffset = game.rnd.integerInRange(3,8);	//com més yOffset, més recorregut vertical farà
 	this.xOffset = game.rnd.integerInRange(20,60);	//com més xOffset, més "lent" anirà verticalment (la vel. hor. sempre és igual per a tots)
 
 	//Físiques

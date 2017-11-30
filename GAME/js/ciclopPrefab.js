@@ -7,16 +7,15 @@ platformer.ciclopPrefab=function(game,x,y,_level){
 	this.scale.x= -1;
     
 	this.level			= _level;
-	this.walking 		= false;
-	this.aggro 			= false; 	//si està aggro, ens atacarà
-	this.hp = 500;
+	this.walking		= false;
+	this.aggro			= false; 	//si està aggro, ens atacarà
+	this.hp				= 800;
+	this.jumping		= false;
 	
 	//animacions
-	this.animations.add('walk1', [2,0,1],8,true);
-	this.animations.add('walk2', [3,4,5],8,true);
+	this.animations.add('walk1', [2,0,1],4,true);
+	this.animations.add('walk2', [3,4,5],4,true);
 	this.animations.add('jump', [7,8],3,false);
-	
-	this.animations.play('walk1',3,true,true);
 	
     //físiques
     game.physics.arcade.enable(this);
@@ -30,12 +29,53 @@ platformer.ciclopPrefab.prototype=Object.create(Phaser.Sprite.prototype);
 platformer.ciclopPrefab.prototype.constructor=platformer.ciclopPrefab;
 
 platformer.ciclopPrefab.prototype.update = function () {
-	this.game.physics.arcade.collide(this, this.level.platform_collision);
+	this.game.physics.arcade.collide(this, this.level.platform_collision, this.changeFrameAfterJump,null,this);
 	this.game.physics.arcade.collide(this, this.level.hero);
-	if(!this.aggro && this.x && Phaser.Math.difference(this.x,platformer.tutorial.hero.x) < gameOptions.gameWidth/2){
+	if(!this.aggro && Phaser.Math.difference(this.x,platformer.tutorial.hero.x) < (gameOptions.gameWidth/2)-this.width/2){
 		this.aggro = true;
-		//this.frame = 1;
+		this.level.game.time.events.add(500,this.getAngry,this);
+		console.log("aggro");
 	}
+};
+
+//canvia el frame per després del salt
+platformer.ciclopPrefab.prototype.changeFrameAfterJump = function () {
+	console.log("COLLISION");
+	if(this.frame ==8){
+		console.log("frame");
+	   
+	   }
+	if(this.aggro && this.jumping){
+		console.log("WTF");
+		this.jumping = false;
+		this.animations.stop();
+		this.frame = 4;
+		this.body.velocity.x = 0;
+	}
+};
+
+//comportament del ciclop
+platformer.ciclopPrefab.prototype.getAngry = function () {
+	this.frame = 9;
+	this.level.game.time.events.add(900,function(){this.frame=0},this);
+	this.level.game.time.events.add(1600,this.pursue,this);
+	console.log("getting angry");
+};
+
+platformer.ciclopPrefab.prototype.pursue = function () {
+	//walk
+	if(Phaser.Math.difference(this.x,platformer.tutorial.hero.x) > 150){
+		this.body.velocity.x = -gameOptions.ciclopWalkSpeed;
+		this.animations.play('walk1');
+		console.log("walk");
+	} else { //jump
+		this.body.velocity.x = -gameOptions.ciclopWalkSpeed/2;
+		this.body.velocity.y = -500;
+		this.animations.play('jump');
+		this.jumping = true;
+		console.log("jump");
+	}
+	this.level.game.time.events.add(1500,this.pursue,this);
 };
 
 platformer.ciclopPrefab.ciclopPoints = function () {
