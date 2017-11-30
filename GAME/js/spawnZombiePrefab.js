@@ -7,8 +7,8 @@ platformer.spawnZombiePrefab=function(game,x,y, _level){
     this.numZombies = game.rnd.integerInRange (2,3);
     this.instantiatedZombies = 0;
     
-   
-    this.spawnX = x - game.rnd.integerInRange (-30,30);
+    
+    this.spawnX = x;
     this.spawnY = y;
     this.level = _level;
     this.activateSpawn = false;
@@ -39,6 +39,11 @@ platformer.spawnZombiePrefab.prototype.update = function () {
         //cridem el spawn fins que haguem arrivat al maxim de numZombies
         var timeInter = window.setTimeout(function spawn (){                
             
+            //calcular diferents posisions
+            this.offSetX = Math.floor(Math.random() * 60) - 30;
+            this.spawnX = this.x + this.offSetX;
+            
+            //spawn
             var newZombie = new platformer.zombiePrefab(this.level.game,this.spawnX,this.spawnY,this.level);               
             this.level.enemies.add (newZombie);
             this.instantiatedZombies +=1;
