@@ -282,7 +282,7 @@ else this.body.allowGravity=true;
            }
 
         }
-    if(this.isKill<=0&&this.animationStop==false &&this.player_life <= 0) {
+    if(this.isKill<=0&&this.animationStop==false) {
         this.animations.play('die');
         this.animations.currentAnim.onComplete.add(function () {
           this.animationStop=true;
