@@ -319,6 +319,8 @@ platformer.tutorial.createPlants = function(){
 	//var plantaTest = new platformer.plantaPrefab(this.game,400+gameOptions.gameWidth/2,350,this);
 	this.enemies.add(new platformer.plantaPrefab(this.game,1628,202,this));
 	this.enemies.add(new platformer.plantaPrefab(this.game,2210,202,this));
+	this.enemies.add(new platformer.plantaPrefab(this.game,5453,350,this));
+	this.enemies.add(new platformer.plantaPrefab(this.game,6209,350,this));
 	//falta una planta per posar
 };
 platformer.tutorial.createCrows = function(){
