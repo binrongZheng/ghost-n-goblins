@@ -20,6 +20,7 @@ platformer.RedDemonPrefab = function (game,x,y, _level) {
     //physics
 	game.physics.arcade.enable(this);
     this.body.allowGravity = false;
+    this.body.setSize(this.width/4*this.direction, this.height/2, this.width/8,0);
 
     this.activateNextMove = false;
     this.numOfMoves = 0;
@@ -103,8 +104,11 @@ platformer.RedDemonPrefab.prototype.update = function () {
 
         //COLISIONS
         this.game.physics.arcade.collide (this, this.level.hero,function (devil, heroe){
-            heroe.killPlayer(devil,heroe);
+            if (heroe.isKill > 0)
+                heroe.killPlayer(devil,heroe);
         });
+        
+        this.game.debug.body(this);
     }
 };
 platformer.RedDemonPrefab.prototype.goUp = function () { //es posa a volar i després de 1s comença el seguent moviment
