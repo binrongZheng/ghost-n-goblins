@@ -10,15 +10,27 @@ platformer.mapScreen={
     preload:function(){
         //BACKGROUND
         this.load.image('bg','img/fullMap.png');
+        //SO
+        this.game.load.audio('map_music','sounds/intro_map.mp3');
     },
     create:function(){
         //BACKGROUND
        	this.bg = this.game.add.sprite(0,0, 'bg');
-        this.cameraMovement=-1;
+        this.cameraMovement=-2.1;
+
+
+        //MUSIC
+            this.mapMusic=this.add.audio('map_music');
+            this.mapMusic.loop = false;
+
+            this.mapMusic.play();
     },
     update:function(){
-        if(this.bg.x <= -this.bg.width/2) this.cameraMovement=1;
-        if(this.bg.x>0) this.game.state.start('tutorial');
+        if(this.bg.x <= -this.bg.width/2) {
+          this.mapMusic.stop();
+          this.game.state.start('tutorial');
+        }
+
         this.bg.x+=this.cameraMovement;
     }
 

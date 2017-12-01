@@ -76,6 +76,7 @@ platformer.mainMenu={
         //music-stop
         platformer.tutorial.themeMusic.stop();
         platformer.tutorial.inPlay=false;
+        platformer.mapScreen.mapMusic.stop();
     },
     update:function(){
 
