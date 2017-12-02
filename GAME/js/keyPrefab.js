@@ -37,7 +37,7 @@ platformer.keyPrefab.prototype.update = function(){
         //tornem el pj a normal
         key.game.time.events.add(500, function () {
             pj.celebrating = false;
-        }.bind(this), this)
+        }.bind(this), this);
         key.kill();                               
         
     });

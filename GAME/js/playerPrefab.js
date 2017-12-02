@@ -18,12 +18,13 @@ platformer.playerPrefab = function (game,x,y, _level,_player_life,_cursors,_jump
     this.playerPos=[x,y];
     this.animationStop=false;    
     this.celebrating = false;//per no deixar moure's ni re just quan ha agafat la clau
+    this.damaged = false; //per no deixar fer res quan t'acaven de fer daño
     //SPRITE
 	  Phaser.Sprite.call(this,game,x,y,'hero');
 	  game.add.existing (this);
 	  this.anchor.setTo(.5);
 	//ARMADURA - GONE
-    this.animations.add("removeArmadura", [33,39], 10, true);
+    this.animations.add("removeArmour", [32,33], 8, false);
     //PLAYER - WITH CLOTH
     this.animations.add('walk', [0,1,2,3],10,true);
     this.animations.add('stand', [4],10,false);
@@ -165,7 +166,7 @@ else this.body.allowGravity=true;
         //this.body.setSize(this.width/2*this.scale.x, this.height, this.width/4*this.scale.x,0);
 
     //WITH CLOTH ANIMATION
-        if(this.with_cloth==true&&!this.climbing && !this.celebrating){
+        if(this.with_cloth==true&&!this.climbing && !this.celebrating && !this.damaged){
             //ATTACK
             if (this.space.isDown){
               if(this.ajupir_attack) this.animations.play('attack_ajupir');
@@ -236,7 +237,7 @@ else this.body.allowGravity=true;
 
         }
 
-     else if(this.isKill!=0&&!this.climbing && !this.celebrating){
+     else if(this.isKill!=0&&!this.climbing && !this.celebrating && !this.damaged){
 
            //ATTACK
            if (this.space.isDown){
@@ -272,7 +273,7 @@ else this.body.allowGravity=true;
                        this.body.velocity.x = 0;
                }
            }
-           else if (this.cursors.right.isDown ){
+           else if (this.cursors.right.isDown && !this.celebrating && !this.damaged){
              this.ajupir_attack=false;
                if(this.body.blocked.down||this.touchGrave==true){
                    this.body.velocity.x =+gameOptions.playerSpeed;
@@ -297,7 +298,7 @@ else this.body.allowGravity=true;
            }
 
            //JUMP
-           if (this.jump_key.isDown && this.body.blocked.down && this.jump_key.downDuration(250)||this.jump_key.isDown && this.touchGrave==true && this.jump_key.downDuration(250)){
+           if (!this.celebrating && !this.damaged && this.jump_key.isDown && this.body.blocked.down && this.jump_key.downDuration(250)||this.jump_key.isDown && this.touchGrave==true && this.jump_key.downDuration(250)){
                this.ajupir_attack=false;
                this.body.velocity.y = -gameOptions.playerJumpForce;
            }
@@ -313,6 +314,10 @@ else this.body.allowGravity=true;
     //timer del dispar
     if (!this.canShoot && platformer.tutorial.game.time.now - this.timeCheck > this.shootWait){
         this.canShoot = true;
+    }
+    //quan ens fan daño no ens podem moure fins que tornem a tocar el terra
+    if(this.damaged && this.body.blocked.down){
+        this.damaged = false;
     }
 
 }
@@ -351,7 +356,14 @@ platformer.playerPrefab.prototype.killPlayer = function (hero,enemy) {
         if(this.with_cloth==true && this.isKill==2) {
 			this.invincible = true;
 		  	this.game.time.events.add(1060,this.stopInvincible,this);	//para dejar de ser invencible
-          	//this.showArmourGone(hero,enemy);							//da error (no puede conseguir la x del enemigo)
+          	//this.showArmourGone(hero,enemy);					//da error (no puede conseguir la x del enemigo)
+            
+            //no deixem moure i apliquem força fins que tornem a tocar el terra
+            this.damaged = true;
+            this.animations.play('removeArmour');
+            this.body.velocity.x = -150;
+            this.body.velocity.y = -250;
+                        
             this.game.time.events.repeat(Phaser.Timer.SECOND/27,28,this.invincibleBlink,this);	//evento para que se ponga a parpadear
         }
         this.with_cloth=false;
