@@ -21,7 +21,7 @@ platformer.ghostSpawnPrefab.prototype=Object.create(Phaser.Sprite.prototype);
 platformer.ghostSpawnPrefab.prototype.constructor=platformer.ghostSpawnPrefab;
 
 platformer.ghostSpawnPrefab.prototype.update = function () {
-	if(this.level.hero.x>this.x && !this.spawning){			//comença a espawnejar fantasmes
+	if(this.level.hero.x>this.x && !this.spawning && this.x > this.level.checkpoints[gameOptions.currentCheckpoint].x){			//comença a espawnejar fantasmes
 		this.spawning = true;
 		this.level.game.time.events.add(100,this.spawnAghost,this);
 	}

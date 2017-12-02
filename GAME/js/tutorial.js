@@ -211,14 +211,10 @@ platformer.tutorial = {
         this.enemies = this.add.group();
   		this.createPlants();
 		this.createCrows();
-        //this.enemies.add (new platformer.zombiePrefab(this.game,200+gameOptions.gameWidth/2,350,this));
-        this.redDevil = new platformer.RedDemonPrefab(this.game,2900,350,this);
-        //this.myghost = new platformer.ghostPrefab(this.game,500,350,this);
-		//this.enemies.add(new platformer.ciclopPrefab(this.game,6975,250,this));
-
+        this.createBosses();
+        
         //BOTINS FIXES
         this.createFixedLoot();
-
 
         //SPAWNS DE ZOMBIES
         this.spawns.add(new platformer.spawnZombiePrefab(this.game,475,350,this));
@@ -321,18 +317,30 @@ platformer.tutorial = {
 
 platformer.tutorial.createPlants = function(){
 	//var plantaTest = new platformer.plantaPrefab(this.game,400+gameOptions.gameWidth/2,350,this);
-	this.enemies.add(new platformer.plantaPrefab(this.game,1628,202,this));
+	var points = [{x:1628, y:202}, {x:2210, y:202}, {x:5453, y:350} , {x:6209, y:350}];
+    for (var i = 0; i < points.length;i++){
+        if(points[i].x > this.checkpoints[gameOptions.currentCheckpoint].x) //nomes si estan mes endavant que lultim chekpoint
+            this.enemies.add(new platformer.plantaPrefab(this.game,points[i].x,points[i].y,this));
+    }
+    
+    /*this.enemies.add(new platformer.plantaPrefab(this.game,1628,202,this));
 	this.enemies.add(new platformer.plantaPrefab(this.game,2210,202,this));
 	this.enemies.add(new platformer.plantaPrefab(this.game,5453,350,this));
-	this.enemies.add(new platformer.plantaPrefab(this.game,6209,350,this));
+	this.enemies.add(new platformer.plantaPrefab(this.game,6209,350,this));*/
 	//falta una planta per posar
 };
 platformer.tutorial.createCrows = function(){
-	this.enemies.add(new platformer.crowPrefab(this.game,1498,332,this));
+	var points = [{x:1498, y:332}, {x:1724, y:172}, {x:2206, y:332} , {x:2524, y:332} , {x:3036, y:332}];
+    for (var i = 0; i < points.length;i++){
+        if(points[i].x > this.checkpoints[gameOptions.currentCheckpoint].x) //nomes si estan mes endavant que lultim chekpoint
+            this.enemies.add(new platformer.crowPrefab(this.game,points[i].x,points[i].y,this));
+    }
+    
+   /* this.enemies.add(new platformer.crowPrefab(this.game,1498,332,this));
 	this.enemies.add(new platformer.crowPrefab(this.game,1724,172,this));
 	this.enemies.add(new platformer.crowPrefab(this.game,2206,332,this));
 	this.enemies.add(new platformer.crowPrefab(this.game,2524,332,this));
-	this.enemies.add(new platformer.crowPrefab(this.game,3036,332,this));
+	this.enemies.add(new platformer.crowPrefab(this.game,3036,332,this));*/
 };
 platformer.tutorial.createFixedLoot = function(){
     new platformer.lootPrefab(this.game, 700, 370, this, false);
@@ -340,4 +348,10 @@ platformer.tutorial.createFixedLoot = function(){
     new platformer.lootPrefab(this.game, 1650, 200, this, false);
     new platformer.lootPrefab(this.game, 2200, 200, this, false);
     new platformer.lootPrefab(this.game, 2800, 370, this, false);
+}
+platformer.tutorial.createBosses = function () {
+    if (2900 > this.checkpoints[gameOptions.currentCheckpoint].x)
+        this.redDevil = new platformer.RedDemonPrefab(this.game,2900,350,this);
+    //ciclop mai ens quedara enrere
+    this.enemies.add(new platformer.ciclopPrefab(this.game,6975,250,this));
 }

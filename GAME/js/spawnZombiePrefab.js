@@ -21,7 +21,7 @@ platformer.spawnZombiePrefab.prototype.update = function () {
     
     
     //Si el personatge s'appropa s'activa el spawn    
-    if (Phaser.Math.difference(this.spawnX,this.level.hero.position.x) < 200 && this.canActivate){        
+    if (Phaser.Math.difference(this.spawnX,this.level.hero.position.x) < 200 && this.canActivate && this.x > this.level.checkpoints[gameOptions.currentCheckpoint].x){        
         this.activateSpawn = true;
         this.canActivate = false;
     }

@@ -35,7 +35,7 @@ platformer.keyPrefab.prototype.update = function(){
         door.animations.currentAnim.onComplete.add (function(){door.open = true;}.bind(door),door);
         
         //tornem el pj a normal
-        key.game.time.events.add(500, function () {
+        key.game.time.events.add(1000, function () {
             pj.celebrating = false;
         }.bind(this), this);
         key.kill();                               

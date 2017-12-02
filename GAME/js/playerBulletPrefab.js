@@ -21,7 +21,8 @@ platformer.playerBulletPrefab=function(game,x,y,_bullet_type, _level){
             break;
     }
     //DIRECCIO
-    this.direction = this.level.hero.scale.x;    
+    this.direction = this.level.hero.scale.x;
+    this.scale.x = this.direction;
     this.anchor.setTo(.5);   
     
     //FISIQUES

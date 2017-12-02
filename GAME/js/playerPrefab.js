@@ -157,7 +157,7 @@ else this.body.allowGravity=true;
 
 
 	//INVENCIBILITAT
-	if(this.invincibleKey.isDown){
+	if(this.invincibleKey.isDown && this.invincibleKey.downDuration(10)){        
         this.invincible = !this.invincible;
     }
     //POSAR TAMANY COLISIO A NORMAL SI NO HO ESTA
