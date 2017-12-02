@@ -8,7 +8,7 @@ platformer.playerPrefab = function (game,x,y, _level,_player_life,_cursors,_jump
     this.cursors = _cursors;
     this.jump_key = _jump_key;
     this.space = _space;
-    this.with_cloth = _with_cloth;
+    this.with_cloth = _with_cloth;    
     this.onLadder=false; //esta xoca amb ladder
     this.climbing=false; //no esta pujant
     this.climbingStopState=false;//esta stop de climb
@@ -16,9 +16,8 @@ platformer.playerPrefab = function (game,x,y, _level,_player_life,_cursors,_jump
     this.ajupir_attack=false;//per fer atack diferent
     this.isKill=2;
     this.playerPos=[x,y];
-    this.animationStop=false;
-    this.hasKey = false;
-
+    this.animationStop=false;    
+    this.celebrating = false;//per no deixar moure's ni re just quan ha agafat la clau
     //SPRITE
 	  Phaser.Sprite.call(this,game,x,y,'hero');
 	  game.add.existing (this);
@@ -166,7 +165,7 @@ else this.body.allowGravity=true;
         //this.body.setSize(this.width/2*this.scale.x, this.height, this.width/4*this.scale.x,0);
 
     //WITH CLOTH ANIMATION
-        if(this.with_cloth==true&&!this.climbing){
+        if(this.with_cloth==true&&!this.climbing && !this.celebrating){
             //ATTACK
             if (this.space.isDown){
               if(this.ajupir_attack) this.animations.play('attack_ajupir');
@@ -237,7 +236,7 @@ else this.body.allowGravity=true;
 
         }
 
-     else if(this.isKill!=0&&!this.climbing){
+     else if(this.isKill!=0&&!this.climbing && !this.celebrating){
 
            //ATTACK
            if (this.space.isDown){

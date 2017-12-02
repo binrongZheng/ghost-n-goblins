@@ -21,8 +21,23 @@ platformer.keyPrefab.prototype.constructor=platformer.keyPrefab;
 platformer.keyPrefab.prototype.update = function(){
     
     this.game.physics.arcade.overlap (this, this.level.hero,function (key, pj){
-        //activar animacio de la porta, segurament l'haurem de crear nosaltres
+        
+        //el pj
         pj.hasKey = true;
+        pj.celebrating = true;
+        pj.with_cloth = true;
+        pj.isKill = 2;
+        pj.frame = 40;
+        
+        //la porta
+        var door = key.level.door;
+        door.animations.play('open');
+        door.animations.currentAnim.onComplete.add (function(){door.open = true;}.bind(door),door);
+        
+        //tornem el pj a normal
+        key.game.time.events.add(500, function () {
+            pj.celebrating = false;
+        }.bind(this), this)
         key.kill();                               
         
     });

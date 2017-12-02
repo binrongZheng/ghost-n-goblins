@@ -191,7 +191,7 @@ platformer.tutorial = {
 
         //PORTA I CLAU
         this.door = new platformer.doorPrefab(this.game, 6962, 256, this);
-        this.key = new platformer.keyPrefab(this.game,6800,0,this);
+        this.key = new platformer.keyPrefab(this.game,6850,0,this);
 
         //PLAYER ->(game,x,y, _level,_player_life,_cursors,_jump_key,_space,_with_cloth)
         this.hero = new platformer.playerPrefab(this.game,this.checkpoints[gameOptions.currentCheckpoint].x,this.checkpoints[gameOptions.currentCheckpoint].y,this,this.player_life,this.cursors,this.jump_key,this.space,this.with_cloth,this.playerHaveLife );
@@ -214,7 +214,7 @@ platformer.tutorial = {
         //this.enemies.add (new platformer.zombiePrefab(this.game,200+gameOptions.gameWidth/2,350,this));
         this.redDevil = new platformer.RedDemonPrefab(this.game,2900,350,this);
         //this.myghost = new platformer.ghostPrefab(this.game,500,350,this);
-		this.enemies.add(new platformer.ciclopPrefab(this.game,6975,250,this));
+		//this.enemies.add(new platformer.ciclopPrefab(this.game,6975,250,this));
 
         //BOTINS FIXES
         this.createFixedLoot();

@@ -18,12 +18,7 @@ platformer.doorPrefab = function(game,x,y,_level){
 }
 platformer.doorPrefab.prototype=Object.create(Phaser.Sprite.prototype);
 platformer.doorPrefab.prototype.constructor=platformer.doorPrefab;
-platformer.doorPrefab.prototype.update = function(){
-    if (Phaser.Math.difference(this.position.x,this.level.hero.position.x) < 80 && this.level.hero.hasKey){
-        this.animations.play('open');
-        this.level.hero.hasKey = false;
-        this.animations.currentAnim.onComplete.add (function(){this.open = true;}.bind(this),this);
-    }
+platformer.doorPrefab.prototype.update = function(){   
     
     if (this.open){
         this.game.physics.arcade.overlap (this, this.level.hero,function (porta, heroi){
