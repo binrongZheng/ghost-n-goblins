@@ -133,29 +133,38 @@ platformer.RedDemonPrefab.prototype.ShootTwice = function () {
         bulletDir.normalize().multiply(gameOptions.eyeSpeed*1.5,gameOptions.eyeSpeed*1.5);
         var bala = new platformer.enemyBulletPrefab(this.game,this.x,this.y,0,bulletDir.x,bulletDir.y);
     },this);
-
-    this.game.time.events.add(750,function(){this.VueltoRasante(); this.animations.play('fly');},this);
+    
+    var newX = 0;
+     if(this.x > this.level.hero.x)
+        newX = this.level.hero.x + 150;
+    else
+        newX = this.level.hero.x - 150;
+    
+    this.game.add.tween(this).to( { x: newX }, 500, "Linear", true, 0).onComplete.add(function() { 
+        this.game.time.events.add(750,function(){this.VueltoRasante(); this.animations.play('fly');},this); 
+    }, this);
+    
 }
-platformer.RedDemonPrefab.prototype.VueltoRasante = function () {
+platformer.RedDemonPrefab.prototype.VueltoRasante = function () {   
 
-    var cX = this.level.hero.position.x;
+    if(this.x > this.level.hero.x)
+        this.direction = 1;
+    else
+        this.direction = -1;
+    
+    var cX = this.x - 150*this.direction;
     var cY = this.y;
-    var r = (350 - this.y);
-
-    if(cX > this.x && this.direction == 1)
-        this.direction *= -1;
-    else if(cX < this.x && this.direction == -1)
-        this.direction *= -1;
+    var r = 150;
 
     //Ens movem fins a l'exterior del cercle
     this.game.add.tween(this).to( { x: cX + r*this.direction}, 250, "Linear" , true, 0);
 
     //VolRasant
-    var xMov = this.game.add.tween(this).to( { x: cX }, 1000, Phaser.Easing.Sinusoidal.In , true, 0);
-    xMov.onComplete.add(function() { this.game.add.tween(this).to({ x: cX - (r*this.direction) }, 1000, Phaser.Easing.Sinusoidal.Out , true, 0); }, this);
-    var yMov = this.game.add.tween(this).to( { y: cY + r }, 1000, Phaser.Easing.Sinusoidal.Out , true, 0);
+    var xMov = this.game.add.tween(this).to( { x: cX }, 750, Phaser.Easing.Sinusoidal.In , true, 0);
+    xMov.onComplete.add(function() { this.game.add.tween(this).to({ x: cX - (r*this.direction) }, 750, Phaser.Easing.Sinusoidal.Out , true, 0); }, this);
+    var yMov = this.game.add.tween(this).to( { y: cY + r }, 750, Phaser.Easing.Sinusoidal.Out , true, 0);
     yMov.onComplete.add(function() {
-        var yMov2 = this.game.add.tween(this).to({ y: cY }, 1000, Phaser.Easing.Sinusoidal.In , true, 0);
+        var yMov2 = this.game.add.tween(this).to({ y: cY }, 750, Phaser.Easing.Sinusoidal.In , true, 0);
         yMov2.onComplete.add(function(){this.activateNextMove = true;this.numOfMoves++;this.direction *=-1;},this);
     }, this);
 
