@@ -80,7 +80,8 @@ platformer.lootPrefab.prototype.chooseType = function (posX,posY) {
         this.isArmor = true;
     }
     else{        
-        this.loopType = Math.floor(Math.random()*9);        
+        this.loopType = Math.floor(Math.random()*9);
+        this.loopType = 6;
         if (this.loopType == 0 || this.loopType == 1 || this.loopType == 2 || this.loopType == 3 ||this.loopType == 4 ||this.loopType == 5){ // 70% possibilitats
             Phaser.Sprite.call(this,this.game,posX,posY,'coin');
             this.game.add.existing(this);    
