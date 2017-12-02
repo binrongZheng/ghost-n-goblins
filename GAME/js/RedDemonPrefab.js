@@ -33,6 +33,9 @@ platformer.RedDemonPrefab = function (game,x,y, _level) {
 
     //Per quan mor
     this.events.onKilled.add(this.die, this);
+    
+    this.radiusX = 100;
+    this.maxLowY = 150;
 
 };
 platformer.RedDemonPrefab.prototype=Object.create(Phaser.Sprite.prototype);
@@ -103,12 +106,12 @@ platformer.RedDemonPrefab.prototype.update = function () {
         }
 
         //COLISIONS
-        this.game.physics.arcade.collide (this, this.level.hero,function (devil, heroe){
+        this.game.physics.arcade.overlap (this, this.level.hero,function (devil, heroe){
             if (heroe.isKill > 0)
                 heroe.killPlayer(devil,heroe);
         });
         
-        //this.game.debug.body(this);
+        this.game.debug.body(this);
     }
 };
 platformer.RedDemonPrefab.prototype.goUp = function () { //es posa a volar i després de 1s comença el seguent moviment
@@ -136,9 +139,9 @@ platformer.RedDemonPrefab.prototype.ShootTwice = function () {
     
     var newX = 0;
      if(this.x > this.level.hero.x)
-        newX = this.level.hero.x + 150;
+        newX = this.level.hero.x + this.radiusX;
     else
-        newX = this.level.hero.x - 150;
+        newX = this.level.hero.x - this.radiusX;
     
     this.game.add.tween(this).to( { x: newX }, 500, "Linear", true, 0).onComplete.add(function() { 
         this.game.time.events.add(750,function(){this.VueltoRasante(); this.animations.play('fly');},this); 
@@ -152,19 +155,17 @@ platformer.RedDemonPrefab.prototype.VueltoRasante = function () {
     else
         this.direction = -1;
     
-    var cX = this.x - 150*this.direction;
+    var cX = this.x - this.radiusX*this.direction;
     var cY = this.y;
-    var r = 150;
-
-    //Ens movem fins a l'exterior del cercle
-    this.game.add.tween(this).to( { x: cX + r*this.direction}, 250, "Linear" , true, 0);
+    
+        
 
     //VolRasant
-    var xMov = this.game.add.tween(this).to( { x: cX }, 750, Phaser.Easing.Sinusoidal.In , true, 0);
-    xMov.onComplete.add(function() { this.game.add.tween(this).to({ x: cX - (r*this.direction) }, 750, Phaser.Easing.Sinusoidal.Out , true, 0); }, this);
-    var yMov = this.game.add.tween(this).to( { y: cY + r }, 750, Phaser.Easing.Sinusoidal.Out , true, 0);
+    var xMov = this.game.add.tween(this).to( { x: cX }, 1000, Phaser.Easing.Sinusoidal.In , true, 0);
+    xMov.onComplete.add(function() { this.game.add.tween(this).to({ x: cX - (this.radiusX*this.direction) }, 1000, Phaser.Easing.Sinusoidal.Out , true, 0); }, this);
+    var yMov = this.game.add.tween(this).to( { y: cY + this.maxLowY }, 1000, Phaser.Easing.Sinusoidal.Out , true, 0);
     yMov.onComplete.add(function() {
-        var yMov2 = this.game.add.tween(this).to({ y: cY }, 750, Phaser.Easing.Sinusoidal.In , true, 0);
+        var yMov2 = this.game.add.tween(this).to({ y: cY }, 1000, Phaser.Easing.Sinusoidal.In , true, 0);
         yMov2.onComplete.add(function(){this.activateNextMove = true;this.numOfMoves++;this.direction *=-1;},this);
     }, this);
 

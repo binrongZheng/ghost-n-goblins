@@ -209,8 +209,8 @@ platformer.tutorial = {
 
         //ENEMIES
         this.enemies = this.add.group();
-  		this.createPlants();
-		this.createCrows();
+  		//this.createPlants();
+		//this.createCrows();
         this.createBosses();        
 
         //SPAWNS DE ZOMBIES
