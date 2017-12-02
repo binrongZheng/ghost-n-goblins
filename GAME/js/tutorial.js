@@ -209,12 +209,9 @@ platformer.tutorial = {
 
         //ENEMIES
         this.enemies = this.add.group();
-  		this.createPlants();
+  		//this.createPlants();
 		this.createCrows();
-        this.createBosses();
-        
-        //BOTINS FIXES
-        this.createFixedLoot();
+        this.createBosses();        
 
         //SPAWNS DE ZOMBIES
         this.spawns.add(new platformer.spawnZombiePrefab(this.game,475,350,this));
@@ -228,7 +225,9 @@ platformer.tutorial = {
 		//SPAWNS DE GHOSTS
 		this.spawnGhost1 = new platformer.ghostSpawnPrefab(this.game,4769,350,this);
 		this.spawnGhost2 = new platformer.ghostSpawnPrefab(this.game,5406,350,this);
-
+        
+        //BOTINS FIXES
+        this.createFixedLoot();
 
 		//CAMERA
 		this.camera.follow(this.hero);

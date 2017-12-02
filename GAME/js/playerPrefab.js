@@ -229,11 +229,7 @@ else this.body.allowGravity=true;
             if (this.jump_key.isDown && this.body.blocked.down && this.jump_key.downDuration(250)||this.jump_key.isDown && this.touchGrave==true && this.jump_key.downDuration(250)){
                 this.ajupir_attack=false;
                 this.body.velocity.y = -gameOptions.playerJumpForce;
-            }
-            //QUAN NO ESTEM AJUPITS POSEM L'ALÇADA DEL DISPAR AL NORMAL
-            if (!this.cursors.down.isDown && this.shootOffset != 7){
-                this.shootOffset = 7;
-            }
+            }            
 
         }
 
@@ -298,7 +294,7 @@ else this.body.allowGravity=true;
            }
 
            //JUMP
-           if (!this.celebrating && !this.damaged && this.jump_key.isDown && this.body.blocked.down && this.jump_key.downDuration(250)||this.jump_key.isDown && this.touchGrave==true && this.jump_key.downDuration(250)){
+           if (this.jump_key.isDown && this.body.blocked.down && this.jump_key.downDuration(250)||this.jump_key.isDown && this.touchGrave==true && this.jump_key.downDuration(250)){
                this.ajupir_attack=false;
                this.body.velocity.y = -gameOptions.playerJumpForce;
            }
@@ -318,6 +314,10 @@ else this.body.allowGravity=true;
     //quan ens fan daño no ens podem moure fins que tornem a tocar el terra
     if(this.damaged && this.body.blocked.down){
         this.damaged = false;
+    }
+    //QUAN NO ESTEM AJUPITS POSEM L'ALÇADA DEL DISPAR AL NORMAL
+    if (!this.cursors.down.isDown && this.shootOffset != 7){
+        this.shootOffset = 7;
     }
 
 }

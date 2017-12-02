@@ -27,6 +27,8 @@ platformer.keyPrefab.prototype.update = function(){
         pj.celebrating = true;
         pj.with_cloth = true;
         pj.isKill = 2;
+        pj.body.velocity.x = 0; //per si estavem corrent quan l'ha pillat
+        pj.animations.stop();
         pj.frame = 40;
         
         //la porta
@@ -35,7 +37,7 @@ platformer.keyPrefab.prototype.update = function(){
         door.animations.currentAnim.onComplete.add (function(){door.open = true;}.bind(door),door);
         
         //tornem el pj a normal
-        key.game.time.events.add(1000, function () {
+        key.game.time.events.add(2000, function () {
             pj.celebrating = false;
         }.bind(this), this);
         key.kill();                               
