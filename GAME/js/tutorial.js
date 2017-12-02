@@ -118,7 +118,7 @@ platformer.tutorial = {
         //BULLET SPRITES
         this.load.image('arma_lance','img/lance.png');
         this.load.image('arma_daga','img/daga.png');
-        this.load.spritesheet('arma_torcha','img/arma_foc.png',16,16);
+        this.load.spritesheet('arma_torcha','img/arma_foc.png',32,32);
         this.load.spritesheet('foc','img/foc.png',32,32);
         //GRAVE
         this.load.image('grave0','img/grave0.png');
@@ -243,7 +243,7 @@ platformer.tutorial = {
         this.gameoverMusic=this.add.audio('gameover');
         this.themeMusic.loop = true;
 
-        this.themeMusic.play();
+       // this.themeMusic.play();
         //MENU PAUSA
         this.inPlay=true;
 	},

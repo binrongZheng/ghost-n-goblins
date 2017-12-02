@@ -13,7 +13,7 @@ platformer.playerBulletPrefab=function(game,x,y,_bullet_type, _level){
         case 1: Phaser.Sprite.call(this,game,x,y,'arma_daga'); this.dmg = 80;this.speed = gameOptions.dagaSpeed;
             break;
         case 2: 
-            Phaser.Sprite.call(this,game,x,y,'arma_torcha'); 
+            Phaser.Sprite.call(this,game,x,y,'arma_torcha');             
             this.dmg = 100;
             this.speed = gameOptions.torchaSpeed; 
             this.animations.add('idle', [0,1,2,3],10,true);
@@ -21,15 +21,14 @@ platformer.playerBulletPrefab=function(game,x,y,_bullet_type, _level){
             break;
     }
     //DIRECCIO
-    this.direction = this.level.hero.scale.x;
-    this.scale.x = this.direction;
+    this.direction = this.level.hero.scale.x;    
     this.anchor.setTo(.5);   
     
     //FISIQUES
     game.physics.arcade.enable(this);
 	//this.body.collideWorldBounds = true;
     if (this.bullet_type == 2) {
-        this.body.velocity.y = -300;                
+        this.body.velocity.y = -150;                
     }else this.body.allowGravity = false;
     
     this.checkWorldBounds = true;

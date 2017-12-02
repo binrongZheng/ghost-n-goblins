@@ -138,13 +138,13 @@ else this.body.allowGravity=true;
 
     });
 
-	this.body.velocity.x = 0;
+	
 
     //COMPROVAR CHECKPOINTS I SETEJAR SI CAL
     for (var i = 0; i < this.level.checkpoints.length;i++){
         if (Phaser.Math.difference(this.position.x,this.level.checkpoints[i].x) < 10){
             if (i > gameOptions.currentCheckpoint){ //aixi nomes ho fa un cop
-				this.level.hud.resetTimer();		//vaig crear la funcio per algo.... >.<
+				this.level.hud.resetTimer();		//vaig crear la funcio per algo.... >.< , ostia sry haha
                 /*var hud = this.level.hud;
                 hud.timer = this.level.game.time.create(false);
 	            hud.timer.loop(gameOptions.tutorialTime*1000+999,hud.timerFinished,hud);
@@ -178,14 +178,14 @@ else this.body.allowGravity=true;
             else if (this.cursors.down.isDown && this.body.blocked.down||this.cursors.down.isDown && this.touchGrave==true ){
                 this.animations.play('ajupir');
                 this.ajupir_attack=true;
-                this.shootOffset = 3;
+                this.shootOffset = -10;
                 this.body.setSize(this.width/2*this.scale.x, this.height/2, this.width/3*this.scale.x, this.height/2);
             }
             //MOVEMENT LEFT/RIGHT with or without JUMP
             else if (this.cursors.left.isDown){
                 this.ajupir_attack=false;
                 if(this.body.blocked.down||this.touchGrave==true){
-                    if ((this.x+this.width/2) > (this.level.checkpoints[gameOptions.currentCheckpoint].x - gameOptions.gameWidth/2))
+                    if ((this.x+this.width/2) > (this.level.checkpoints[gameOptions.currentCheckpoint].x - gameOptions.gameWidth/2)) //per no poder caminar mes enrere del checkpoint
                         this.body.velocity.x = -gameOptions.playerSpeed;
                     else
                         this.body.velocity.x = 0;
@@ -195,7 +195,7 @@ else this.body.allowGravity=true;
                 if(this.jump_key.isDown&&!this.body.blocked.down&&this.touchGrave==false){
                     this.animations.play('jump_throw');
                     this.scale.x = -1;
-                    if ((this.x+this.width/2) > (this.level.checkpoints[gameOptions.currentCheckpoint].x - gameOptions.gameWidth/2))
+                    if ((this.x+this.width/2) > (this.level.checkpoints[gameOptions.currentCheckpoint].x - gameOptions.gameWidth/2)) //per no caminar mes enrere del checkpoint
                         this.body.velocity.x = -gameOptions.playerSpeed;
                     else
                         this.body.velocity.x = 0;
@@ -211,7 +211,7 @@ else this.body.allowGravity=true;
                 if(this.jump_key.isDown&&!this.body.blocked.down&&this.touchGrave==false){
                     this.animations.play('jump_throw');
                     this.scale.x = 1;
-                    this.body.velocity.x =+gameOptions.playerSpeed;
+                    this.body.velocity.x = gameOptions.playerSpeed;
                 }
             }
             else if(!this.body.blocked.down&&this.touchGrave==false){
@@ -220,6 +220,7 @@ else this.body.allowGravity=true;
             }
                  //STAND
             else if(this.body.blocked.down||this.touchGrave==true){
+                this.body.velocity.x = 0; //esta aqui pq nomes sigui 0 quan estas al terra
                 this.ajupir_attack=false;
                 this.animations.play('stand');
             }
@@ -249,7 +250,7 @@ else this.body.allowGravity=true;
            else if (this.cursors.down.isDown && this.body.blocked.down||this.cursors.down.isDown && this.touchGrave==true ){
                this.animations.play('ajupir_N');
                this.ajupir_attack=true;
-               this.shootOffset = 3;
+               this.shootOffset = -10;
                this.body.setSize(this.width*this.scale.x, this.height/2, 0, this.height/2);
            }
            //MOVEMENT LEFT/RIGHT with or without JUMP
@@ -291,7 +292,8 @@ else this.body.allowGravity=true;
            }
                 //STAND
            else if(this.body.blocked.down||this.touchGrave==true){
-             this.ajupir_attack=false;
+               this.body.velocity.x = 0; //esta aqui pq nomes sigui 0 quan estas al terra 
+               this.ajupir_attack=false;
                this.animations.play('stand_N');
            }
 

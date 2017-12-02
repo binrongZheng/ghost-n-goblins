@@ -14,10 +14,10 @@ platformer.firePrefab=function(game,x,y, _level){
     this.animations.play('idle');
     
     //Temps de vida i canviant de tamany
-    this.game.time.events.add(1000, function() {
+    this.game.time.events.add(250, function() {
         this.scale.setTo(1);
         this.y += this.height/4;
-        this.game.time.events.add(500, function() {
+        this.game.time.events.add(250, function() {
             this.kill();
         }.bind(this),this);        
     }.bind(this), this);
