@@ -147,6 +147,10 @@ platformer.tutorial = {
         this.game.load.audio('lootPickUp','sounds/lootPickUp.wav');
         this.game.load.audio('weaponPickUp','sounds/weaponPickUp.wav');
         this.game.load.audio('gameover','sounds/gameover.mp3');
+        this.game.load.audio('jumpUpSo','sounds/jumpStart.mp3');
+        this.game.load.audio('jumpDownSo','sounds/jumpEnd.mp3');
+        this.game.load.audio('dieSo','sounds/die.mp3');
+        this.game.load.audio('removeArmourSo','sounds/removeArmour.mp3');
 
         //ADD motor de physics
 		this.game.physics.startSystem(Phaser.Physics.ARCADE);
@@ -195,8 +199,8 @@ platformer.tutorial = {
 
         //PLAYER ->(game,x,y, _level,_player_life,_cursors,_jump_key,_space,_with_cloth)
         this.hero = new platformer.playerPrefab(this.game,this.checkpoints[gameOptions.currentCheckpoint].x,this.checkpoints[gameOptions.currentCheckpoint].y,this,this.player_life,this.cursors,this.jump_key,this.space,this.with_cloth,this.playerHaveLife );
-        
-        
+
+
 
         //BALES DEL PERSONATGE
         this.projectiles = this.add.group();
@@ -212,7 +216,7 @@ platformer.tutorial = {
         this.enemies = this.add.group();
   		this.createPlants();
 		this.createCrows();
-        this.createBosses();        
+        this.createBosses();
 
         //SPAWNS DE ZOMBIES
         this.spawns.add(new platformer.spawnZombiePrefab(this.game,475,350,this));
@@ -221,12 +225,12 @@ platformer.tutorial = {
         this.spawns.add(new platformer.spawnZombiePrefab(this.game,1450,350,this));
         this.spawns.add(new platformer.spawnZombiePrefab(this.game,1900,350,this));
         this.spawns.add(new platformer.spawnZombiePrefab(this.game,2250,350,this));
-        
+
 
 		//SPAWNS DE GHOSTS
 		this.spawnGhost1 = new platformer.ghostSpawnPrefab(this.game,4769,350,this);
 		this.spawnGhost2 = new platformer.ghostSpawnPrefab(this.game,5406,350,this);
-        
+
         //BOTINS FIXES
         this.createFixedLoot();
 
@@ -322,7 +326,7 @@ platformer.tutorial.createPlants = function(){
         if(points[i].x > this.checkpoints[gameOptions.currentCheckpoint].x) //nomes si estan mes endavant que lultim chekpoint
             this.enemies.add(new platformer.plantaPrefab(this.game,points[i].x,points[i].y,this));
     }
-    
+
     /*this.enemies.add(new platformer.plantaPrefab(this.game,1628,202,this));
 	this.enemies.add(new platformer.plantaPrefab(this.game,2210,202,this));
 	this.enemies.add(new platformer.plantaPrefab(this.game,5453,350,this));
@@ -335,7 +339,7 @@ platformer.tutorial.createCrows = function(){
         if(points[i].x > this.checkpoints[gameOptions.currentCheckpoint].x) //nomes si estan mes endavant que lultim chekpoint
             this.enemies.add(new platformer.crowPrefab(this.game,points[i].x,points[i].y,this));
     }
-    
+
    /* this.enemies.add(new platformer.crowPrefab(this.game,1498,332,this));
 	this.enemies.add(new platformer.crowPrefab(this.game,1724,172,this));
 	this.enemies.add(new platformer.crowPrefab(this.game,2206,332,this));

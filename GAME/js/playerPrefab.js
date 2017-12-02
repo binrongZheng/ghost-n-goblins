@@ -8,15 +8,17 @@ platformer.playerPrefab = function (game,x,y, _level,_player_life,_cursors,_jump
     this.cursors = _cursors;
     this.jump_key = _jump_key;
     this.space = _space;
-    this.with_cloth = _with_cloth;    
+    this.with_cloth = _with_cloth;
     this.onLadder=false; //esta xoca amb ladder
     this.climbing=false; //no esta pujant
     this.climbingStopState=false;//esta stop de climb
     this.climbingLevel=0;//altura de ladder donde esta
     this.ajupir_attack=false;//per fer atack diferent
+    this.jumping_start=false;//per fer el so difeent
+    this.lastJumpState=false;
     this.isKill=2;
     this.playerPos=[x,y];
-    this.animationStop=false;    
+    this.animationStop=false;
     this.celebrating = false;//per no deixar moure's ni re just quan ha agafat la clau
     this.damaged = false; //per no deixar fer res quan t'acaven de fer daño
     //SPRITE
@@ -59,6 +61,12 @@ platformer.playerPrefab = function (game,x,y, _level,_player_life,_cursors,_jump
 
     //AUDIO
     this.playerShoot = this.level.add.audio('player_Shoot');
+    this.playerJumpStart= this.level.add.audio('jumpUpSo');
+    this.playerJumpStart.loop=false;
+    this.playerJumpEnd= this.level.add.audio('jumpDownSo');
+    this.playerJumpEnd.loop=false;
+    this.removeArmourSo= this.level.add.audio('removeArmourSo');
+    this.playerDieSo= this.level.add.audio('dieSo');
 
 	//physics
 	  game.physics.arcade.enable(this);
@@ -85,10 +93,29 @@ platformer.playerPrefab.prototype.constructor = platformer.playerPrefab;
 platformer.playerPrefab.prototype.update = function () {
     this.touchGrave=false;
 
+/*
+    if(!this.body.blocked.down){
+      this.jumping_start=true;
+    }*/
+/*    if(this.jumping_start) this.playerJumpStart.play();
+    else  this.playerJumpEnd.play();
+    if(this.body.blocked.down&&this.jump_key.isDown) this.jumping_start=true;
+    if(this.body.blocked.down&&this.jump_key.isUp)  this.jumping_start=false;
+*/
+    // this.playerJumpStart.play();
+
 	  this.game.physics.arcade.collide(this, this.level.platform_collision);
     this.game.physics.arcade.collide(this, this.level.graves, this.touch, null, this);
     this.game.physics.arcade.collide(this, this.level.movingPlatform, this.touch, null, this);	//utilizo lo mismo para la movingPlatform
     this.game.physics.arcade.collide (this, this.level.water, this.PlayerDie, null, this);
+
+    this.lastJumpState = this.jumping_start;
+    //so de jump
+    if(this.jump_key.isDown)  this.jumping_start=true;
+    if(this.jumping_start==true&&this.jumping_start!=this.lastJumpState) this.playerJumpStart.play();
+    if(this.jump_key.isUp&&this.body.blocked.down)  this.jumping_start=false;
+    if(this.jumping_start==false&&this.jumping_start!=this.lastJumpState) this.playerJumpEnd.play();
+    console.log(this.body.blocked.down);
 
 //collide with ladders
   //xoca amb ladders
@@ -138,7 +165,7 @@ else this.body.allowGravity=true;
 
     });
 
-	
+
 
     //COMPROVAR CHECKPOINTS I SETEJAR SI CAL
     for (var i = 0; i < this.level.checkpoints.length;i++){
@@ -157,15 +184,15 @@ else this.body.allowGravity=true;
 
 
 	//INVENCIBILITAT
-	if(this.invincibleKey.isDown && this.invincibleKey.downDuration(10)){        
+	if(this.invincibleKey.isDown && this.invincibleKey.downDuration(10)){
         this.invincible = !this.invincible;
     }
-    
+
     //si no estem saltant posem a 0 la velocitat
     if (this.body.blocked.down) {
         this.body.velocity.x = 0;
     }
-    
+
     //POSAR TAMANY COLISIO A NORMAL SI NO HO ESTA
     if (this.body.height != this.height)
         this.body.setSize(this.width*this.scale.x, this.height, 0,0);
@@ -181,7 +208,7 @@ else this.body.allowGravity=true;
                     this.shoot();
             }
             //AJUPIR
-            else if (this.cursors.down.isDown && this.body.blocked.down||this.cursors.down.isDown && this.touchGrave==true ){                
+            else if (this.cursors.down.isDown && this.body.blocked.down||this.cursors.down.isDown && this.touchGrave==true ){
                 this.animations.play('ajupir');
                 this.ajupir_attack=true;
                 this.shootOffset = -10;
@@ -193,16 +220,18 @@ else this.body.allowGravity=true;
                 if(this.body.blocked.down||this.touchGrave==true){
                     if ((this.x+this.width/2) > (this.level.checkpoints[gameOptions.currentCheckpoint].x - gameOptions.gameWidth/2)) //per no poder caminar mes enrere del checkpoint
                         this.body.velocity.x = -gameOptions.playerSpeed;
-                    
+
                     this.animations.play('walk');
                     this.scale.x = -1;
                 }
                 if(this.jump_key.isDown&&!this.body.blocked.down&&this.touchGrave==false){
+
                     this.animations.play('jump_throw');
+
                     this.scale.x = -1;
                     if ((this.x+this.width/2) > (this.level.checkpoints[gameOptions.currentCheckpoint].x - gameOptions.gameWidth/2)) //per no caminar mes enrere del checkpoint
                         this.body.velocity.x = -gameOptions.playerSpeed;
-                    
+
                 }
             }
             else if (this.cursors.right.isDown ){
@@ -213,17 +242,22 @@ else this.body.allowGravity=true;
                     this.scale.x=1;
                 }
                 if(this.jump_key.isDown&&!this.body.blocked.down&&this.touchGrave==false){
+
                     this.animations.play('jump_throw');
+
                     this.scale.x = 1;
                     this.body.velocity.x = gameOptions.playerSpeed;
                 }
             }
             else if(!this.body.blocked.down&&this.touchGrave==false){
                 this.ajupir_attack=false;
+
                 this.animations.play('jump_up');
+
+
             }
                  //STAND
-            else if(this.body.blocked.down||this.touchGrave==true){                
+            else if(this.body.blocked.down||this.touchGrave==true){
                 this.ajupir_attack=false;
                 this.animations.play('stand');
             }
@@ -232,7 +266,7 @@ else this.body.allowGravity=true;
             if (this.jump_key.isDown && this.body.blocked.down && this.jump_key.downDuration(250)||this.jump_key.isDown && this.touchGrave==true && this.jump_key.downDuration(250)){
                 this.ajupir_attack=false;
                 this.body.velocity.y = -gameOptions.playerJumpForce;
-            }            
+            }
 
         }
 
@@ -246,7 +280,7 @@ else this.body.allowGravity=true;
                    this.shoot();
            }
            //AJUPIR
-           else if (this.cursors.down.isDown && this.body.blocked.down||this.cursors.down.isDown && this.touchGrave==true ){               
+           else if (this.cursors.down.isDown && this.body.blocked.down||this.cursors.down.isDown && this.touchGrave==true ){
                this.animations.play('ajupir_N');
                this.ajupir_attack=true;
                this.shootOffset = -10;
@@ -258,16 +292,18 @@ else this.body.allowGravity=true;
                if(this.body.blocked.down||this.touchGrave==true){
                    if ((this.x+this.width/2) > (this.level.checkpoints[gameOptions.currentCheckpoint].x - gameOptions.gameWidth/2))
                         this.body.velocity.x = -gameOptions.playerSpeed;
-                  
+
                    this.animations.play('walk_N');
                    this.scale.x = -1;
                }
                if(this.jump_key.isDown&&!this.body.blocked.down&&this.touchGrave==false){
+
                    this.animations.play('jump_throw_N');
+
                    this.scale.x = -1;
                    if ((this.x+this.width/2) > (this.level.checkpoints[gameOptions.currentCheckpoint].x - gameOptions.gameWidth/2))
                         this.body.velocity.x = -gameOptions.playerSpeed;
-                   
+
                }
            }
            else if (this.cursors.right.isDown && !this.celebrating && !this.damaged){
@@ -278,17 +314,22 @@ else this.body.allowGravity=true;
                    this.scale.x=1;
                }
                if(this.jump_key.isDown&&!this.body.blocked.down&&this.touchGrave==false){
+
                    this.animations.play('jump_throw_N');
+
                    this.scale.x = 1;
                    this.body.velocity.x =+gameOptions.playerSpeed;
                }
            }
            else if(!this.body.blocked.down&&this.touchGrave==false){
              this.ajupir_attack=false;
+
                this.animations.play('jump_up_N');
+
+
            }
                 //STAND
-           else if(this.body.blocked.down||this.touchGrave==true){                
+           else if(this.body.blocked.down||this.touchGrave==true){
                this.ajupir_attack=false;
                this.animations.play('stand_N');
            }
@@ -318,7 +359,7 @@ else this.body.allowGravity=true;
     //QUAN NO ESTEM AJUPITS POSEM L'ALÇADA DEL DISPAR AL NORMAL
     if (!this.cursors.down.isDown && this.shootOffset != 7){
         this.shootOffset = 7;
-    }    
+    }
 
 }
 platformer.playerPrefab.prototype.shoot = function () {
@@ -357,20 +398,20 @@ platformer.playerPrefab.prototype.killPlayer = function (hero,enemy) {
 			this.invincible = true;
 		  	this.game.time.events.add(1060,this.stopInvincible,this);	//para dejar de ser invencible
           	//this.showArmourGone(hero,enemy);					//da error (no puede conseguir la x del enemigo)
-            
+
             //no deixem moure i apliquem força fins que tornem a tocar el terra
             this.damaged = true;
             this.animations.play('removeArmour');
             this.body.velocity.x = -150;
             this.body.velocity.y = -250;
-                        
+
             this.game.time.events.repeat(Phaser.Timer.SECOND/27,28,this.invincibleBlink,this);	//evento para que se ponga a parpadear
         }
         this.with_cloth=false;
         this.isKill--;
         if(this.with_cloth==false&&this.isKill==0){
             lastLife=this.player_life;
-            this.player_life--;            
+            this.player_life--;
             if(this.player_life<lastLife&&this.player_life!=0) {
                 this.isKill=0;
                 this.body.checkCollision.up=false;
