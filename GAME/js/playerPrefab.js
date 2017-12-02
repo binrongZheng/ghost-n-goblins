@@ -13,6 +13,7 @@ platformer.playerPrefab = function (game,x,y, _level,_player_life,_cursors,_jump
     this.climbing=false; //no esta pujant
     this.climbingStopState=false;//esta stop de climb
     this.climbingLevel=0;//altura de ladder donde esta
+    this.ajupir_attack=false;//per fer atack diferent
     this.isKill=2;
     this.playerPos=[x,y];
     this.animationStop=false;
@@ -31,7 +32,8 @@ platformer.playerPrefab = function (game,x,y, _level,_player_life,_cursors,_jump
     this.animations.add('jump_throw', [5],10,false);
     this.animations.add('ajupir', [6],10,false);
     this.animations.add('hurt', [7],10,false);
-    this.animations.add('attack', [8,9,10,11],15,false);
+    this.animations.add('attack', [8,9],5,false);
+    this.animations.add('attack_ajupir', [10,11],5,false);
     this.animations.add("climb", [12,15], 10, true);
     this.animations.add("climbstopleft", [12], 10, false);
     this.animations.add("climbstopright", [15], 10, false);
@@ -45,7 +47,8 @@ platformer.playerPrefab = function (game,x,y, _level,_player_life,_cursors,_jump
     this.animations.add('jump_throw_N', [21],10,false);
     this.animations.add('ajupir_N', [22],10,false);
     this.animations.add('hurt_N', [7],10,false);
-    this.animations.add('attack_N', [24,25,26,27],10,false);
+    this.animations.add('attack_N', [24,25],5,false);
+    this.animations.add('attack_N_ajupir', [26,27],5,false);
     this.animations.add("climb_N", [28,31], 10, true);
     this.animations.add("climbstopleft_N", [28], 10, false);
     this.animations.add("climbstopright_N", [31], 10, false);
@@ -166,19 +169,21 @@ else this.body.allowGravity=true;
         if(this.with_cloth==true&&!this.climbing){
             //ATTACK
             if (this.space.isDown){
-                this.animations.play('attack');
-                if (this.canShoot)
+              if(this.ajupir_attack) this.animations.play('attack_ajupir');
+              else this.animations.play('attack');
+              if (this.canShoot)
                     this.shoot();
             }
             //AJUPIR
             else if (this.cursors.down.isDown && this.body.blocked.down||this.cursors.down.isDown && this.touchGrave==true ){
                 this.animations.play('ajupir');
+                this.ajupir_attack=true;
                 this.shootOffset = 3;
                 this.body.setSize(this.width/2*this.scale.x, this.height/2, this.width/3*this.scale.x, this.height/2);
             }
             //MOVEMENT LEFT/RIGHT with or without JUMP
             else if (this.cursors.left.isDown){
-
+                this.ajupir_attack=false;
                 if(this.body.blocked.down||this.touchGrave==true){
                     if ((this.x+this.width/2) > (this.level.checkpoints[gameOptions.currentCheckpoint].x - gameOptions.gameWidth/2))
                         this.body.velocity.x = -gameOptions.playerSpeed;
@@ -197,6 +202,7 @@ else this.body.allowGravity=true;
                 }
             }
             else if (this.cursors.right.isDown ){
+                this.ajupir_attack=false;
                 if(this.body.blocked.down||this.touchGrave==true){
                     this.body.velocity.x =+gameOptions.playerSpeed;
                     this.animations.play('walk');
@@ -209,15 +215,18 @@ else this.body.allowGravity=true;
                 }
             }
             else if(!this.body.blocked.down&&this.touchGrave==false){
+                this.ajupir_attack=false;
                 this.animations.play('jump_up');
             }
                  //STAND
             else if(this.body.blocked.down||this.touchGrave==true){
+                this.ajupir_attack=false;
                 this.animations.play('stand');
             }
 
             //JUMP
             if (this.jump_key.isDown && this.body.blocked.down && this.jump_key.downDuration(250)||this.jump_key.isDown && this.touchGrave==true && this.jump_key.downDuration(250)){
+                this.ajupir_attack=false;
                 this.body.velocity.y = -gameOptions.playerJumpForce;
             }
             //QUAN NO ESTEM AJUPITS POSEM L'ALÇADA DEL DISPAR AL NORMAL
@@ -231,18 +240,21 @@ else this.body.allowGravity=true;
 
            //ATTACK
            if (this.space.isDown){
-               this.animations.play('attack_N');
+             if(this.ajupir_attack) this.animations.play('attack_N_ajupir');
+             else this.animations.play('attack_N');
                if (this.canShoot)
                    this.shoot();
            }
            //AJUPIR
            else if (this.cursors.down.isDown && this.body.blocked.down||this.cursors.down.isDown && this.touchGrave==true ){
                this.animations.play('ajupir_N');
+               this.ajupir_attack=true;
                this.shootOffset = 3;
                this.body.setSize(this.width*this.scale.x, this.height/2, 0, this.height/2);
            }
            //MOVEMENT LEFT/RIGHT with or without JUMP
            else if (this.cursors.left.isDown){
+             this.ajupir_attack=false;
                if(this.body.blocked.down||this.touchGrave==true){
                    if ((this.x+this.width/2) > (this.level.checkpoints[gameOptions.currentCheckpoint].x - gameOptions.gameWidth/2))
                         this.body.velocity.x = -gameOptions.playerSpeed;
@@ -261,6 +273,7 @@ else this.body.allowGravity=true;
                }
            }
            else if (this.cursors.right.isDown ){
+             this.ajupir_attack=false;
                if(this.body.blocked.down||this.touchGrave==true){
                    this.body.velocity.x =+gameOptions.playerSpeed;
                    this.animations.play('walk_N');
@@ -273,15 +286,18 @@ else this.body.allowGravity=true;
                }
            }
            else if(!this.body.blocked.down&&this.touchGrave==false){
+             this.ajupir_attack=false;
                this.animations.play('jump_up_N');
            }
                 //STAND
            else if(this.body.blocked.down||this.touchGrave==true){
+             this.ajupir_attack=false;
                this.animations.play('stand_N');
            }
 
            //JUMP
            if (this.jump_key.isDown && this.body.blocked.down && this.jump_key.downDuration(250)||this.jump_key.isDown && this.touchGrave==true && this.jump_key.downDuration(250)){
+               this.ajupir_attack=false;
                this.body.velocity.y = -gameOptions.playerJumpForce;
            }
 
@@ -455,6 +471,7 @@ platformer.playerPrefab.prototype.gameover = function () {
     this.killOnComplete=true;
 
     if(this.killOnComplete){
+      //todo lo que esta aqui tiene que ser platformer con this.level no funciona
       platformer.tutorial.gameoverMusic.stop();
       platformer.game.state.start('mainMenu');
       platformer.tutorial.themeMusic.stop();
