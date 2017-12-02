@@ -372,12 +372,13 @@ platformer.playerPrefab.prototype.killPlayer = function (hero,enemy) {
         this.isKill--;
         if(this.with_cloth==false&&this.isKill==0){
             lastLife=this.player_life;
-            this.player_life--;
+            this.player_life--;            
             if(this.player_life<lastLife&&this.player_life!=0) {
                 this.isKill=0;
                 this.body.checkCollision.up=false;
                 this.body.checkCollision.left=false;
                 this.body.checkCollision.right=false;
+                this.body.velocity.x = 0;
                 this.game.time.events.add(Phaser.Timer.SECOND * 0.75, this.map_Screen, this);
 
                 //this.game.state.start('tutorial');
@@ -392,6 +393,7 @@ platformer.playerPrefab.prototype.killPlayer = function (hero,enemy) {
             this.body.checkCollision.right=false;
             this.level.themeMusic.stop();
             this.level.gameoverMusic.play();
+            this.body.velocity.x = 0;
             this.game.time.events.add(Phaser.Timer.SECOND * 5, this.gameover);
             this.level.currentCheckpoint = 0; //posem el respawn al inici un altre cop
             }
