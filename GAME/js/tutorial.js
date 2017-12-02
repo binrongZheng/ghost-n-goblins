@@ -194,7 +194,7 @@ platformer.tutorial = {
         this.key = new platformer.keyPrefab(this.game,6850,0,this);
 
         //PLAYER ->(game,x,y, _level,_player_life,_cursors,_jump_key,_space,_with_cloth)
-        this.hero = new platformer.playerPrefab(this.game,2700/*this.checkpoints[gameOptions.currentCheckpoint].x*/,this.checkpoints[gameOptions.currentCheckpoint].y,this,this.player_life,this.cursors,this.jump_key,this.space,this.with_cloth,this.playerHaveLife );
+        this.hero = new platformer.playerPrefab(this.game,this.checkpoints[gameOptions.currentCheckpoint].x,this.checkpoints[gameOptions.currentCheckpoint].y,this,this.player_life,this.cursors,this.jump_key,this.space,this.with_cloth,this.playerHaveLife );
 
 
         //BALES DEL PERSONATGE
@@ -209,18 +209,18 @@ platformer.tutorial = {
 
         //ENEMIES
         this.enemies = this.add.group();
-  		//this.createPlants();
-		//this.createCrows();
+  		this.createPlants();
+		this.createCrows();
         this.createBosses();        
 
         //SPAWNS DE ZOMBIES
-        /*this.spawns.add(new platformer.spawnZombiePrefab(this.game,475,350,this));
+        this.spawns.add(new platformer.spawnZombiePrefab(this.game,475,350,this));
         this.spawns.add(new platformer.spawnZombiePrefab(this.game,800,350,this));
         this.spawns.add(new platformer.spawnZombiePrefab(this.game,1200,350,this));
         this.spawns.add(new platformer.spawnZombiePrefab(this.game,1450,350,this));
         this.spawns.add(new platformer.spawnZombiePrefab(this.game,1900,350,this));
         this.spawns.add(new platformer.spawnZombiePrefab(this.game,2200,350,this));
-        this.spawns.add(new platformer.spawnZombiePrefab(this.game,2300,350,this));*/
+        this.spawns.add(new platformer.spawnZombiePrefab(this.game,2300,350,this));
 
 		//SPAWNS DE GHOSTS
 		this.spawnGhost1 = new platformer.ghostSpawnPrefab(this.game,4769,350,this);
