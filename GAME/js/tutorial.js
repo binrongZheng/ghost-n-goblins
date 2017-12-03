@@ -228,17 +228,9 @@ platformer.tutorial = {
         this.spawns.add(new platformer.spawnZombiePrefab(this.game,1200,350,this));
         this.spawns.add(new platformer.spawnZombiePrefab(this.game,1450,350,this));
         this.spawns.add(new platformer.spawnZombiePrefab(this.game,1900,350,this));
-<<<<<<< HEAD
-        this.spawns.add(new platformer.spawnZombiePrefab(this.game,2250,350,this));*/
-
-        //new platformer.finalBossPrefab(this.game, 400, 320);
+        this.spawns.add(new platformer.spawnZombiePrefab(this.game,2250,350,this));
 
 
-=======
-        this.spawns.add(new platformer.spawnZombiePrefab(this.game,2250,350,this));       
-        
-        
->>>>>>> eec41393e43dc26ee9c30683d9f6387105070535
         //SPAWNS DE GHOSTS
 		this.spawnGhost1 = new platformer.ghostSpawnPrefab(this.game,4769,350,this);
 		this.spawnGhost2 = new platformer.ghostSpawnPrefab(this.game,5406,350,this);
@@ -370,6 +362,6 @@ platformer.tutorial.createBosses = function () {
         this.redDevil = new platformer.RedDemonPrefab(this.game,2900,350,this);
     //ciclop mai ens quedara enrere
     this.enemies.add(new platformer.ciclopPrefab(this.game,6975,250,this));
-    
+
     //this.enemies.add(new platformer.finalBossPrefab(this.game, 400, 320, this));
 }
