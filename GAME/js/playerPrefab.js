@@ -180,7 +180,7 @@ else this.body.allowGravity=true;
     }
 
     //si no estem saltant posem a 0 la velocitat
-    if (this.body.blocked.down) {
+    if (this.body.blocked.down || this.touchGrave==true) {
         this.body.velocity.x = 0;
     }
 
