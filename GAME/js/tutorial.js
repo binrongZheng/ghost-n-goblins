@@ -108,7 +108,7 @@ platformer.tutorial = {
 
 		//CICLOP
         this.load.spritesheet('ciclop', 'img/ciclop.png', 96, 96);
-        
+
         //CICLOP
         this.load.spritesheet('finalBoss', 'img/finalBoss.png', 72, 72);
 
@@ -229,10 +229,10 @@ platformer.tutorial = {
         this.spawns.add(new platformer.spawnZombiePrefab(this.game,1450,350,this));
         this.spawns.add(new platformer.spawnZombiePrefab(this.game,1900,350,this));
         this.spawns.add(new platformer.spawnZombiePrefab(this.game,2250,350,this));*/
-        
+
         //new platformer.finalBossPrefab(this.game, 400, 320);
-        
-        
+
+
         //SPAWNS DE GHOSTS
 		this.spawnGhost1 = new platformer.ghostSpawnPrefab(this.game,4769,350,this);
 		this.spawnGhost2 = new platformer.ghostSpawnPrefab(this.game,5406,350,this);

@@ -9,6 +9,7 @@ platformer.playerPrefab = function (game,x,y, _level,_player_life,_cursors,_jump
     this.jump_key = _jump_key;
     this.space = _space;
     this.with_cloth = _with_cloth;
+    this.ladderArea;//detectce ladder
     this.onLadder=false; //esta xoca amb ladder
     this.climbing=false; //no esta pujant
     this.climbingStopState=false;//esta stop de climb
@@ -107,7 +108,7 @@ platformer.playerPrefab.prototype.update = function () {
     if(this.jump_key.isUp&&this.body.blocked.down||this.jump_key.isUp&&this.touchGrave)  this.jumping_start=false;
     if(this.jumping_start==false&&this.jumping_start!=this.lastJumpState) this.playerJumpEnd.play();
 
-    
+
 //collide with ladders
   //xoca amb ladders
   if(this.game.physics.arcade.overlap(this,this.level.ladders)){
@@ -150,8 +151,10 @@ if(this.climbing&&this.isKill>0){
   this.body.setSize(this.width/2*this.scale.x, this.height, this.width/4*this.scale.x,0);
 }
 
-else this.body.allowGravity=true;
-
+else {
+  this.body.allowGravity=true;
+  this.body.setSize(this.width*this.scale.x, this.height, 0,0);
+}
   this.game.physics.arcade.overlap (this, this.level.enemies,function (pj, enemy){
 
       if(pj.isKill > 0 && (!(enemy instanceof platformer.zombiePrefab) || enemy.frame < 4))  //si no es zombie o ja esta casi spawnejat del tot treu vida
@@ -181,11 +184,11 @@ else this.body.allowGravity=true;
 	if(this.invincibleKey.isDown && this.invincibleKey.downDuration(10)){
         this.invincible = !this.invincible;
     }
-    
+
     //si no estem saltant posem a 0 la velocitat
-    
+
     if (this.touchGrave || this.body.blocked.down) {
-        this.body.velocity.x = 0;        
+        this.body.velocity.x = 0;
     }
 
     //POSAR TAMANY COLISIO A NORMAL SI NO HO ESTA
@@ -539,11 +542,11 @@ platformer.playerPrefab.prototype.gameover = function () {
     }
 }
 platformer.playerPrefab.prototype.climbLadders = function (hero,ladder) {
-  var area = hero.x-ladder.x;
-  console.log(hero.x-ladder.x);
+  this.ladderArea = hero.x-ladder.x;
+  if(this.ladderArea<10||  this.ladderArea>38) {this.onLadder=false;  this.climbing=false;}
   if(this.isKill>0) {
   //si sube
-  if(this.cursors.up.isDown&&area>10&area<38){
+  if(this.cursors.up.isDown&&  this.ladderArea>10&&  this.ladderArea<38){
     //climbing es true
     this.climbing=true;
     //posicio en ladder
@@ -572,7 +575,7 @@ platformer.playerPrefab.prototype.climbLadders = function (hero,ladder) {
     this.body.velocity.y=-(gameOptions.playerSpeed-100);
   }
   //si baja
-  else if(this.cursors.down.isDown&&area>10&area<38){
+  else if(this.cursors.down.isDown&&  this.ladderArea>10&&  this.ladderArea<38){
     //climbing es true
     this.climbing=true;
     //desactivar collision amb plataforma
