@@ -5,13 +5,12 @@ platformer.enemyBulletPrefab=function(game,x,y,_enemyBullet_type,velX,velY){
     this.enemyBullet_type=_enemyBullet_type;
 
     switch(this.enemyBullet_type){
-        case 0: Phaser.Sprite.call(this,game,x,y,'ull');
+        case 0: Phaser.Sprite.call(this,game,x,y,'ull');this.animations.add('ullAnim', [0,1,2,3],10,true);
             break;
-        //case 1: Phaser.Sprite.call(this,game,x,y,'foc');
-            //break;
+        case 1: Phaser.Sprite.call(this,game,x,y,'bossBullet');this.scale.setTo(2);
+            break;
     }
-    //potser s'haurà d'afegir en un group............
-    this.animations.add('ullAnim', [0,1,2,3],10,true);
+        
 
     game.add.existing(this);
     this.anchor.setTo(.5);
@@ -44,6 +43,6 @@ platformer.enemyBulletPrefab.prototype.update = function () {
       hero.killPlayer(hero, bullet);      
       bullet.kill();      
   });
-    
+
     
 }

@@ -95,6 +95,7 @@ platformer.tutorial = {
 
         //ENEMY BULLET SPRITES
         this.load.spritesheet('ull', 'img/ull.png', 18, 18);
+        this.load.spritesheet('bossBullet', 'img/bossBullet.png', 19, 13);
 
         //ENEMY SPRITES
         this.load.spritesheet('planta', 'img/Planta.png', 36, 64);
@@ -107,6 +108,9 @@ platformer.tutorial = {
 
 		//CICLOP
         this.load.spritesheet('ciclop', 'img/ciclop.png', 96, 96);
+        
+        //CICLOP
+        this.load.spritesheet('finalBoss', 'img/finalBoss.png', 72, 72);
 
         //LOOT
         this.load.spritesheet('coin', 'img/item_coin.png', 16, 16);
@@ -219,15 +223,17 @@ platformer.tutorial = {
         this.createBosses();
 
         //SPAWNS DE ZOMBIES
-        this.spawns.add(new platformer.spawnZombiePrefab(this.game,475,350,this));
+        /*this.spawns.add(new platformer.spawnZombiePrefab(this.game,475,350,this));
         this.spawns.add(new platformer.spawnZombiePrefab(this.game,800,350,this));
         this.spawns.add(new platformer.spawnZombiePrefab(this.game,1200,350,this));
         this.spawns.add(new platformer.spawnZombiePrefab(this.game,1450,350,this));
         this.spawns.add(new platformer.spawnZombiePrefab(this.game,1900,350,this));
-        this.spawns.add(new platformer.spawnZombiePrefab(this.game,2250,350,this));
-
-
-		//SPAWNS DE GHOSTS
+        this.spawns.add(new platformer.spawnZombiePrefab(this.game,2250,350,this));*/
+        
+        //new platformer.finalBossPrefab(this.game, 400, 320);
+        
+        
+        //SPAWNS DE GHOSTS
 		this.spawnGhost1 = new platformer.ghostSpawnPrefab(this.game,4769,350,this);
 		this.spawnGhost2 = new platformer.ghostSpawnPrefab(this.game,5406,350,this);
 
