@@ -91,7 +91,7 @@ platformer.playerPrefab.prototype = Object.create(Phaser.Sprite.prototype);
 platformer.playerPrefab.prototype.constructor = platformer.playerPrefab;
 
 platformer.playerPrefab.prototype.update = function () {
-    this.touchGrave=false;
+
 
 	  this.game.physics.arcade.collide(this, this.level.platform_collision);
     this.game.physics.arcade.collide(this, this.level.graves, this.touch, null, this);
@@ -103,10 +103,10 @@ platformer.playerPrefab.prototype.update = function () {
   //so de jump
     if(this.jump_key.isDown)  this.jumping_start=true;
     if(this.jumping_start==true&&this.jumping_start!=this.lastJumpState) this.playerJumpStart.play();
-    if(this.jump_key.isUp&&this.body.blocked.down)  this.jumping_start=false;
+    if(this.jump_key.isUp&&this.body.blocked.down||this.jump_key.isUp&&this.touchGrave)  this.jumping_start=false;
     if(this.jumping_start==false&&this.jumping_start!=this.lastJumpState) this.playerJumpEnd.play();
-    console.log(this.body.blocked.down);
 
+    this.touchGrave=false;
 //collide with ladders
   //xoca amb ladders
   if(this.game.physics.arcade.overlap(this,this.level.ladders)){
