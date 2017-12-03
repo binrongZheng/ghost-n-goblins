@@ -95,10 +95,10 @@ platformer.playerPrefab.prototype.update = function () {
     this.game.physics.arcade.collide(this, this.level.platform);
 
 	  this.game.physics.arcade.collide(this, this.level.platform_collision);
+    this.touchGrave=false;
     this.game.physics.arcade.collide(this, this.level.graves, this.touch, null, this);
     this.game.physics.arcade.collide(this, this.level.movingPlatform, this.touch, null, this);	//utilizo lo mismo para la movingPlatform
     this.game.physics.arcade.collide (this, this.level.water, this.PlayerDie, null, this);
-
     this.lastJumpState = this.jumping_start;
 
   //so de jump
@@ -107,7 +107,7 @@ platformer.playerPrefab.prototype.update = function () {
     if(this.jump_key.isUp&&this.body.blocked.down||this.jump_key.isUp&&this.touchGrave)  this.jumping_start=false;
     if(this.jumping_start==false&&this.jumping_start!=this.lastJumpState) this.playerJumpEnd.play();
 
-    this.touchGrave=false;
+    
 //collide with ladders
   //xoca amb ladders
   if(this.game.physics.arcade.overlap(this,this.level.ladders)){
@@ -181,10 +181,11 @@ else this.body.allowGravity=true;
 	if(this.invincibleKey.isDown && this.invincibleKey.downDuration(10)){
         this.invincible = !this.invincible;
     }
-
+    
     //si no estem saltant posem a 0 la velocitat
-    if (this.body.blocked.down || this.touchGrave==true) {
-        this.body.velocity.x = 0;
+    
+    if (this.touchGrave || this.body.blocked.down) {
+        this.body.velocity.x = 0;        
     }
 
     //POSAR TAMANY COLISIO A NORMAL SI NO HO ESTA
@@ -253,6 +254,7 @@ else this.body.allowGravity=true;
                  //STAND
             else if(this.body.blocked.down||this.touchGrave==true){
                 this.ajupir_attack=false;
+                this.body.velocity.x = 0;
                 this.animations.play('stand');
             }
 
