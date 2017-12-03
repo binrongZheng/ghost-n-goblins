@@ -29,7 +29,8 @@ var gameOptions = {
 	platformSpeed:120,
 	ciclopWalkSpeed:110,
 	ciclopPoints:2000,
-    finalBossSpeed:15
+    finalBossSpeed:15,
+    bossPoints:10000
 };
 
 platformer.game = new Phaser.Game(gameOptions.gameWidth,gameOptions.gameHeight,Phaser.AUTO,null,this,false,false);
