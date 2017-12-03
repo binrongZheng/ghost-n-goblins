@@ -101,7 +101,8 @@ platformer.playerPrefab.prototype.update = function () {
     this.lastJumpState = this.jumping_start;
 
   //so de jump
-    if(this.jump_key.isDown)  this.jumping_start=true;
+    if(this.jump_key.isDown||!this.body.blocked.down)  this.jumping_start=true;
+
     if(this.jumping_start==true&&this.jumping_start!=this.lastJumpState) this.playerJumpStart.play();
     if(this.jump_key.isUp&&this.body.blocked.down||this.jump_key.isUp&&this.touchGrave)  this.jumping_start=false;
     if(this.jumping_start==false&&this.jumping_start!=this.lastJumpState) this.playerJumpEnd.play();
