@@ -102,7 +102,6 @@ platformer.playerPrefab.prototype.update = function () {
 
   //so de jump
     if(this.jump_key.isDown||!this.body.blocked.down)  this.jumping_start=true;
-
     if(this.jumping_start==true&&this.jumping_start!=this.lastJumpState) this.playerJumpStart.play();
     if(this.jump_key.isUp&&this.body.blocked.down||this.jump_key.isUp&&this.touchGrave)  this.jumping_start=false;
     if(this.jumping_start==false&&this.jumping_start!=this.lastJumpState) this.playerJumpEnd.play();
@@ -145,7 +144,7 @@ platformer.playerPrefab.prototype.update = function () {
 //si esta moure en ladder
 if(this.onLadder)  this.game.physics.arcade.overlap(this,this.level.ladders,this.climbLadders, null, this);
 //si esta pujant no hay gravetat
-if(this.climbing) this.body.allowGravity=false;
+if(this.climbing&&this.isKill>0) this.body.allowGravity=false;
 
 else this.body.allowGravity=true;
 
@@ -535,6 +534,7 @@ platformer.playerPrefab.prototype.gameover = function () {
 }
 platformer.playerPrefab.prototype.climbLadders = function (hero,ladder) {
   var area = hero.x-ladder.x;
+  if(this.isKill>0) {
   //si sube
   if(this.cursors.up.isDown&&area>10&area<38){
     //climbing es true
@@ -625,6 +625,8 @@ platformer.playerPrefab.prototype.climbLadders = function (hero,ladder) {
     if(this.y>192){
      this.body.velocity.y=0;}
    }
+ }
+
 }
 platformer.playerPrefab.prototype.invincibleBlink = function(){
 	//hace que el jugador se ponga a parpadear (se llama des de un evento que se repite)
