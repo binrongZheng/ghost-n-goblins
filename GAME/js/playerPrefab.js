@@ -93,24 +93,14 @@ platformer.playerPrefab.prototype.constructor = platformer.playerPrefab;
 platformer.playerPrefab.prototype.update = function () {
     this.touchGrave=false;
 
-/*
-    if(!this.body.blocked.down){
-      this.jumping_start=true;
-    }*/
-/*    if(this.jumping_start) this.playerJumpStart.play();
-    else  this.playerJumpEnd.play();
-    if(this.body.blocked.down&&this.jump_key.isDown) this.jumping_start=true;
-    if(this.body.blocked.down&&this.jump_key.isUp)  this.jumping_start=false;
-*/
-    // this.playerJumpStart.play();
-
 	  this.game.physics.arcade.collide(this, this.level.platform_collision);
     this.game.physics.arcade.collide(this, this.level.graves, this.touch, null, this);
     this.game.physics.arcade.collide(this, this.level.movingPlatform, this.touch, null, this);	//utilizo lo mismo para la movingPlatform
     this.game.physics.arcade.collide (this, this.level.water, this.PlayerDie, null, this);
 
     this.lastJumpState = this.jumping_start;
-    //so de jump
+
+  //so de jump
     if(this.jump_key.isDown)  this.jumping_start=true;
     if(this.jumping_start==true&&this.jumping_start!=this.lastJumpState) this.playerJumpStart.play();
     if(this.jump_key.isUp&&this.body.blocked.down)  this.jumping_start=false;
@@ -401,6 +391,7 @@ platformer.playerPrefab.prototype.killPlayer = function (hero,enemy) {
 
             //no deixem moure i apliquem força fins que tornem a tocar el terra
             this.damaged = true;
+            this.removeArmourSo.play();
             this.animations.play('removeArmour');
             this.body.velocity.x = -150;
             this.body.velocity.y = -250;
@@ -418,7 +409,9 @@ platformer.playerPrefab.prototype.killPlayer = function (hero,enemy) {
                 this.body.checkCollision.left=false;
                 this.body.checkCollision.right=false;
                 this.body.velocity.x = 0;
-                this.game.time.events.add(Phaser.Timer.SECOND * 0.75, this.map_Screen, this);
+                this.playerDieSo.play();
+                this.playerDieSo.onStop.addOnce(function() {    this.game.time.events.add(Phaser.Timer.SECOND * 0.75, this.map_Screen, this);}, this);
+
 
                 //this.game.state.start('tutorial');
             }
@@ -463,7 +456,11 @@ platformer.playerPrefab.prototype.PlayerDie = function (hero,water) {
         if(this.player_life<lastLife&&this.player_life>0) {
             gameOptions.levelOption = this.player_life;
             this.level.themeMusic.stop();
-              this.game.state.start('mapScreen');
+            hero.kill();
+            this.playerDieSo.play();
+//this.playerDieSo.onStop.addOnce(function() {    this.game.time.events.add(Phaser.Timer.SECOND * 0.75, this.map_Screen, this);}, this);
+            this.playerDieSo.onStop.addOnce(function() { this.game.state.start('mapScreen');}, this);
+
             //this.game.state.start('tutorial');
 
         }
