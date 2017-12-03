@@ -232,8 +232,8 @@ platformer.tutorial = {
 
 
         //SPAWNS DE GHOSTS
-		this.spawnGhost1 = new platformer.ghostSpawnPrefab(this.game,4769,350,this);
-		this.spawnGhost2 = new platformer.ghostSpawnPrefab(this.game,5406,350,this);
+		this.spawnGhost1 = new platformer.ghostSpawnPrefab(this.game,4669,350,this); //4769
+		this.spawnGhost2 = new platformer.ghostSpawnPrefab(this.game,5306,350,this); //5406
 
         //BOTINS FIXES
         this.createFixedLoot();

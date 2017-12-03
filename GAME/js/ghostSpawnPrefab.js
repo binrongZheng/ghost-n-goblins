@@ -25,7 +25,7 @@ platformer.ghostSpawnPrefab.prototype.update = function () {
 		this.spawning = true;
 		this.level.game.time.events.add(100,this.spawnAghost,this);
 	}
-	if(this.spawning && this.level.hero.x>this.spawnPosX){	//si el jugador s'avança lo suficient, destruïm l'spawn
+	if(this.spawning && (this.level.hero.x > (this.spawnPosX-gameOptions.distanceToStop))){	//si el jugador s'avança lo suficient, destruïm l'spawn
 		this.spawning = false;
 		this.destroy();
 	}
