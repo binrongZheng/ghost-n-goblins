@@ -145,7 +145,10 @@ platformer.playerPrefab.prototype.update = function () {
 //si esta moure en ladder
 if(this.onLadder)  this.game.physics.arcade.overlap(this,this.level.ladders,this.climbLadders, null, this);
 //si esta pujant no hay gravetat
-if(this.climbing&&this.isKill>0) this.body.allowGravity=false;
+if(this.climbing&&this.isKill>0){
+  this.body.allowGravity=false;
+  this.body.setSize(this.width/2*this.scale.x, this.height, this.width/4*this.scale.x,0);
+}
 
 else this.body.allowGravity=true;
 
@@ -537,13 +540,15 @@ platformer.playerPrefab.prototype.gameover = function () {
 }
 platformer.playerPrefab.prototype.climbLadders = function (hero,ladder) {
   var area = hero.x-ladder.x;
+  console.log(hero.x-ladder.x);
   if(this.isKill>0) {
   //si sube
   if(this.cursors.up.isDown&&area>10&area<38){
     //climbing es true
     this.climbing=true;
     //posicio en ladder
-    hero.body.x=ladder.x-7;
+    hero.body.x=ladder.x+5;
+
     //ladder nivell diferet que 0
     this.climbingLevel+=0.1;
     //activa animacio amb armadura o no (hasta un distancia limit)
@@ -574,7 +579,7 @@ platformer.playerPrefab.prototype.climbLadders = function (hero,ladder) {
     if(this.y>250) this.body.checkCollision.down=true;
     else this.body.checkCollision.down=false;
     //posicio en ladder
-    hero.body.x=ladder.x-7;
+    hero.body.x=ladder.x+5;
     //ladder nivell diferet que 0
     this.climbingLevel-=0.1;
     //activa animacio amb armadura o no (hasta un distancia limit)
