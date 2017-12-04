@@ -199,7 +199,7 @@ platformer.tutorial = {
 
         //PORTA I CLAU
         this.door = new platformer.doorPrefab(this.game, 6962, 256, this);
-        this.key = new platformer.keyPrefab(this.game,6850,0,this);
+        //this.key = new platformer.keyPrefab(this.game,6850,50,this);	//la afegeixo quan matem el ciclop
 
         //PLAYER ->(game,x,y, _level,_player_life,_cursors,_jump_key,_space,_with_cloth)
         this.hero = new platformer.playerPrefab(this.game,this.checkpoints[gameOptions.currentCheckpoint].x,this.checkpoints[gameOptions.currentCheckpoint].y,this,this.player_life,this.cursors,this.jump_key,this.space,this.with_cloth,this.playerHaveLife );
@@ -232,8 +232,8 @@ platformer.tutorial = {
 
 
         //SPAWNS DE GHOSTS
-		this.spawnGhost1 = new platformer.ghostSpawnPrefab(this.game,4569,350,this); //4769
-		this.spawnGhost2 = new platformer.ghostSpawnPrefab(this.game,5206,350,this); //5406
+		this.spawnGhost1 = new platformer.ghostSpawnPrefab(this.game,4569,350,this); 	//pos inicial 4769
+		this.spawnGhost2 = new platformer.ghostSpawnPrefab(this.game,5206,350,this); 	//pos inicial 5406
 
         //BOTINS FIXES
         this.createFixedLoot();
@@ -361,7 +361,11 @@ platformer.tutorial.createBosses = function () {
     if (2900 > this.checkpoints[gameOptions.currentCheckpoint].x)
         this.redDevil = new platformer.RedDemonPrefab(this.game,2900,350,this);
     //ciclop mai ens quedara enrere
-    this.enemies.add(new platformer.ciclopPrefab(this.game,6975,250,this));
+	ciclop = new platformer.ciclopPrefab(this.game,6975,250,this);
+	ciclop.events.onKilled.add(function(){
+		this.key = new platformer.keyPrefab(this.game,6850,50,this);
+	}, this);
+    this.enemies.add(ciclop);
 
     //this.enemies.add(new platformer.finalBossPrefab(this.game, 400, 320, this));
 }
