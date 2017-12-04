@@ -60,8 +60,6 @@ platformer.hudPrefab.prototype.update=function(){
 };
 
 platformer.hudPrefab.prototype.updateScore = function(newScore){
-	//this.score += newScore;
-	//this.scoreText.text = this.score;
 	gameOptions.currentScore += newScore;
 	this.scoreText.text = gameOptions.currentScore;
 };
