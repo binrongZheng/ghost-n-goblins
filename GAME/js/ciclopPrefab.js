@@ -9,7 +9,7 @@ platformer.ciclopPrefab=function(game,x,y,_level){
 	this.level			= _level;
 	this.walking		= false;
 	this.aggro			= false; 	//si està aggro, ens atacarà
-	this.hp				= 900;
+	this.hp				= 600;
 	this.jumping		= false;
 	
 	//animacions
@@ -72,7 +72,7 @@ platformer.ciclopPrefab.prototype.pursue = function () {
 		this.level.game.time.events.add(500,this.pursue,this);
 	} else { 																	//saltar
 		this.body.velocity.x = this.scale.x*gameOptions.ciclopWalkSpeed;		
-		this.body.velocity.y = -580;
+		this.body.velocity.y = -500;
 		this.animations.play('jump');
 		this.jumping = true;
 		this.level.game.time.events.add(1300,this.pursue,this);
