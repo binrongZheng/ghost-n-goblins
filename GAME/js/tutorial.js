@@ -155,6 +155,7 @@ platformer.tutorial = {
         this.game.load.audio('jumpDownSo','sounds/jumpEnd.mp3');
         this.game.load.audio('dieSo','sounds/die.mp3');
         this.game.load.audio('removeArmourSo','sounds/removeArmour.mp3');
+        this.game.load.audio('keyMusic','sounds/keyMusic.mp3');
 
         //ADD motor de physics
 		this.game.physics.startSystem(Phaser.Physics.ARCADE);
@@ -246,12 +247,27 @@ platformer.tutorial = {
         this.themeMusic=this.add.audio('theme_music');
         this.gameoverMusic=this.add.audio('gameover');
         this.themeMusic.loop = true;
+        this.keyMusic=this.add.audio('keyMusic');
 
-       // this.themeMusic.play();
+
+        this.themeMusic.play();
         //MENU PAUSA
         this.inPlay=true;
+        this.soKeyPlay=0;
 	},
 	update:function(){
+
+      //key so
+      if(this.hero.x>=6800){
+        this.themeMusic.stop();
+        this.soKeyPlay++;
+      }
+      if(this.soKeyPlay==1){
+        this.keyMusic.play();
+      }
+
+
+
         if(this.themeMusic.loop==false) this.themeMusic.stop();
         //GAMEOVER screen
         this.game_over = this.add.sprite(this.camera.x+gameOptions.gameWidth/2,this.camera.y+gameOptions.gameHeight/2, 'game_over');
