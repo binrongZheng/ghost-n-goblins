@@ -5,6 +5,7 @@ var gameOptions = {
 		gameHeight:448,
 		level1Height:448,
 		level1Width:7168,
+	currentScore:0,
     playerLife:true,
     playerGravity:1000,
 		playerSpeed:200,
