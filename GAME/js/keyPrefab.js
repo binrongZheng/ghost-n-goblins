@@ -11,7 +11,7 @@ platformer.keyPrefab = function(game,x,y,_level){
 
     //MOVIMENT
     this.game.add.tween(this).to( { y: 350}, 6000, "Linear" , true, 0);
-    
+
     //FISIQUES
     game.physics.arcade.enable(this);
 	this.body.allowGravity = false;
@@ -32,10 +32,15 @@ platformer.keyPrefab.prototype.update = function(){
         pj.frame = 40;
 
         //la porta
-        var door = key.level.door;
-        door.animations.play('open');
-        door.animations.currentAnim.onComplete.add (function(){door.open = true;}.bind(door),door);
 
+
+        key.game.time.events.add(3000, function () {
+          var door = key.level.door;
+          door.animations.play('open');
+          door.animations.currentAnim.onComplete.add (function(){door.open = true;}.bind(door),door);
+
+
+    });
         //tornem el pj a normal
         key.game.time.events.add(2000, function () {
             pj.celebrating = false;

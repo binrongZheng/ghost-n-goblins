@@ -19,6 +19,9 @@ platformer.finalLevel={
       this.load.image('platform','img/ladder.png');
       //PLAYER SPRITE
       this.load.spritesheet('hero', 'img/arthur.png', 64, 64);
+      //SO
+      this.game.load.audio('theme_music','sounds/final_level_music.mp3');
+
 
     },
     create:function(){
@@ -32,8 +35,10 @@ platformer.finalLevel={
       this.platform.enableBody = true;
       this.platform.immovable = true;
       //hero
-      this.hero = new platformer.playerPrefab(this.game,this.checkpoints[gameOptions.currentCheckpoint].x,this.checkpoints[gameOptions.currentCheckpoint].y,this,this.player_life,this.cursors,this.jump_key,this.space,this.with_cloth,this.playerHaveLife );
+      //this.hero = new platformer.playerPrefab(this.game,this.checkpoints[gameOptions.currentCheckpoint].x,this.checkpoints[gameOptions.currentCheckpoint].y,this,this.player_life,this.cursors,this.jump_key,this.space,this.with_cloth,this.playerHaveLife );
+      this.themeMusic=this.add.audio('theme_music');
 
+      this.themeMusic.play();
     },
     update:function(){
     }
