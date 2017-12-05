@@ -10,7 +10,7 @@ platformer.enemyBulletPrefab=function(game,x,y,_enemyBullet_type,velX,velY, _lev
         case 1: Phaser.Sprite.call(this,game,x,y,'bossBullet'); this.scale.setTo(2);
             break;
     }
-       
+
 
     game.add.existing(this);
     this.anchor.setTo(.5);
@@ -22,7 +22,7 @@ platformer.enemyBulletPrefab=function(game,x,y,_enemyBullet_type,velX,velY, _lev
     this.body.allowGravity = false;
 
 	this.level = _level;
-	
+
     //animació
     if(this.enemyBullet_type ==0){
         this.animations.play('ullAnim');
