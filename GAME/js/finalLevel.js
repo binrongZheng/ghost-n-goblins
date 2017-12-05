@@ -17,6 +17,9 @@ platformer.finalLevel={
       //MAPA
       this.load.image('bg','img/sala_boss.png');
       this.load.image('platform','img/ladder.png');
+        
+        this.game.load.bitmapFont('gngFont','fonts/gng_font.png','fonts/gng_font.xml');
+        
       //PLAYER SPRITE
       this.load.spritesheet('hero', 'img/arthur.png', 64, 64);
       //BULLET SPRITES
@@ -24,16 +27,28 @@ platformer.finalLevel={
       this.load.image('arma_daga','img/daga.png');
       this.load.spritesheet('arma_torcha','img/arma_foc.png',32,32);
       this.load.spritesheet('foc','img/foc.png',32,32);
+      //BOSS
+      this.load.spritesheet('finalBoss', 'img/finalBoss.png', 72, 72);
+      //BOSS BULLETS
+      this.load.spritesheet('bossBullet', 'img/bossBullet.png', 19, 13);
+        
       //MENU PAUSA
       this.load.image('menu_pausa', 'img/menu pausa.png');
       //GAME OVER
       this.load.image('game_over', 'img/game_over.png');
-
+    //HUD SPRITE
+    this.load.spritesheet('hud', 'img/HUD-armes.png', 60, 60);
+    this.load.spritesheet('lives', 'img/lives.png', 56, 26);
+    //EXPLOSION SPRITES
+    this.load.spritesheet('explosion_medium', 'img/mediumExplosion.png', 64, 64);
+    this.load.spritesheet('explosion_normal', 'img/normalExplosion.png', 64, 64);
+    this.load.spritesheet('spark', 'img/spark.png', 88, 64);
       //SO
       this.game.load.audio('theme_music','sounds/final_level_music.mp3');
       this.game.load.audio('player_Shoot','sounds/lance.mp3');
       this.game.load.audio('gameover','sounds/gameover.mp3');
       this.game.load.audio('jumpUpSo','sounds/jumpStart.mp3');
+      this.game.load.audio('enemyDeath','sounds/enemyDeath.wav');
       this.game.load.audio('jumpDownSo','sounds/jumpEnd.mp3');
       this.game.load.audio('dieSo','sounds/die.mp3');
       this.game.load.audio('removeArmourSo','sounds/removeArmour.mp3');
@@ -88,9 +103,14 @@ platformer.finalLevel={
 
       //hero
       this.hero = new platformer.playerPrefab(this.game,this.checkpoints[gameOptions.currentCheckpoint].x,this.checkpoints[gameOptions.currentCheckpoint].y,this,this.player_life,this.cursors,this.jump_key,this.space,this.with_cloth,this.playerHaveLife );
-
+    
+        //BOSS      
+    this.boss = new platformer.finalBossPrefab(this.game, 330, 290, this); 
+    
+        
       //BALES DEL PERSONATGE
       this.projectiles = this.add.group();
+        this.explosions = this.add.group();
 
       //INTRO VIDEO
 
@@ -102,35 +122,44 @@ platformer.finalLevel={
       this.introSprite.height=gameOptions.gameHeight-45;
 
       this.introVideo.play(true);
-
-
+        
+      
+        
 
 
       //CAMERA
       //this.camera.follow(this.hero);
       //HUD
-    //  this.hud = new platformer.hudPrefab(this.game,this,this.hero.player_life);
+      this.hud = new platformer.hudPrefab(this.game,this,this.hero.player_life);
 
       //music
       this.themeMusic=this.add.audio('theme_music');
       this.themeMusic.loop = true;
+    this.gameoverMusic=this.add.audio('gameover');
 
       //this.themeMusic.play();
       this.win_Music=this.add.audio('win_music');
+        
+    //parar el video quan acavi
+     this.game.time.events.add(6700, this.changeState, this);
+      
 
     },
     update:function(){
       if(this.themeMusic.loop==false) this.themeMusic.stop();
-      if(!this.win){
-        this.game.time.events.add(6700, this.changeState, this);
-      }
-      else{
+      //GAMEOVER screen
+        this.game_over = this.add.sprite(this.camera.x+gameOptions.gameWidth/2,this.camera.y+gameOptions.gameHeight/2, 'game_over');
+        this.game_over.anchor.setTo(0.5);
+        this.game_over.visible=false;
+        //this.map.forEach(function(t){if (t) {t.collideDown=false;}},this.game,0,0,this.map.width,this.map.height,'platform_up');
+        
+      if (this.win){          
         this.playWinMusic++;
         if(this.playWinMusic==1)  this.win_Music.play();
         if(this.playWinMusic>100) this.playWinMusic=10;
         this.game.time.events.add(10, this.gotoEndAnimation, this);
       }
-      console.log(this.canPlay);
+      //console.log(this.canPlay);
     /*  this.game_over = this.add.sprite(this.camera.x+gameOptions.gameWidth/2,this.camera.y+gameOptions.gameHeight/2, 'game_over');
       this.game_over.anchor.setTo(0.5);
       this.game_over.visible=false;
@@ -142,13 +171,19 @@ platformer.finalLevel={
     else this.canPlay=true;
     this.introSprite.destroy();
     this.introVideo.stop();
+      //Deixem moure el boss;
+    this.boss.activate();
  },
  gotoEndAnimation:function(){
    //END VIDEO
+     
+     this.canPlay = false;
    this.endVideo = this.game.add.video('endVideo');
    this.endSprite = this.endVideo.addToWorld(gameOptions.gameWidth/2, gameOptions.gameHeight/2, 0.5, 0.5,1,0.7);
    this.endSprite.width=gameOptions.gameWidth+90;
    this.endSprite.height=gameOptions.gameHeight-89;
+     
+    
 
  }
 

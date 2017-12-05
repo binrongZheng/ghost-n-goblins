@@ -190,7 +190,7 @@ else {
 
     //si no estem saltant posem a 0 la velocitat
 
-    if (this.touchGrave || this.body.blocked.down) {
+    if (!this.damaged && this.touchGrave || this.body.blocked.down) {
         this.body.velocity.x = 0;
     }
 
@@ -351,7 +351,7 @@ else {
     }
 
     //timer del dispar
-    if (!this.canShoot && platformer.tutorial.game.time.now - this.timeCheck > this.shootWait){
+    if (!this.canShoot && this.level.game.time.now - this.timeCheck > this.shootWait){
         this.canShoot = true;
     }
     //quan ens fan daño no ens podem moure fins que tornem a tocar el terra
@@ -371,7 +371,7 @@ platformer.playerPrefab.prototype.shoot = function () {
     this.level.projectiles.add(this.newProjectile);
     //posem el contador al temps actual per no deixar disparar a lo loco
     this.canShoot = false;
-    this.timeCheck = platformer.tutorial.game.time.now;
+    this.timeCheck = this.level.game.time.now;
     //so de dispar
     this.playerShoot.play();
 }
@@ -395,6 +395,7 @@ platformer.playerPrefab.prototype.showArmourGone = function(hero,enemy){
 }, this);*/
 }
 platformer.playerPrefab.prototype.killPlayer = function (hero,enemy) {
+    
     if(!this.invincible){
         if(this.with_cloth==true && this.isKill==2) {
 			this.invincible = true;
@@ -405,9 +406,8 @@ platformer.playerPrefab.prototype.killPlayer = function (hero,enemy) {
             this.damaged = true;
             this.removeArmourSo.play();
             this.animations.play('removeArmour');
-            this.body.velocity.x = -150;
-            this.body.velocity.y = -250;
-
+            this.body.velocity.x = -200;            
+            this.body.velocity.y = -250;            
             this.game.time.events.repeat(Phaser.Timer.SECOND/27,28,this.invincibleBlink,this);	//evento para que se ponga a parpadear
         }
         this.with_cloth=false;
@@ -523,7 +523,7 @@ platformer.playerPrefab.prototype.deadByTimer = function(){
 	}
 }
 platformer.playerPrefab.prototype.map_Screen = function () {
-    platformer.tutorial.game_over.destroy();
+   this.level.game_over.destroy();
     this.killOnComplete=true;
     if(this.killOnComplete){
       gameOptions.levelOption = this.player_life;
@@ -532,15 +532,15 @@ platformer.playerPrefab.prototype.map_Screen = function () {
     }
 }
 platformer.playerPrefab.prototype.gameover = function () {
-    platformer.tutorial.game_over.destroy();
+    this.level.game_over.destroy();
     this.killOnComplete=true;
 
     if(this.killOnComplete){
       //todo lo que esta aqui tiene que ser platformer con this.level no funciona
       gameOptions.currentScore = 0;
-      platformer.tutorial.gameoverMusic.stop();
+      this.level.gameoverMusic.stop();
       platformer.game.state.start('mainMenu');
-      platformer.tutorial.themeMusic.stop();
+      this.level.themeMusic.stop();
       gameOptions.levelOption=gameOptions.lastOption;
       gameOptions.currentCheckpoint = 0;
     }

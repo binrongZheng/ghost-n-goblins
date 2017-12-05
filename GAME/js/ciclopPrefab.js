@@ -9,7 +9,7 @@ platformer.ciclopPrefab=function(game,x,y,_level){
 	this.level			= _level;
 	this.walking		= false;
 	this.aggro			= false; 	//si està aggro, ens atacarà
-	this.hp				= 600;
+	this.hp				= 900;
 	this.jumping		= false;
 	
 	//animacions

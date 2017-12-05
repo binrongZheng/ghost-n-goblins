@@ -95,7 +95,7 @@ platformer.RedDemonPrefab.prototype.update = function () {
             this.animations.stop();
             this.frame = 13;
             this.canShoot = false;
-            var bala = new platformer.enemyBulletPrefab(this.game,this.x,this.y,0,0,gameOptions.eyeSpeed);
+            var bala = new platformer.enemyBulletPrefab(this.game,this.x,this.y,0,0,gameOptions.eyeSpeed, this.level);
             this.game.time.events.add(250,function(){this.animations.play('fly');},this);
         } //tornem al behaviour de disparar i aquest ja activara la resta quan toqui
         else if (this.numOfMoves == 3 && this.activateNextMove){

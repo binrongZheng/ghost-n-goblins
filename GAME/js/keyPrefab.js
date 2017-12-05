@@ -32,17 +32,12 @@ platformer.keyPrefab.prototype.update = function(){
         pj.frame = 40;
 
         //la porta
-
-
-        key.game.time.events.add(3000, function () {
-          var door = key.level.door;
-          door.animations.play('open');
-          door.animations.currentAnim.onComplete.add (function(){door.open = true;}.bind(door),door);
-
-
-    });
+        var door = key.level.door;
+        door.animations.play('open');
+        door.animations.currentAnim.onComplete.add (function(){door.open = true;}.bind(door),door);
+    
         //tornem el pj a normal
-        key.game.time.events.add(2000, function () {
+        key.game.time.events.add(1000, function () {
             pj.celebrating = false;
         }.bind(this), this);
         key.kill();
