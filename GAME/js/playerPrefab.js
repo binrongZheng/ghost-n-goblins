@@ -189,13 +189,11 @@ else {
     }
 
     //si no estem saltant posem a 0 la velocitat
-	if (this.damaged)
-		console.log('1 ' + this.body.velocity.x);
+	
     if (!this.damaged && (this.touchGrave || this.body.blocked.down) ) {
         this.body.velocity.x = 0;
     }
-	if (this.damaged)
-		console.log('2 ' + this.body.velocity.x);
+	
     //POSAR TAMANY COLISIO A NORMAL SI NO HO ESTA
     if (this.body.height != this.height)
         this.body.setSize(this.width*this.scale.x, this.height, 0,0);
@@ -357,8 +355,7 @@ else {
         this.canShoot = true;
     }
 	
-	if (this.damaged)
-		console.log('2 ' + this.body.velocity.x);
+	
 	
     //quan ens fan daño no ens podem moure fins que tornem a tocar el terra
     if(this.damaged && (this.body.blocked.down || this.touchGrave) ){

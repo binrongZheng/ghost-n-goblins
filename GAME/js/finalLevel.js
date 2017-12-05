@@ -73,12 +73,8 @@ platformer.finalLevel={
       //CHECKPOINT
       this.checkpoints = [];
       var c1 = new Phaser.Point(gameOptions.gameWidth/4+32,330);//+47
-      var c2 = new Phaser.Point(3100,330);
       this.checkpoints.push(c1);
-      this.checkpoints.push(c2);
-
-
-    },
+},
     create:function(){
       //platform
       this.platform = this.game.add.sprite(gameOptions.gameWidth/2,gameOptions.gameHeight/10*9, 'platform');
@@ -127,8 +123,7 @@ platformer.finalLevel={
 
       //CAMERA
       //this.camera.follow(this.hero);
-      //HUD
-      this.hud = new platformer.hudPrefab(this.game,this,this.hero.player_life);
+      
 
       //music
       this.themeMusic=this.add.audio('theme_music');
@@ -145,18 +140,19 @@ platformer.finalLevel={
     },
     update:function(){
       if(this.themeMusic.loop==false) this.themeMusic.stop();
-		console.log(this.win);
+		
       //GAMEOVER screen
     this.game_over = this.add.sprite(this.camera.x+gameOptions.gameWidth/2,this.camera.y+gameOptions.gameHeight/2, 'game_over');
     this.game_over.anchor.setTo(0.5);
     this.game_over.visible=false;
     //this.map.forEach(function(t){if (t) {t.collideDown=false;}},this.game,0,0,this.map.width,this.map.height,'platform_up');
 		
-      if (this.win){          
+      if (this.win){		 
         this.playWinMusic++;
         if(this.playWinMusic==1)  this.win_Music.play();
         if(this.playWinMusic>100) this.playWinMusic=10;
         this.game.time.events.add(10, this.gotoEndAnimation, this);
+		  this.win = false;
       }
       //console.log(this.canPlay);
     /*  this.game_over = this.add.sprite(this.camera.x+gameOptions.gameWidth/2,this.camera.y+gameOptions.gameHeight/2, 'game_over');
@@ -172,6 +168,8 @@ platformer.finalLevel={
     this.introVideo.stop();
       //Deixem moure el boss;
     this.boss.activate();
+	  //HUD
+      this.hud = new platformer.hudPrefab(this.game,this,this.hero.player_life);
  },
  gotoEndAnimation:function(){
    //END VIDEO
