@@ -49,9 +49,9 @@ platformer.plantaPrefab.prototype.update = function () {
     if(this.animations.currentFrame.index == 3 && this.shot == false && this.aggro == true){
         this.shot = true;
         //mirar la velocitat que pilla
-        var bulletDir = new Phaser.Point(platformer.tutorial.hero.x-this.x,platformer.tutorial.hero.y-this.y);
+        var bulletDir = new Phaser.Point(platformer.tutorial.hero.x-this.x,platformer.tutorial.hero.y-6-this.y);
         bulletDir.normalize().multiply(gameOptions.eyeSpeed,gameOptions.eyeSpeed);
-        var bala = new platformer.enemyBulletPrefab(this.game,this.x,this.y-10,0,bulletDir.x,bulletDir.y);
+        var bala = new platformer.enemyBulletPrefab(this.game,this.x,this.y-14,0,bulletDir.x,bulletDir.y);
         
     }
 };

@@ -13,7 +13,7 @@ platformer.ghostSpawnPrefab=function(game,x,y,_level){
 	this.game 			= game;
     this.spawning 		= false;						//si està espawnejant fantasmes (PJ dintre del rang)
 	this.spawnedGhosts 	= 0;							//quants fantasmes ha spawnejat (màxim de 3 per tongada)
-	this.spawnPosX		= this.x+gameOptions.gameWidth;
+	this.spawnPosX		= this.x+gameOptions.gameWidth+200;
 	this.spawnPosY		= gameOptions.ghostSpawnPosY;
 };
 
@@ -25,7 +25,7 @@ platformer.ghostSpawnPrefab.prototype.update = function () {
 		this.spawning = true;
 		this.level.game.time.events.add(100,this.spawnAghost,this);
 	}
-	if(this.spawning && this.level.hero.x>this.spawnPosX){	//si el jugador s'avança lo suficient, destruïm l'spawn
+	if(this.spawning && (this.level.hero.x > (this.spawnPosX-gameOptions.distanceToStop))){	//si el jugador s'avança lo suficient, destruïm l'spawn
 		this.spawning = false;
 		this.destroy();
 	}
@@ -37,7 +37,7 @@ platformer.ghostSpawnPrefab.prototype.spawnAghost = function(){
 		this.level.enemies.add(new platformer.ghostPrefab(this.game,this.spawnPosX,this.spawnPosY,this.level));		//espawnegem un fantasma
 		
 		if(this.spawnedGhosts < 3){
-			this.level.game.time.events.add(this.game.rnd.integerInRange (gameOptions.minTimeGhostSpawn,gameOptions.maxTimeGhostSpawn),this.spawnAghost,this);								//si encara no hem arribat a 3, espawnejarem un altre
+			this.level.game.time.events.add(this.game.rnd.realInRange (gameOptions.minTimeGhostSpawn,gameOptions.maxTimeGhostSpawn),this.spawnAghost,this);								//si encara no hem arribat a 3, espawnejarem un altre
 		} else{
 			//cridem evento següent tongada
 			this.spawnedGhosts = 0;

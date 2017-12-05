@@ -73,11 +73,12 @@ platformer.tutorial = {
         this.player_life=gameOptions.levelOption;
         this.playerHaveLife=gameOptions.playerLife;//playerLife==false;
         this.isPlay=true;
+        this.canPlay=true;
 	},
 	preload:function(){
         //MAPA
         this.load.image('bg','img/mapa_level1.png');
-		this.load.tilemap('map','TileMaps/mapa_level.json',null,Phaser.Tilemap.TILED_JSON);
+		    this.load.tilemap('map','TileMaps/mapa_level.json',null,Phaser.Tilemap.TILED_JSON);
         this.load.image('platform_collision','img/platform_collision.png');
         this.load.image('moving_platform','img/movingPlatform.png');
         //PLAYER SPRITE
@@ -100,7 +101,7 @@ platformer.tutorial = {
         //ENEMY SPRITES
         this.load.spritesheet('planta', 'img/Planta.png', 36, 64);
         this.load.spritesheet('crow', 'img/crow.png', 36, 32);
-		this.load.spritesheet('zombie', 'img/zombie.png', 32, 32);
+		    this.load.spritesheet('zombie', 'img/zombie.png', 32, 32);
         this.load.spritesheet('ghost', 'img/ghost.png', 34, 60);
 
         //RED DEVIL
@@ -108,7 +109,7 @@ platformer.tutorial = {
 
 		//CICLOP
         this.load.spritesheet('ciclop', 'img/ciclop.png', 96, 96);
-        
+
         //CICLOP
         this.load.spritesheet('finalBoss', 'img/finalBoss.png', 72, 72);
 
@@ -155,6 +156,7 @@ platformer.tutorial = {
         this.game.load.audio('jumpDownSo','sounds/jumpEnd.mp3');
         this.game.load.audio('dieSo','sounds/die.mp3');
         this.game.load.audio('removeArmourSo','sounds/removeArmour.mp3');
+        this.game.load.audio('keyMusic','sounds/keyMusic.mp3');
 
         //ADD motor de physics
 		this.game.physics.startSystem(Phaser.Physics.ARCADE);
@@ -178,28 +180,28 @@ platformer.tutorial = {
         this.bg = this.game.add.tileSprite(0,0,gameOptions.level1Width, gameOptions.level1Height, 'bg');
 
 		      //MAP
-		this.map = this.game.add.tilemap('map');
+		    this.map = this.game.add.tilemap('map');
         this.map.addTilesetImage('platform_collision');
 
         this.platform_collision = this.map.createLayer('platform_up');
 
         this.map.setCollisionBetween(2,5,true,'platform_up');
 
-		this.map.createLayer('platform_up');
+		    this.map.createLayer('platform_up');
         this.map.createLayer('ladder');
 
-		this.movingPlatform = new platformer.platformPrefab(this.game,3433,410,this,3338,3528);
+		    this.movingPlatform = new platformer.platformPrefab(this.game,3433,410,this,3338,3528);
 
-		      //CONTROLS
-		this.cursors = this.game.input.keyboard.createCursorKeys();
+		    //CONTROLS
+		    this.cursors = this.game.input.keyboard.createCursorKeys();
         this.jump_key=this.game.input.keyboard.addKey(Phaser.Keyboard.Z);
-		this.space = this.game.input.keyboard.addKey(Phaser.Keyboard.X);
+		    this.space = this.game.input.keyboard.addKey(Phaser.Keyboard.X);
         this.escKey = this.game.input.keyboard.addKey(Phaser.Keyboard.ESC);
         this.playKey = this.game.input.keyboard.addKey(Phaser.Keyboard.P);
 
         //PORTA I CLAU
         this.door = new platformer.doorPrefab(this.game, 6962, 256, this);
-        this.key = new platformer.keyPrefab(this.game,6850,0,this);
+        //this.key = new platformer.keyPrefab(this.game,6850,50,this);	//la afegeixo quan matem el ciclop
 
         //PLAYER ->(game,x,y, _level,_player_life,_cursors,_jump_key,_space,_with_cloth)
         this.hero = new platformer.playerPrefab(this.game,this.checkpoints[gameOptions.currentCheckpoint].x,this.checkpoints[gameOptions.currentCheckpoint].y,this,this.player_life,this.cursors,this.jump_key,this.space,this.with_cloth,this.playerHaveLife );
@@ -228,12 +230,12 @@ platformer.tutorial = {
         this.spawns.add(new platformer.spawnZombiePrefab(this.game,1200,350,this));
         this.spawns.add(new platformer.spawnZombiePrefab(this.game,1450,350,this));
         this.spawns.add(new platformer.spawnZombiePrefab(this.game,1900,350,this));
-        this.spawns.add(new platformer.spawnZombiePrefab(this.game,2250,350,this));       
-        
-        
+        this.spawns.add(new platformer.spawnZombiePrefab(this.game,2250,350,this));
+
+
         //SPAWNS DE GHOSTS
-		this.spawnGhost1 = new platformer.ghostSpawnPrefab(this.game,4769,350,this);
-		this.spawnGhost2 = new platformer.ghostSpawnPrefab(this.game,5406,350,this);
+		this.spawnGhost1 = new platformer.ghostSpawnPrefab(this.game,4569,350,this); 	//pos inicial 4769
+		this.spawnGhost2 = new platformer.ghostSpawnPrefab(this.game,5206,350,this); 	//pos inicial 5406
 
         //BOTINS FIXES
         this.createFixedLoot();
@@ -245,13 +247,30 @@ platformer.tutorial = {
 		//MUSIC
         this.themeMusic=this.add.audio('theme_music');
         this.gameoverMusic=this.add.audio('gameover');
-        this.themeMusic.loop = true;
 
-       // this.themeMusic.play();
+        this.themeMusic.loop = true;
+        this.themeMusic.volume = 0.5;
+        this.themeMusic.play();
+        //so de key
+        this.keyMusic=this.add.audio('keyMusic');
+        this.soKeyPlay=0;
         //MENU PAUSA
         this.inPlay=true;
+
 	},
 	update:function(){
+
+      //key so
+      if(this.hero.x>=6800){
+        this.themeMusic.stop();
+        this.soKeyPlay++;
+      }
+      if(this.soKeyPlay==1){
+        this.keyMusic.play();
+      }
+
+
+
         if(this.themeMusic.loop==false) this.themeMusic.stop();
         //GAMEOVER screen
         this.game_over = this.add.sprite(this.camera.x+gameOptions.gameWidth/2,this.camera.y+gameOptions.gameHeight/2, 'game_over');
@@ -361,7 +380,11 @@ platformer.tutorial.createBosses = function () {
     if (2900 > this.checkpoints[gameOptions.currentCheckpoint].x)
         this.redDevil = new platformer.RedDemonPrefab(this.game,2900,350,this);
     //ciclop mai ens quedara enrere
-    this.enemies.add(new platformer.ciclopPrefab(this.game,6975,250,this));
-    
+	ciclop = new platformer.ciclopPrefab(this.game,6975,250,this);
+	ciclop.events.onKilled.add(function(){
+		this.key = new platformer.keyPrefab(this.game,6850,50,this);
+	}, this);
+    this.enemies.add(ciclop);
+
     //this.enemies.add(new platformer.finalBossPrefab(this.game, 400, 320, this));
 }

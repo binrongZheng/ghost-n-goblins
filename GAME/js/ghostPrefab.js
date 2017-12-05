@@ -7,8 +7,9 @@ platformer.ghostPrefab=function(game,x,y,_level){
     game.add.existing(this);
 	this.anchor.setTo(.5);
     
-	this.yOffset = game.rnd.integerInRange(3,8);	//com més yOffset, més recorregut vertical farà
-	this.xOffset = game.rnd.integerInRange(20,60);	//com més xOffset, més "lent" anirà verticalment (la vel. hor. sempre és igual per a tots)
+	this.yScale		= game.rnd.realInRange(3.5,6);		//com més yScale, més recorregut vertical farà
+	this.xScale		= game.rnd.realInRange(40,67);		//com més xScale, més "lent" anirà verticalment (la vel. hor. sempre és igual per a tots)
+	this.randomX	= game.rnd.realInRange(-1.5,1.5);	//per fer que apareixi en una altura random
 
 	//Físiques
     game.physics.arcade.enable(this);
@@ -27,7 +28,7 @@ platformer.ghostPrefab.prototype.constructor=platformer.ghostPrefab;
 
 platformer.ghostPrefab.prototype.update = function () {
     if(this.alive){
-        this.y += Math.sin((this.x-this.startX)/this.xOffset)*this.yOffset;
+        this.y += Math.sin(((this.x-this.startX)/this.xScale) + this.randomX)*this.yScale;
         //Si surt de la pantalla, es mor
         if(this.x < (platformer.tutorial.hero.x-gameOptions.gameWidth/2)){
             this.destroy();

@@ -5,6 +5,7 @@ var gameOptions = {
 		gameHeight:448,
 		level1Height:448,
 		level1Width:7168,
+	currentScore:0,
     playerLife:true,
     playerGravity:1000,
 		playerSpeed:200,
@@ -24,10 +25,11 @@ var gameOptions = {
 	minTimeGhostSpawn:250,		//mínim de temps entre ghost i ghost
 	maxTimeGhostSpawn:1000,		//màxim  "  "  "
 	ghostWaitTime:4000,			//temps entre cada serie de 3 fantasmes que apareixen
-	ghostSpawnPosY:330,
+	ghostSpawnPosY:300,
+	distanceToStop:120,
     currentCheckpoint:0,
 	platformSpeed:120,
-	ciclopWalkSpeed:110,
+	ciclopWalkSpeed:100,
 	ciclopPoints:2000,
     finalBossSpeed:15,
     bossPoints:10000
@@ -38,6 +40,7 @@ platformer.game = new Phaser.Game(gameOptions.gameWidth,gameOptions.gameHeight,P
 platformer.game.state.add('mainMenu',platformer.mainMenu);
 platformer.game.state.add('credits',platformer.credits);
 platformer.game.state.add('ranking',platformer.ranking);
+platformer.game.state.add('intro_scene',platformer.intro_scene);
 platformer.game.state.add('tutorial',platformer.tutorial);
 platformer.game.state.add('mapScreen',platformer.mapScreen);
 platformer.game.state.add('finalLevel',platformer.finalLevel);
