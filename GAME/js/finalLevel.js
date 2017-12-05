@@ -37,7 +37,7 @@ platformer.finalLevel={
       //hero
       //this.hero = new platformer.playerPrefab(this.game,this.checkpoints[gameOptions.currentCheckpoint].x,this.checkpoints[gameOptions.currentCheckpoint].y,this,this.player_life,this.cursors,this.jump_key,this.space,this.with_cloth,this.playerHaveLife );
       this.themeMusic=this.add.audio('theme_music');
-
+      this.themeMusic.loop = true;
       this.themeMusic.play();
     },
     update:function(){
