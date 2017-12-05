@@ -92,14 +92,16 @@ platformer.playerPrefab.prototype = Object.create(Phaser.Sprite.prototype);
 platformer.playerPrefab.prototype.constructor = platformer.playerPrefab;
 
 platformer.playerPrefab.prototype.update = function () {
-    //collision de sala sala_boss
-    this.game.physics.arcade.collide(this, this.level.platform);
 
 	  this.game.physics.arcade.collide(this, this.level.platform_collision);
     this.touchGrave=false;
     this.game.physics.arcade.collide(this, this.level.graves, this.touch, null, this);
     this.game.physics.arcade.collide(this, this.level.movingPlatform, this.touch, null, this);	//utilizo lo mismo para la movingPlatform
     this.game.physics.arcade.collide (this, this.level.water, this.PlayerDie, null, this);
+    //collision de sala sala_boss
+    this.game.physics.arcade.collide(this, this.level.platform,this.touch,null,this);
+
+
     this.lastJumpState = this.jumping_start;
 
   //so de jump
@@ -365,7 +367,7 @@ platformer.playerPrefab.prototype.shoot = function () {
     //crear arma-----------TODO: FALTA PER MIRAR SI EL PLAYER ESTÀ AJUPIT O NO (surt més amunt o avall)
     this.newProjectile = new platformer.playerBulletPrefab(platformer.game,this.x+(20*this.scale.x),this.y-this.shootOffset,this.weaponType, this.level);
     //afegir a l'array d'armes
-    platformer.tutorial.projectiles.add(this.newProjectile);
+    this.level.projectiles.add(this.newProjectile);
     //posem el contador al temps actual per no deixar disparar a lo loco
     this.canShoot = false;
     this.timeCheck = platformer.tutorial.game.time.now;
