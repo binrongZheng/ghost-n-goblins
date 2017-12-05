@@ -52,9 +52,6 @@ platformer.finalLevel={
 
     },
     create:function(){
-      //BACKGROUND
-      this.bg = this.game.add.sprite(gameOptions.gameWidth/2,gameOptions.gameHeight/2, 'bg');
-      this.bg.anchor.setTo(.5);
       //platform
       this.platform = this.game.add.sprite(gameOptions.gameWidth/2,gameOptions.gameHeight/10*9, 'platform');
       this.platform.scale.setTo(1.5,2.6);
@@ -63,6 +60,10 @@ platformer.finalLevel={
       this.game.physics.arcade.enable(this.platform);
       this.platform.body.immovable=true;
       this.platform.body.allowGravity=false;
+
+      //BACKGROUND
+      this.bg = this.game.add.sprite(gameOptions.gameWidth/2,gameOptions.gameHeight/2, 'bg');
+      this.bg.anchor.setTo(.5);
 
       //CONTROLS
       this.cursors = this.game.input.keyboard.createCursorKeys();
