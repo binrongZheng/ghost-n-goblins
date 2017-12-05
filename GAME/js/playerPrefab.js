@@ -165,7 +165,7 @@ else {
 
     });
 
-
+	
 
     //COMPROVAR CHECKPOINTS I SETEJAR SI CAL
     for (var i = 0; i < this.level.checkpoints.length;i++){
@@ -189,7 +189,7 @@ else {
     }
 
     //si no estem saltant posem a 0 la velocitat
-
+	//console.log(this.damaged +' vs ' + this.body.blocked.down);
     if (!this.damaged && this.touchGrave || this.body.blocked.down) {
         this.body.velocity.x = 0;
     }
@@ -258,7 +258,7 @@ else {
 
             }
                  //STAND
-            else if(this.body.blocked.down||this.touchGrave==true){
+            else if(!this.damaged && this.body.blocked.down||this.touchGrave==true){
                 this.ajupir_attack=false;
                 this.body.velocity.x = 0;
                 this.animations.play('stand');
@@ -355,13 +355,16 @@ else {
         this.canShoot = true;
     }
     //quan ens fan daño no ens podem moure fins que tornem a tocar el terra
-    if(this.damaged && this.body.blocked.down){
+    if(this.damaged && (this.body.blocked.down || this.touchGrave) ){
         this.damaged = false;
     }
     //QUAN NO ESTEM AJUPITS POSEM L'ALÇADA DEL DISPAR AL NORMAL
     if (!this.cursors.down.isDown && this.shootOffset != 7){
         this.shootOffset = 7;
     }
+	
+	
+	
 
 }
 platformer.playerPrefab.prototype.shoot = function () {
@@ -376,8 +379,10 @@ platformer.playerPrefab.prototype.shoot = function () {
     this.playerShoot.play();
 }
 platformer.playerPrefab.prototype.touch = function (hero,grave) {
-    if(hero.body.touching.down&&grave.body.touching.up)
-    this.touchGrave=true;
+    if(hero.body.touching.down&&grave.body.touching.up){
+    	this.touchGrave=true;
+		
+	}
 }
 platformer.playerPrefab.prototype.showArmourGone = function(hero,enemy){
 
@@ -406,9 +411,10 @@ platformer.playerPrefab.prototype.killPlayer = function (hero,enemy) {
             this.damaged = true;
             this.removeArmourSo.play();
             this.animations.play('removeArmour');
-            this.body.velocity.x = -200;            
-            this.body.velocity.y = -250;            
-            this.game.time.events.repeat(Phaser.Timer.SECOND/27,28,this.invincibleBlink,this);	//evento para que se ponga a parpadear
+            this.body.velocity.x = -200;
+			this.body.velocity.y = -250;
+			this.body.position.y -=50;
+			this.game.time.events.repeat(Phaser.Timer.SECOND/27,28,this.invincibleBlink,this);	//evento para que se ponga a parpadear
         }
         this.with_cloth=false;
         this.isKill--;
@@ -438,7 +444,7 @@ platformer.playerPrefab.prototype.killPlayer = function (hero,enemy) {
             this.level.themeMusic.stop();
             this.level.gameoverMusic.play();
             this.body.velocity.x = 0;
-            this.game.time.events.add(Phaser.Timer.SECOND * 5, this.gameover);
+            this.game.time.events.add(Phaser.Timer.SECOND * 5, this.gameover, this);
             this.level.currentCheckpoint = 0; //posem el respawn al inici un altre cop
             }
         }
