@@ -77,7 +77,7 @@ platformer.tutorial = {
 	preload:function(){
         //MAPA
         this.load.image('bg','img/mapa_level1.png');
-		this.load.tilemap('map','TileMaps/mapa_level.json',null,Phaser.Tilemap.TILED_JSON);
+		    this.load.tilemap('map','TileMaps/mapa_level.json',null,Phaser.Tilemap.TILED_JSON);
         this.load.image('platform_collision','img/platform_collision.png');
         this.load.image('moving_platform','img/movingPlatform.png');
         //PLAYER SPRITE
@@ -100,7 +100,7 @@ platformer.tutorial = {
         //ENEMY SPRITES
         this.load.spritesheet('planta', 'img/Planta.png', 36, 64);
         this.load.spritesheet('crow', 'img/crow.png', 36, 32);
-		this.load.spritesheet('zombie', 'img/zombie.png', 32, 32);
+		    this.load.spritesheet('zombie', 'img/zombie.png', 32, 32);
         this.load.spritesheet('ghost', 'img/ghost.png', 34, 60);
 
         //RED DEVIL
@@ -179,22 +179,22 @@ platformer.tutorial = {
         this.bg = this.game.add.tileSprite(0,0,gameOptions.level1Width, gameOptions.level1Height, 'bg');
 
 		      //MAP
-		this.map = this.game.add.tilemap('map');
+		    this.map = this.game.add.tilemap('map');
         this.map.addTilesetImage('platform_collision');
 
         this.platform_collision = this.map.createLayer('platform_up');
 
         this.map.setCollisionBetween(2,5,true,'platform_up');
 
-		this.map.createLayer('platform_up');
+		    this.map.createLayer('platform_up');
         this.map.createLayer('ladder');
 
-		this.movingPlatform = new platformer.platformPrefab(this.game,3433,410,this,3338,3528);
+		    this.movingPlatform = new platformer.platformPrefab(this.game,3433,410,this,3338,3528);
 
-		      //CONTROLS
-		this.cursors = this.game.input.keyboard.createCursorKeys();
+		    //CONTROLS
+		    this.cursors = this.game.input.keyboard.createCursorKeys();
         this.jump_key=this.game.input.keyboard.addKey(Phaser.Keyboard.Z);
-		this.space = this.game.input.keyboard.addKey(Phaser.Keyboard.X);
+		    this.space = this.game.input.keyboard.addKey(Phaser.Keyboard.X);
         this.escKey = this.game.input.keyboard.addKey(Phaser.Keyboard.ESC);
         this.playKey = this.game.input.keyboard.addKey(Phaser.Keyboard.P);
 
@@ -247,13 +247,13 @@ platformer.tutorial = {
         this.themeMusic=this.add.audio('theme_music');
         this.gameoverMusic=this.add.audio('gameover');
         this.themeMusic.loop = true;
+        //this.themeMusic.play();
+        //so de key
         this.keyMusic=this.add.audio('keyMusic');
-
-
-        this.themeMusic.play();
+        this.soKeyPlay=0;
         //MENU PAUSA
         this.inPlay=true;
-        this.soKeyPlay=0;
+
 	},
 	update:function(){
 

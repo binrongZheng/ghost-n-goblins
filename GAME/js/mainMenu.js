@@ -112,7 +112,7 @@ platformer.mainMenu={
             //SELECCIONAR OPCIO
             if (this.enterKey.isDown) {
                 switch (this.buttonIndex) {
-                    case 0: platformer.game.state.start('tutorial');break;
+                    case 0: platformer.game.state.start('intro_scene');break;
                     case 1: platformer.game.state.start('ranking');break;
                     case 2: platformer.game.state.start('credits');break;
                     case 3: this.selectedOptions();break;

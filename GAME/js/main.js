@@ -40,10 +40,11 @@ platformer.game = new Phaser.Game(gameOptions.gameWidth,gameOptions.gameHeight,P
 platformer.game.state.add('mainMenu',platformer.mainMenu);
 platformer.game.state.add('credits',platformer.credits);
 platformer.game.state.add('ranking',platformer.ranking);
+platformer.game.state.add('intro_scene',platformer.intro_scene);
 platformer.game.state.add('tutorial',platformer.tutorial);
 platformer.game.state.add('mapScreen',platformer.mapScreen);
 platformer.game.state.add('finalLevel',platformer.finalLevel);
 
-//platformer.game.state.start('mainMenu');
+platformer.game.state.start('mainMenu');
 
-platformer.game.state.start('finalLevel');
+//platformer.game.state.start('finalLevel');
