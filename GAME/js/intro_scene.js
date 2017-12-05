@@ -26,6 +26,7 @@ platformer.intro_scene={
         this.map_Music=this.add.audio('map_music');
         //CONTROLS
         this.escKey = this.game.input.keyboard.addKey(Phaser.Keyboard.ESC);
+    platformer.finalLevel.inPlay=false;
     },
     update:function(){
         this.game.time.events.add(8600, this.changeState, this);

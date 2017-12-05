@@ -1,4 +1,64 @@
 var platformer = platformer || {};
+window.onkeydown = function(event) {
+    if(platformer.finalLevel.inPlay==true){
+        if (event.keyCode == 27&&platformer.game.paused==false){
+            platformer.game.paused = true;
+            this.menuPause = new platformer.menuPause(platformer.game,platformer.finalLevel.camera.x+gameOptions.gameWidth/2,platformer.finalLevel.camera.y+gameOptions.gameHeight/2);
+            this.cursor = new platformer.cursorPrefab(platformer.game,platformer.finalLevel.camera.x+gameOptions.gameWidth/2-90, platformer.finalLevel.camera.y + gameOptions.gameHeight/2-10);
+            this.cursorState=0;
+        }
+        if(event.keyCode == 40&&platformer.game.paused==true){
+            if(this.cursor.y>=platformer.finalLevel.camera.y + gameOptions.gameHeight/2+60){
+                 this.cursor.y=platformer.finalLevel.camera.y + gameOptions.gameHeight/2-10;
+                 this.cursorState=0;
+            }//asdsadu
+            else{
+                this.cursor.y+=35;
+                this.cursorState++;
+            }
+        }
+        if(event.keyCode == 38&&platformer.game.paused==true){
+            if(this.cursor.y<=platformer.finalLevel.camera.y + gameOptions.gameHeight/2-10){
+                 this.cursor.y= platformer.finalLevel.camera.y + gameOptions.gameHeight/2+60;
+                this.cursorState=2;
+            }
+            else {
+                this.cursor.y-=35;
+                this.cursorState--;
+             }
+        }
+        switch(this.cursorState){
+            case 0:
+                 this.cursor.x=platformer.finalLevel.camera.x+gameOptions.gameWidth/2-90;
+                 if (event.keyCode == 13&&platformer.game.paused==true){//asdas
+                     platformer.game.paused = false;
+                     this.menuPause.kill();
+                     this.cursor.kill();
+                 }
+                break;
+            case 1:
+                this.cursor.x=platformer.finalLevel.camera.x+gameOptions.gameWidth/2-100;
+                if (event.keyCode == 13&&platformer.game.paused==true){
+                    gameOptions.currentCheckpoint = 0;
+                    platformer.game.paused = false;
+                    this.menuPause.kill();
+                    this.cursor.kill();
+                    platformer.finalLevel.themeMusic.stop();
+                    platformer.game.state.start('finalLevel');
+                }
+                break;
+            case 2:
+                this.cursor.x=platformer.finalLevel.camera.x+gameOptions.gameWidth/2-65;
+                if (event.keyCode == 13&&platformer.game.paused==true){
+                    platformer.game.paused = false;
+                    this.menuPause.kill();
+                    this.cursor.kill();
+                    platformer.game.state.start('mainMenu');
+                }
+                break;
+        }
+    }
+}
 
 platformer.finalLevel={
     init:function(){
@@ -11,15 +71,15 @@ platformer.finalLevel={
           this.with_cloth=true;
           this.player_life=gameOptions.levelOption;
           this.playerHaveLife=gameOptions.playerLife;//playerLife==false;
-          this.isPlay=true;
+
 	  },
     preload:function(){
       //MAPA
       this.load.image('bg','img/sala_boss.png');
       this.load.image('platform','img/ladder.png');
-        
+
         this.game.load.bitmapFont('gngFont','fonts/gng_font.png','fonts/gng_font.xml');
-        
+
       //PLAYER SPRITE
       this.load.spritesheet('hero', 'img/arthur.png', 64, 64);
       //BULLET SPRITES
@@ -31,7 +91,9 @@ platformer.finalLevel={
       this.load.spritesheet('finalBoss', 'img/finalBoss.png', 72, 72);
       //BOSS BULLETS
       this.load.spritesheet('bossBullet', 'img/bossBullet.png', 19, 13);
-        
+      //HUD SPRITE
+      this.load.spritesheet('hud', 'img/HUD-armes.png', 60, 60);
+
       //MENU PAUSA
       this.load.image('menu_pausa', 'img/menu pausa.png');
       //GAME OVER
@@ -59,7 +121,8 @@ platformer.finalLevel={
       this.game.load.video('introVideo', 'video/Intro_bossLevel.mp4');
       //endVideo
       this.game.load.video('endVideo', 'video/End_bossLevel.mp4');
-
+      //para menu pausa
+      this.inPlay==true
       //comprovar si puede jugar o no
       this.canPlay=false;
       //comprovar si guanyar o no
@@ -95,15 +158,16 @@ platformer.finalLevel={
       this.space = this.game.input.keyboard.addKey(Phaser.Keyboard.X);
       this.escKey = this.game.input.keyboard.addKey(Phaser.Keyboard.ESC);
       this.playKey = this.game.input.keyboard.addKey(Phaser.Keyboard.P);
+      //this.escKey = this.game.input.keyboard.addKey(Phaser.Keyboard.ESC);
 
 
       //hero
       this.hero = new platformer.playerPrefab(this.game,this.checkpoints[gameOptions.currentCheckpoint].x,this.checkpoints[gameOptions.currentCheckpoint].y,this,this.player_life,this.cursors,this.jump_key,this.space,this.with_cloth,this.playerHaveLife );
-    
-        //BOSS      
-    this.boss = new platformer.finalBossPrefab(this.game, 330, 290, this); 
-    
-        
+
+        //BOSS
+    this.boss = new platformer.finalBossPrefab(this.game, 330, 290, this);
+
+
       //BALES DEL PERSONATGE
       this.projectiles = this.add.group();
         this.explosions = this.add.group();
@@ -117,13 +181,13 @@ platformer.finalLevel={
       this.introSprite.width=gameOptions.gameWidth+90;
       this.introSprite.height=gameOptions.gameHeight-45;
 
-      this.introVideo.play(true);   
-        
+      this.introVideo.play(true);
+
 
 
       //CAMERA
       //this.camera.follow(this.hero);
-      
+
 
       //music
       this.themeMusic=this.add.audio('theme_music');
@@ -132,29 +196,31 @@ platformer.finalLevel={
 
       //this.themeMusic.play();
       this.win_Music=this.add.audio('win_music');
-        
+
     //parar el video quan acavi
      this.game.time.events.add(6700, this.changeState, this);
-      
-	
+
+     //MENU PAUSA
+     this.inPlay=true;
     },
     update:function(){
       if(this.themeMusic.loop==false) this.themeMusic.stop();
-		
+
       //GAMEOVER screen
     this.game_over = this.add.sprite(this.camera.x+gameOptions.gameWidth/2,this.camera.y+gameOptions.gameHeight/2, 'game_over');
     this.game_over.anchor.setTo(0.5);
     this.game_over.visible=false;
     //this.map.forEach(function(t){if (t) {t.collideDown=false;}},this.game,0,0,this.map.width,this.map.height,'platform_up');
-		
-      if (this.win){		 
+
+      if (this.win){
         this.playWinMusic++;
         if(this.playWinMusic==1)  this.win_Music.play();
         if(this.playWinMusic>100) this.playWinMusic=10;
-		  this.canPlay = false;	  
+		  this.canPlay = false;
           this.game.time.events.add(500, this.gotoEndAnimation, this);
 		  this.win = false;
       }
+
       //console.log(this.canPlay);
     /*  this.game_over = this.add.sprite(this.camera.x+gameOptions.gameWidth/2,this.camera.y+gameOptions.gameHeight/2, 'game_over');
       this.game_over.anchor.setTo(0.5);
@@ -174,15 +240,16 @@ platformer.finalLevel={
  },
  gotoEndAnimation:function(){
    //END VIDEO
-     
+
      this.canPlay = false;
    this.endVideo = this.game.add.video('endVideo');
    this.endSprite = this.endVideo.addToWorld(gameOptions.gameWidth/2, gameOptions.gameHeight/2, 0.5, 0.5,1,0.7);
    this.endSprite.width=gameOptions.gameWidth+90;
    this.endSprite.height=gameOptions.gameHeight-89;
-    this.endVideo.play(true);   
-    
+    this.endVideo.play(true);
+
 	 this.hud = new platformer.hudPrefab(this.game,this,this.hero.player_life);
+
  }
 
 
