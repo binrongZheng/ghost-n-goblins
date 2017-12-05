@@ -146,18 +146,27 @@ platformer.mainMenu={
                     case 0:
                       console.log(gameOptions.playerLife);
                       gameOptions.playerLife=false;
+                      if (this.enterKey.isDown)
+                        platformer.game.state.start('mainMenu');
+
                       break;
                     case 1:
                       console.log(gameOptions.levelOption);
                       gameOptions.levelOption=3;
                       gameOptions.lastOption=gameOptions.levelOption;
                       gameOptions.playerLife=true;
+                      if (this.enterKey.isDown)
+                        platformer.game.state.start('mainMenu');
+
                       break;
                     case 2:
                       console.log(gameOptions.levelOption);
                       gameOptions.levelOption=1;
                       gameOptions.lastOption=gameOptions.levelOption;
                       gameOptions.playerLife=true;
+                      if (this.enterKey.isDown)
+                        platformer.game.state.start('mainMenu');
+
                       break;
                 }
             }
