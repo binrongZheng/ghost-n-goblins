@@ -531,6 +531,7 @@ platformer.playerPrefab.prototype.map_Screen = function () {
       this.game.state.start('mapScreen');
     }
 }
+//merge
 platformer.playerPrefab.prototype.gameover = function () {
     this.level.game_over.destroy();
     this.killOnComplete=true;
