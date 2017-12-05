@@ -57,13 +57,12 @@ platformer.finalBossPrefab.death = function () {
 	this.level.hud.spawnPoints(this.x-30, this.y, gameOptions.bossPoints);
 	this.level.explosions.add(new platformer.explosionPrefab(this.level.game,this.x,this.y,1, this.level));
     this.level.win = true;    
-    //this.level.enemies.remove(this);
-    this.game.time.events.stop();
+    this.game.time.events.remove(this.shootEvent);
     this.destroy();
 };
 platformer.finalBossPrefab.prototype.activate = function () {
     
     this.body.velocity.x = -gameOptions.finalBossSpeed;    
-    this.game.time.events.loop(Phaser.Timer.SECOND*1,this.shoot,this);    
+    this.shootEvent = this.game.time.events.loop(Phaser.Timer.SECOND*1,this.shoot,this);    
     
 }

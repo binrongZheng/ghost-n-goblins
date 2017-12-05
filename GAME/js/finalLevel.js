@@ -151,7 +151,8 @@ platformer.finalLevel={
         this.playWinMusic++;
         if(this.playWinMusic==1)  this.win_Music.play();
         if(this.playWinMusic>100) this.playWinMusic=10;
-        this.game.time.events.add(10, this.gotoEndAnimation, this);
+		  this.canPlay = false;	  
+          this.game.time.events.add(500, this.gotoEndAnimation, this);
 		  this.win = false;
       }
       //console.log(this.canPlay);
@@ -179,9 +180,9 @@ platformer.finalLevel={
    this.endSprite = this.endVideo.addToWorld(gameOptions.gameWidth/2, gameOptions.gameHeight/2, 0.5, 0.5,1,0.7);
    this.endSprite.width=gameOptions.gameWidth+90;
    this.endSprite.height=gameOptions.gameHeight-89;
-     
+    this.endVideo.play(true);   
     
-
+	 this.hud = new platformer.hudPrefab(this.game,this,this.hero.player_life);
  }
 
 
