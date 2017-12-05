@@ -29,7 +29,7 @@ var gameOptions = {
 	distanceToStop:120,
     currentCheckpoint:0,
 	platformSpeed:120,
-	ciclopWalkSpeed:110,
+	ciclopWalkSpeed:100,
 	ciclopPoints:2000,
     finalBossSpeed:15,
     bossPoints:10000

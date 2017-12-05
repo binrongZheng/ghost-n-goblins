@@ -15,6 +15,7 @@ platformer.platformPrefab=function(game,x,y,_level,marginLeft,marginRight){	//ma
     this.body.immovable				= true;
 	this.body.checkCollision.down 	= false;
 	this.body.velocity.x 			= -gameOptions.platformSpeed;
+	this.body.setSize(this.body.width*0.5,this.body.height,this.body.width*0.25);
 };
 
 platformer.platformPrefab.prototype=Object.create(Phaser.Sprite.prototype);
@@ -29,4 +30,5 @@ platformer.platformPrefab.prototype.update = function () {
 	if(this.x >= this.marginRight){
 		this.body.velocity.x = -gameOptions.platformSpeed;
 	}
+	this.game.debug.body(this);
 };
