@@ -400,7 +400,7 @@ platformer.playerPrefab.prototype.showArmourGone = function(hero,enemy){
 }, this);*/
 }
 platformer.playerPrefab.prototype.killPlayer = function (hero,enemy) {
-    
+
     if(!this.invincible){
         if(this.with_cloth==true && this.isKill==2) {
 			this.invincible = true;
@@ -412,9 +412,14 @@ platformer.playerPrefab.prototype.killPlayer = function (hero,enemy) {
             this.removeArmourSo.play();
             this.animations.play('removeArmour');
             this.body.velocity.x = -200;
+<<<<<<< HEAD
 			this.body.velocity.y = -250;
 			this.body.position.y -=50;
 			this.game.time.events.repeat(Phaser.Timer.SECOND/27,28,this.invincibleBlink,this);	//evento para que se ponga a parpadear
+=======
+            this.body.velocity.y = -250;
+            this.game.time.events.repeat(Phaser.Timer.SECOND/27,28,this.invincibleBlink,this);	//evento para que se ponga a parpadear
+>>>>>>> 3199c8cc5c030f8a9deb7cbc6fb2acfc134459e7
         }
         this.with_cloth=false;
         this.isKill--;
@@ -444,7 +449,11 @@ platformer.playerPrefab.prototype.killPlayer = function (hero,enemy) {
             this.level.themeMusic.stop();
             this.level.gameoverMusic.play();
             this.body.velocity.x = 0;
+<<<<<<< HEAD
             this.game.time.events.add(Phaser.Timer.SECOND * 5, this.gameover, this);
+=======
+            this.game.time.events.add(Phaser.Timer.SECOND * 5, this.gameover,this);
+>>>>>>> 3199c8cc5c030f8a9deb7cbc6fb2acfc134459e7
             this.level.currentCheckpoint = 0; //posem el respawn al inici un altre cop
             }
         }

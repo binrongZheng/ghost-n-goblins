@@ -96,7 +96,7 @@ platformer.tutorial = {
 
         //ENEMY BULLET SPRITES
         this.load.spritesheet('ull', 'img/ull.png', 18, 18);
-        
+
 
         //ENEMY SPRITES
         this.load.spritesheet('planta', 'img/Planta.png', 36, 64);
@@ -110,7 +110,7 @@ platformer.tutorial = {
 		//CICLOP
         this.load.spritesheet('ciclop', 'img/ciclop.png', 96, 96);
 
-        
+
 
         //LOOT
         this.load.spritesheet('coin', 'img/item_coin.png', 16, 16);
@@ -269,13 +269,14 @@ platformer.tutorial = {
       }
 
 
-
-        if(this.themeMusic.loop==false) this.themeMusic.stop();
         //GAMEOVER screen
         this.game_over = this.add.sprite(this.camera.x+gameOptions.gameWidth/2,this.camera.y+gameOptions.gameHeight/2, 'game_over');
         this.game_over.anchor.setTo(0.5);
         this.game_over.visible=false;
-        this.map.forEach(function(t){if (t) {t.collideDown=false;}},this.game,0,0,this.map.width,this.map.height,'platform_up');
+
+
+        if(this.themeMusic.loop==false) this.themeMusic.stop();
+                this.map.forEach(function(t){if (t) {t.collideDown=false;}},this.game,0,0,this.map.width,this.map.height,'platform_up');
 
         //NO SEGUIR AL PERSONATGE LA CAMERA SI INTENTES TIRAR ENRERE DEL CHECKPOINT
         if (this.hero.position.x < this.checkpoints[gameOptions.currentCheckpoint].x && this.camera.target != null){
@@ -385,5 +386,5 @@ platformer.tutorial.createBosses = function () {
 	}, this);
     this.enemies.add(ciclop);
 
-    
+
 }
