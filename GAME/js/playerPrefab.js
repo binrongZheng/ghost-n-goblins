@@ -395,7 +395,7 @@ platformer.playerPrefab.prototype.showArmourGone = function(hero,enemy){
 }, this);*/
 }
 platformer.playerPrefab.prototype.killPlayer = function (hero,enemy) {
-    
+
     if(!this.invincible){
         if(this.with_cloth==true && this.isKill==2) {
 			this.invincible = true;
@@ -406,8 +406,8 @@ platformer.playerPrefab.prototype.killPlayer = function (hero,enemy) {
             this.damaged = true;
             this.removeArmourSo.play();
             this.animations.play('removeArmour');
-            this.body.velocity.x = -200;            
-            this.body.velocity.y = -250;            
+            this.body.velocity.x = -200;
+            this.body.velocity.y = -250;
             this.game.time.events.repeat(Phaser.Timer.SECOND/27,28,this.invincibleBlink,this);	//evento para que se ponga a parpadear
         }
         this.with_cloth=false;
@@ -438,7 +438,7 @@ platformer.playerPrefab.prototype.killPlayer = function (hero,enemy) {
             this.level.themeMusic.stop();
             this.level.gameoverMusic.play();
             this.body.velocity.x = 0;
-            this.game.time.events.add(Phaser.Timer.SECOND * 5, this.gameover);
+            this.game.time.events.add(Phaser.Timer.SECOND * 5, this.gameover,this);
             this.level.currentCheckpoint = 0; //posem el respawn al inici un altre cop
             }
         }
