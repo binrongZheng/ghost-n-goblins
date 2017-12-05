@@ -51,7 +51,7 @@ platformer.zombiePrefab.prototype.constructor=platformer.zombiePrefab;
 platformer.zombiePrefab.prototype.update = function () {
     
     //colisions terra
-    this.level.game.physics.arcade.collide(this, platformer.tutorial.platform_collision); 
+    this.level.game.physics.arcade.collide(this, this.level.platform_collision); 
     
     //MOVIMENT
     if (!this.isSpawning){        

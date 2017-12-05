@@ -128,13 +128,13 @@ platformer.RedDemonPrefab.prototype.ShootTwice = function () {
 
     var bulletDir = new Phaser.Point(platformer.tutorial.hero.x-this.x,platformer.tutorial.hero.y-this.y);
     bulletDir.normalize().multiply(gameOptions.eyeSpeed*1.5,gameOptions.eyeSpeed*1.5);
-    var bala = new platformer.enemyBulletPrefab(this.game,this.x,this.y,0,bulletDir.x,bulletDir.y);
+    var bala = new platformer.enemyBulletPrefab(this.game,this.x,this.y,0,bulletDir.x,bulletDir.y, this.level);
 
     //Esperem 750ms i tornem a disparar
     this.game.time.events.add(500, function () {
         var bulletDir = new Phaser.Point(platformer.tutorial.hero.x-this.x,platformer.tutorial.hero.y-this.y);
         bulletDir.normalize().multiply(gameOptions.eyeSpeed*1.5,gameOptions.eyeSpeed*1.5);
-        var bala = new platformer.enemyBulletPrefab(this.game,this.x,this.y,0,bulletDir.x,bulletDir.y);
+        var bala = new platformer.enemyBulletPrefab(this.game,this.x,this.y,0,bulletDir.x,bulletDir.y, this.level);
     },this);
     
     var newX = 0;

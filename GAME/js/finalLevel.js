@@ -121,9 +121,7 @@ platformer.finalLevel={
       this.introSprite.width=gameOptions.gameWidth+90;
       this.introSprite.height=gameOptions.gameHeight-45;
 
-      this.introVideo.play(true);
-        
-      
+      this.introVideo.play(true);   
         
 
 
@@ -143,16 +141,17 @@ platformer.finalLevel={
     //parar el video quan acavi
      this.game.time.events.add(6700, this.changeState, this);
       
-
+	
     },
     update:function(){
       if(this.themeMusic.loop==false) this.themeMusic.stop();
+		console.log(this.win);
       //GAMEOVER screen
-        this.game_over = this.add.sprite(this.camera.x+gameOptions.gameWidth/2,this.camera.y+gameOptions.gameHeight/2, 'game_over');
-        this.game_over.anchor.setTo(0.5);
-        this.game_over.visible=false;
-        //this.map.forEach(function(t){if (t) {t.collideDown=false;}},this.game,0,0,this.map.width,this.map.height,'platform_up');
-        
+    this.game_over = this.add.sprite(this.camera.x+gameOptions.gameWidth/2,this.camera.y+gameOptions.gameHeight/2, 'game_over');
+    this.game_over.anchor.setTo(0.5);
+    this.game_over.visible=false;
+    //this.map.forEach(function(t){if (t) {t.collideDown=false;}},this.game,0,0,this.map.width,this.map.height,'platform_up');
+		
       if (this.win){          
         this.playWinMusic++;
         if(this.playWinMusic==1)  this.win_Music.play();
