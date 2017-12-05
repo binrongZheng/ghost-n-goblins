@@ -193,7 +193,7 @@ else {
     if (!this.damaged && this.touchGrave || this.body.blocked.down) {
         this.body.velocity.x = 0;
     }
-
+	//console.log(this.damaged + ' vs ' + this.velocity.x);
     //POSAR TAMANY COLISIO A NORMAL SI NO HO ESTA
     if (this.body.height != this.height)
         this.body.setSize(this.width*this.scale.x, this.height, 0,0);
@@ -355,7 +355,7 @@ else {
         this.canShoot = true;
     }
     //quan ens fan daño no ens podem moure fins que tornem a tocar el terra
-    if(this.damaged && this.body.blocked.down){
+    if(this.damaged && (this.body.blocked.down || this.touchGrave) ){
         this.damaged = false;
     }
     //QUAN NO ESTEM AJUPITS POSEM L'ALÇADA DEL DISPAR AL NORMAL
