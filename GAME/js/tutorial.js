@@ -246,8 +246,10 @@ platformer.tutorial = {
 		//MUSIC
         this.themeMusic=this.add.audio('theme_music');
         this.gameoverMusic=this.add.audio('gameover');
+
         this.themeMusic.loop = true;
-        //this.themeMusic.play();
+        this.themeMusic.volume = 0.5;
+        this.themeMusic.play();
         //so de key
         this.keyMusic=this.add.audio('keyMusic');
         this.soKeyPlay=0;

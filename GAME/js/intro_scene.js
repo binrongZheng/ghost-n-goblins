@@ -10,6 +10,8 @@ platformer.intro_scene={
     preload:function(){
       //BACKGROUND
       this.game.load.video('introVideo', 'video/introVideo.mp4');
+      this.game.load.audio('map_music','sounds/intro_map.mp3');
+
     },
     create:function(){
 
@@ -21,7 +23,7 @@ platformer.intro_scene={
         this.sprite.height=gameOptions.gameHeight+10;
 
         this.video.play(true);
-
+        this.map_Music=this.add.audio('map_music');
         //CONTROLS
         this.escKey = this.game.input.keyboard.addKey(Phaser.Keyboard.ESC);
     },
@@ -29,12 +31,16 @@ platformer.intro_scene={
         this.game.time.events.add(8600, this.changeState, this);
 
         if(this.escKey.isDown){
-            this.video.play(false);
+            this.sprite.destroy()
+            this.video.destroy();
+            this.map_Music.play();
             platformer.game.state.start('tutorial');
         }
     },
     changeState:function(){
-       this.video.play(false);
+       this.sprite.destroy()
+       this.video.destroy();
+       this.map_Music.play();
        platformer.game.state.start('tutorial');
    }
 }

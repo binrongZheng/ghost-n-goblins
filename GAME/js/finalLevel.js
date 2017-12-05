@@ -38,14 +38,18 @@ platformer.finalLevel={
       this.game.load.audio('dieSo','sounds/die.mp3');
       this.game.load.audio('removeArmourSo','sounds/removeArmour.mp3');
 
+      //introVideo
+      this.game.load.video('introVideo', 'video/Intro_bossLevel.mp4');
+      //comprovar si puede jugar o no
+      this.canPlay=false;
       //ADD motor de physics
       this.game.physics.startSystem(Phaser.Physics.ARCADE);
       this.game.physics.arcade.gravity.y = gameOptions.playerGravity;
 
       //CHECKPOINT
       this.checkpoints = [];
-      var c1 = new Phaser.Point(gameOptions.gameWidth/4,150);
-      var c2 = new Phaser.Point(3100,350);
+      var c1 = new Phaser.Point(gameOptions.gameWidth/4+47,330);
+      var c2 = new Phaser.Point(3100,330);
       this.checkpoints.push(c1);
       this.checkpoints.push(c2);
 
@@ -78,6 +82,16 @@ platformer.finalLevel={
       //BALES DEL PERSONATGE
       this.projectiles = this.add.group();
 
+
+      //BACKGROUND
+      this.video = this.game.add.video('introVideo');
+      //this.video.onPlay.addOnce(start, this);
+      this.sprite = this.video.addToWorld(0, 42, 0.0, 0.0,1,1);
+      this.sprite.width=gameOptions.gameWidth;
+      this.sprite.height=gameOptions.gameHeight-40;
+
+      this.video.play(true);
+
       //CAMERA
       //this.camera.follow(this.hero);
       //HUD
@@ -91,11 +105,19 @@ platformer.finalLevel={
     },
     update:function(){
       if(this.themeMusic.loop==false) this.themeMusic.stop();
+
+      this.game.time.events.add(6700, this.changeState, this);
+
       //GAMEOVER screen
     /*  this.game_over = this.add.sprite(this.camera.x+gameOptions.gameWidth/2,this.camera.y+gameOptions.gameHeight/2, 'game_over');
       this.game_over.anchor.setTo(0.5);
       this.game_over.visible=false;
       this.map.forEach(function(t){if (t) {t.collideDown=false;}},this.game,0,0,this.map.width,this.map.height,'platform_up');
 */
-    }
+  },changeState:function(){
+    this.sprite.destroy();
+    this.video.destroy();
+ }
+
+
 }
