@@ -1,17 +1,17 @@
 var platformer = platformer || {};
 
 //serà el propi enemic qui posi la velocitat adecuada a la bullet
-platformer.enemyBulletPrefab=function(game,x,y,_enemyBullet_type,velX,velY, _level){
+platformer.enemyBulletPrefab=function(game,x,y,_enemyBullet_type,velX,velY){
     this.enemyBullet_type=_enemyBullet_type;
 
     switch(this.enemyBullet_type){
-        case 0: Phaser.Sprite.call(this,game,x,y,'ull');this.animations.add('ullAnim', [0,1,2,3],10,true);
+        case 0: Phaser.Sprite.call(this,game,x,y,'ull');
             break;
-        case 1: Phaser.Sprite.call(this,game,x,y,'bossBullet');this.scale.setTo(2);
-            break;
+        //case 1: Phaser.Sprite.call(this,game,x,y,'foc');
+            //break;
     }
-    
-    this.level = _level;
+    //potser s'haurà d'afegir en un group............
+    this.animations.add('ullAnim', [0,1,2,3],10,true);
 
     game.add.existing(this);
     this.anchor.setTo(.5);
@@ -40,10 +40,10 @@ platformer.enemyBulletPrefab.prototype.constructor=platformer.enemyBulletPrefab;
 
 
 platformer.enemyBulletPrefab.prototype.update = function () {
-  this.game.physics.arcade.collide (this, this.level.hero,function (bullet, hero){
-      hero.killPlayer(hero, bullet);      
-      bullet.kill();      
+  this.game.physics.arcade.collide (this, platformer.tutorial.hero,function (bullet, hero){
+      hero.killPlayer(hero, bullet);
+      bullet.kill();
   });
 
-    
+
 }
