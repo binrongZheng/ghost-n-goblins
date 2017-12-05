@@ -105,11 +105,12 @@ platformer.playerPrefab.prototype.update = function () {
     this.lastJumpState = this.jumping_start;
 
   //so de jump
+  if(this.canPlay){
     if(this.jump_key.isDown||!this.body.blocked.down&&!this.touchGrave)  this.jumping_start=true;
     if(this.jumping_start==true&&this.jumping_start!=this.lastJumpState) this.playerJumpStart.play();
     if(this.jump_key.isUp&&this.body.blocked.down||this.jump_key.isUp&&this.touchGrave)  this.jumping_start=false;
     if(this.jumping_start==false&&this.jumping_start!=this.lastJumpState) this.playerJumpEnd.play();
-
+  }
 
 //collide with ladders
   //xoca amb ladders
@@ -199,7 +200,7 @@ else {
         //this.body.setSize(this.width/2*this.scale.x, this.height, this.width/4*this.scale.x,0);
 
     //WITH CLOTH ANIMATION
-        if(this.with_cloth==true&&!this.climbing && !this.celebrating && !this.damaged){
+        if(this.with_cloth&&!this.climbing && !this.celebrating && !this.damaged&&this.level.canPlay){
             //ATTACK
             if (this.space.isDown){
               if(this.ajupir_attack) this.animations.play('attack_ajupir');
@@ -271,7 +272,7 @@ else {
 
         }
 
-     else if(this.isKill!=0&&!this.climbing && !this.celebrating && !this.damaged){
+     else if(this.isKill!=0&&!this.climbing && !this.celebrating && !this.damaged&&this.level.canPlay){
 
            //ATTACK
            if (this.space.isDown){

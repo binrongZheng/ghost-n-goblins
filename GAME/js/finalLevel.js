@@ -37,18 +37,27 @@ platformer.finalLevel={
       this.game.load.audio('jumpDownSo','sounds/jumpEnd.mp3');
       this.game.load.audio('dieSo','sounds/die.mp3');
       this.game.load.audio('removeArmourSo','sounds/removeArmour.mp3');
+      this.game.load.audio('win_music','sounds/gngEndTheme.mp3');
+
 
       //introVideo
       this.game.load.video('introVideo', 'video/Intro_bossLevel.mp4');
+      //endVideo
+      this.game.load.video('endVideo', 'video/End_bossLevel.mp4');
+
       //comprovar si puede jugar o no
       this.canPlay=false;
+      //comprovar si guanyar o no
+      this.win=false;
+      //para play end music que no todo rato play, solo play una vez
+      this.playWinMusic=0;
       //ADD motor de physics
       this.game.physics.startSystem(Phaser.Physics.ARCADE);
       this.game.physics.arcade.gravity.y = gameOptions.playerGravity;
 
       //CHECKPOINT
       this.checkpoints = [];
-      var c1 = new Phaser.Point(gameOptions.gameWidth/4+47,330);
+      var c1 = new Phaser.Point(gameOptions.gameWidth/4+32,330);//+47
       var c2 = new Phaser.Point(3100,330);
       this.checkpoints.push(c1);
       this.checkpoints.push(c2);
@@ -76,21 +85,26 @@ platformer.finalLevel={
       this.escKey = this.game.input.keyboard.addKey(Phaser.Keyboard.ESC);
       this.playKey = this.game.input.keyboard.addKey(Phaser.Keyboard.P);
 
+
       //hero
       this.hero = new platformer.playerPrefab(this.game,this.checkpoints[gameOptions.currentCheckpoint].x,this.checkpoints[gameOptions.currentCheckpoint].y,this,this.player_life,this.cursors,this.jump_key,this.space,this.with_cloth,this.playerHaveLife );
 
       //BALES DEL PERSONATGE
       this.projectiles = this.add.group();
 
+      //INTRO VIDEO
 
-      //BACKGROUND
-      this.video = this.game.add.video('introVideo');
+      this.introVideo = this.game.add.video('introVideo');
+
       //this.video.onPlay.addOnce(start, this);
-      this.sprite = this.video.addToWorld(0, 42, 0.0, 0.0,1,1);
-      this.sprite.width=gameOptions.gameWidth;
-      this.sprite.height=gameOptions.gameHeight-40;
+      this.introSprite = this.introVideo.addToWorld(gameOptions.gameWidth/2, gameOptions.gameHeight/2+23, 0.5, 0.5,1,1);
+      this.introSprite.width=gameOptions.gameWidth+90;
+      this.introSprite.height=gameOptions.gameHeight-45;
 
-      this.video.play(true);
+      this.introVideo.play(true);
+
+
+
 
       //CAMERA
       //this.camera.follow(this.hero);
@@ -102,21 +116,40 @@ platformer.finalLevel={
       this.themeMusic.loop = true;
 
       //this.themeMusic.play();
+      this.win_Music=this.add.audio('win_music');
+
     },
     update:function(){
       if(this.themeMusic.loop==false) this.themeMusic.stop();
-
-      this.game.time.events.add(6700, this.changeState, this);
-
-      //GAMEOVER screen
+      if(!this.win){
+        this.game.time.events.add(6700, this.changeState, this);
+      }
+      else{
+        this.playWinMusic++;
+        if(this.playWinMusic==1)  this.win_Music.play();
+        if(this.playWinMusic>100) this.playWinMusic=10;
+        this.game.time.events.add(10, this.gotoEndAnimation, this);
+      }
+      console.log(this.canPlay);
     /*  this.game_over = this.add.sprite(this.camera.x+gameOptions.gameWidth/2,this.camera.y+gameOptions.gameHeight/2, 'game_over');
       this.game_over.anchor.setTo(0.5);
       this.game_over.visible=false;
       this.map.forEach(function(t){if (t) {t.collideDown=false;}},this.game,0,0,this.map.width,this.map.height,'platform_up');
 */
-  },changeState:function(){
-    this.sprite.destroy();
-    this.video.destroy();
+  },
+  changeState:function(){
+    if(this.win)this.canPlay=false;
+    else this.canPlay=true;
+    this.introSprite.destroy();
+    this.introVideo.stop();
+ },
+ gotoEndAnimation:function(){
+   //END VIDEO
+   this.endVideo = this.game.add.video('endVideo');
+   this.endSprite = this.endVideo.addToWorld(gameOptions.gameWidth/2, gameOptions.gameHeight/2, 0.5, 0.5,1,0.7);
+   this.endSprite.width=gameOptions.gameWidth+90;
+   this.endSprite.height=gameOptions.gameHeight-89;
+
  }
 
 

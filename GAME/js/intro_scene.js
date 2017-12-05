@@ -32,14 +32,14 @@ platformer.intro_scene={
 
         if(this.escKey.isDown){
             this.sprite.destroy()
-            this.video.destroy();
+            this.video.stop();
             this.map_Music.play();
             platformer.game.state.start('tutorial');
         }
     },
     changeState:function(){
        this.sprite.destroy()
-       this.video.destroy();
+       this.video.stop();
        this.map_Music.play();
        platformer.game.state.start('tutorial');
    }
