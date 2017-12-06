@@ -103,6 +103,7 @@ platformer.tutorial = {
         this.load.spritesheet('crow', 'img/crow.png', 36, 32);
 		    this.load.spritesheet('zombie', 'img/zombie.png', 32, 32);
         this.load.spritesheet('ghost', 'img/ghost.png', 34, 60);
+        this.load.spritesheet('forestGhost', 'img/forestGhost.png', 64, 32);
 
         //RED DEVIL
         this.load.spritesheet('redDevil', 'img/redDevil.png', 42, 42);
@@ -222,6 +223,9 @@ platformer.tutorial = {
   		this.createPlants();
 		this.createCrows();
         this.createBosses();
+		
+		//debug
+		this.enemies.add(new platformer.forestGhostPrefab(this.game,100,350));
 
         //SPAWNS DE ZOMBIES
         this.spawns.add(new platformer.spawnZombiePrefab(this.game,475,350,this));
@@ -346,7 +350,7 @@ platformer.tutorial.createPlants = function(){
 	//var plantaTest = new platformer.plantaPrefab(this.game,400+gameOptions.gameWidth/2,350,this);
 	var points = [{x:1628, y:202}, {x:2210, y:202}, {x:5453, y:350} , {x:6209, y:350}];
     for (var i = 0; i < points.length;i++){
-        if(points[i].x > this.checkpoints[gameOptions.currentCheckpoint].x) //nomes si estan mes endavant que lultim chekpoint
+        if(points[i].x > this.checkpoints[gameOptions.currentCheckpoint].x) //només si estan més endavant que l'últim chekpoint
             this.enemies.add(new platformer.plantaPrefab(this.game,points[i].x,points[i].y,this));
     }
 
@@ -359,7 +363,7 @@ platformer.tutorial.createPlants = function(){
 platformer.tutorial.createCrows = function(){
 	var points = [{x:1498, y:332}, {x:1724, y:172}, {x:2206, y:332} , {x:2524, y:332} , {x:3036, y:332}];
     for (var i = 0; i < points.length;i++){
-        if(points[i].x > this.checkpoints[gameOptions.currentCheckpoint].x) //nomes si estan mes endavant que lultim chekpoint
+        if(points[i].x > this.checkpoints[gameOptions.currentCheckpoint].x) //només si estan més endavant que l'últim chekpoint
             this.enemies.add(new platformer.crowPrefab(this.game,points[i].x,points[i].y,this));
     }
 
