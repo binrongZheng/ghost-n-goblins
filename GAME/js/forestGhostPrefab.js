@@ -7,7 +7,9 @@ platformer.forestGhostPrefab=function(game,x,y,_level){
 	this.anchor.setTo(.5);
     
 	this.randomX	= game.rnd.realInRange(-1.5,1.5);	//per fer que apareixi en una altura random
-    this.hp = 80;
+    this.hp 		= 80;
+	//this.goal 		= this.x - game.rnd.realInRange(100,gameOptions.gameWidth);
+	this.goal 		= this.x - 200;
 
 	//Físiques
     game.physics.arcade.enable(this);
@@ -15,10 +17,10 @@ platformer.forestGhostPrefab=function(game,x,y,_level){
 	this.body.immovable 	= true;
     		
     //animacions
-    this.animations.add('fly', [0,1],8,true);
-    this.animations.add('turning', [3,4],8,false);
-    this.animations.add('spawn', [8,7,6,5],6,false);
-    this.animations.add('shooting', [2],8,false);
+    this.animations.add('fly', 		[0,1],		8,true);
+    this.animations.add('turning',	[3,4],		8,false);
+    this.animations.add('spawn',	[8,7,6,5],	6,false);
+    this.animations.add('shooting',	[2],		8,false);
     this.animations.play('spawn');
     
 	//quan ha acabat l'animació de l'spawn, comença a moure's
@@ -32,9 +34,25 @@ platformer.forestGhostPrefab.prototype=Object.create(Phaser.Sprite.prototype);
 platformer.forestGhostPrefab.prototype.constructor=platformer.forestGhostPrefab;
 
 platformer.forestGhostPrefab.prototype.update = function () {
-    //mentres està fent spawn
-	//es mor quan s'allunya suficient de la pantalla (poden entrar i sortir)
-    
+	if((this.body.velocity.x < 0 && this.x < this.goal) || (this.body.velocity.x > 0 && this.x > this.goal)){
+		//pillar un nou goal
+		this.goal = this.x+200; //HARDCODED -- CANVIAR SEGONS EN QUINA DIRECCIO ANEM
+    	this.animations.play('turning');
+		this.body.velocity.x *= -1;
+		this.events.onAnimationComplete.add(function(){
+			this.scale.x *= -1;
+    		//this.animations.play('turning');
+    		this.animations.currentAnim.reverse();
+			this.events.onAnimationComplete.add(function(){	//yo dawg, I heard you like functions, so I put a function, inside a function, inside another function
+				
+			},this);
+		},this); 
+	}
+	
+	//es destrueix quan s'allunya suficient de la pantalla (poden entrar i sortir)
+    if(this.alive && this.x < (this.level.hero.x-gameOptions.gameWidth*1.4)){
+		this.destroy();
+	}
 };
 
 platformer.forestGhostPrefab.prototype.startMoving = function () {
@@ -42,7 +60,8 @@ platformer.forestGhostPrefab.prototype.startMoving = function () {
 		this.body.velocity.x 	= -gameOptions.foresGhostSpeed;
 		this.animations.play('fly');
 	}
-};	
+};
+
 
 platformer.forestGhostPrefab.prototype.forestGhostPoints = function () {
 	this.level.hud.updateScore(100);
