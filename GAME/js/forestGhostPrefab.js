@@ -8,22 +8,25 @@ platformer.forestGhostPrefab=function(game,x,y,_level){
     
 	this.randomX	= game.rnd.realInRange(-1.5,1.5);	//per fer que apareixi en una altura random
     this.hp 		= 80;
-	//this.goal 		= this.x - game.rnd.realInRange(100,gameOptions.gameWidth);
+	//this.goal 	= this.x - game.rnd.realInRange(100,gameOptions.gameWidth);
 	this.goal 		= this.x - 200;
+	
+	//Estats
+	this.changingDir = false;	//quan estem canviant de direcció
 
 	//Físiques
     game.physics.arcade.enable(this);
     this.body.allowGravity 	= false;
 	this.body.immovable 	= true;
     		
-    //animacions
+    //Animacions
     this.animations.add('fly', 		[0,1],		8,true);
     this.animations.add('turning',	[3,4],		8,false);
     this.animations.add('spawn',	[8,7,6,5],	6,false);
     this.animations.add('shooting',	[2],		8,false);
     this.animations.play('spawn');
     
-	//quan ha acabat l'animació de l'spawn, comença a moure's
+	//Quan ha acabat l'animació de l'spawn, comença a moure's
 	this.events.onAnimationComplete.add(this.startMoving,this); 
 	
     //Quan mor, sumem punts i afegim una explosió
@@ -38,14 +41,14 @@ platformer.forestGhostPrefab.prototype.update = function () {
 		//pillar un nou goal
 		this.goal = this.x+200; //HARDCODED -- CANVIAR SEGONS EN QUINA DIRECCIO ANEM
     	this.animations.play('turning');
-		this.body.velocity.x *= -1;
+		//this.body.velocity.x *= -1;
+		this.body.velocity.x = 0;
 		this.events.onAnimationComplete.add(function(){
+			this.changingDir = true;
 			this.scale.x *= -1;
-    		//this.animations.play('turning');
+    		this.animations.play('turning');
     		this.animations.currentAnim.reverse();
-			this.events.onAnimationComplete.add(function(){	//yo dawg, I heard you like functions, so I put a function, inside a function, inside another function
-				
-			},this);
+			
 		},this); 
 	}
 	
