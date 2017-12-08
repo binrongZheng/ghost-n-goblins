@@ -1,22 +1,21 @@
 var platformer = platformer || {};
 
 platformer.forestGhostPrefab=function(game,x,y,_level){
-    this.level	= _level;
     Phaser.Sprite.call(this,game,x,y,'forestGhost');
     game.add.existing(this);
 	this.anchor.setTo(.5);
     
-	this.y         	= game.rnd.realInRange(360,100);	                          //per fer que apareixi en una altura random
-    this.hp 		= 80;
+    this.level          = _level;
+    this.y              = game.rnd.realInRange(360,100);	                        //per fer que apareixi en una altura random
+    this.hp             = 80;
 	//this.goal 	    = this.x - game.rnd.realInRange(300,gameOptions.gameWidth);
-	this.goal 		= this.x + 200;
-	this.states     = {Spawning:1, chasing:2, changingDir1:3, changingDir2:4}
-    this.currentState = this.states.Spawning;
-    this.dir        = 1;                                                         //-1 -> esquerra, 1-> dreta
+    this.goal           = this.x + 200;
+    this.states         = {Spawning:1, chasing:2, changingDir1:3, changingDir2:4};
+    this.currentState   = this.states.Spawning;
+    this.dir            = 1;                                                        //-1 -> esquerra, 1-> dreta
+    this.verticalDist   = 50;
+    this.verticalSpeed  = this.verticalDist/0.5;                                   //0.5-> temps que triga a donar la volta
     
-	//Estats
-	this.changingDir = false;	//quan estem canviant de direcció
-
 	//Físiques
     game.physics.arcade.enable(this);
     this.body.allowGravity 	= false;
@@ -45,8 +44,12 @@ platformer.forestGhostPrefab.prototype.update = function () {
        if((this.dir < 0 && this.x < this.goal) || (this.dir > 0 && this.x > this.goal)){
            this.currentState = this.states.changingDir1;
     	   this.animations.play('turning1');
-           this.body.velocity.x = 0;
-           
+           //this.body.velocity.x = 0;
+           this.body.acceleration.x = -this.dir*350;
+           if(this.y < 360){
+               this.body.velocity.y = this.verticalSpeed;
+           }
+           console.log("y: "+this.y);
        }
     }
     if(this.currentState == this.states.changingDir1){
@@ -58,6 +61,9 @@ platformer.forestGhostPrefab.prototype.update = function () {
     }
     if(this.currentState == this.states.changingDir2){
        if(this.animations.currentAnim.isFinished){
+        this.body.velocity.y = 0;
+        this.body.acceleration.x = 0;
+        console.log("y: ---"+this.y);
         this.animations.play('fly');
         this.setNewGoal(this);
         this.body.velocity.x = gameOptions.foresGhostSpeed*this.dir;
@@ -65,29 +71,17 @@ platformer.forestGhostPrefab.prototype.update = function () {
        }
     }
     
-    
-    
-    /*if((this.body.velocity.x < 0 && this.x < this.goal) || (this.body.velocity.x > 0 && this.x > this.goal)){
-		//pillar un nou goal
-		this.goal = this.x+200; //HARDCODED -- CANVIAR SEGONS EN QUINA DIRECCIO ANEM
-    	this.animations.play('turning1');
-		//this.body.velocity.x *= -1;
-		this.body.velocity.x = 0;
-		this.events.onAnimationComplete.add(function(){
-			this.changingDir = true;
-			this.scale.x *= -1;
-    		this.animations.play('turning1');
-    		this.animations.currentAnim.reverse();
-			
-		},this); 
-	}*/
+    if(this.y >= 360){
+        this.body.velocity.y = 0;
+    }
 	
-	//es destrueix quan s'allunya suficient de la pantalla (poden entrar i sortir)
+	//Es destrueix quan s'allunya suficient de la pantalla (poden entrar i sortir)
     if(this.alive && this.x < (this.level.hero.x-gameOptions.gameWidth*1.4)){
 		this.destroy();
 	}
 };
 
+//Mètode que es crida just després d'acabar el spawn
 platformer.forestGhostPrefab.prototype.startMoving = function () {
 	if(this.animations.currentAnim.name == "spawn"){
 		this.body.velocity.x 	= -gameOptions.foresGhostSpeed;
@@ -97,7 +91,6 @@ platformer.forestGhostPrefab.prototype.startMoving = function () {
 	}
 };
 
-
 platformer.forestGhostPrefab.prototype.forestGhostPoints = function () {
 	this.level.hud.updateScore(100);
 	this.level.explosions.add(new platformer.explosionPrefab(this.level.game,this.x,this.y,0, this.level));
@@ -105,5 +98,5 @@ platformer.forestGhostPrefab.prototype.forestGhostPoints = function () {
 
 platformer.forestGhostPrefab.prototype.setNewGoal = function(){
     this.dir *=-1;
-    this.goal = this.x + this.dir*this.game.rnd.realInRange(gameOptions.gameWidth/3, gameOptions.gameWidth*1.2);
+    this.goal = this.x + this.dir*this.game.rnd.realInRange(gameOptions.gameWidth/4, gameOptions.gameWidth*1.2);
 };
