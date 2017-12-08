@@ -225,7 +225,7 @@ platformer.tutorial = {
         this.createBosses();
 		
 		//debug
-		//this.enemies.add(new platformer.forestGhostPrefab(this.game,450,350,this));
+		this.enemies.add(new platformer.forestGhostPrefab(this.game,450,100,this));
 
         //SPAWNS DE ZOMBIES
         this.spawns.add(new platformer.spawnZombiePrefab(this.game,475,350,this));
