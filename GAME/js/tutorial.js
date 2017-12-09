@@ -125,6 +125,7 @@ platformer.tutorial = {
         this.load.image('arma_daga','img/daga.png');
         this.load.spritesheet('arma_torcha','img/arma_foc.png',32,32);
         this.load.spritesheet('foc','img/foc.png',32,32);
+        this.load.spritesheet('forestGhostProj','img/forestGhostProjectile.png',46,10);
         //GRAVE
         this.load.image('grave0','img/grave0.png');
         this.load.image('grave1','img/grave1.png');

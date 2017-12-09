@@ -60,10 +60,10 @@ platformer.forestGhostPrefab.prototype.update = function () {
     if(this.currentState == this.states.shooting){
         if(!this.hasShot && this.animations.frame == 2){
             if(this.shootVertical){
-                var bala = new platformer.enemyBulletPrefab(this.game,this.x,this.y,0,0,gameOptions.eyeSpeed, this.level);
+                var bala = new platformer.enemyBulletPrefab(this.game,this.x,this.y,2,0,gameOptions.eyeSpeed, this.level, true);
                 //var bala = new platformer.enemyBulletPrefab(this.game,this.x,this.y,0,0,30, this.level);
             }else{
-                var bala = new platformer.enemyBulletPrefab(this.game,this.x,this.y,0,this.dir*gameOptions.eyeSpeed,0, this.level);
+                var bala = new platformer.enemyBulletPrefab(this.game,this.x,this.y,2,this.dir*gameOptions.eyeSpeed,0, this.level);
                 //var bala = new platformer.enemyBulletPrefab(this.game,this.x,this.y,0, 30,0, this.level);
             }
             this.hasShot = true;
