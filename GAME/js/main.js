@@ -26,6 +26,7 @@ var gameOptions = {
 	maxTimeGhostSpawn:1000,		//màxim  "  "  "
 	ghostWaitTime:4000,			//temps entre cada serie de 3 fantasmes que apareixen
 	ghostSpawnPosY:300,
+	forestGhostSpawnTime:300,
 	foresGhostSpeed:180,
 	distanceToStop:120,
     currentCheckpoint:0,

@@ -224,25 +224,24 @@ platformer.tutorial = {
 		this.createCrows();
         this.createBosses();
 		
-		//debug
-		this.spawnForestGhost = new platformer.forestGhostSpawnPrefab(this.game,400,350,this);
-        
-        //this.provaFG = new platformer.forestGhostPrefab(this.game,450,this);
-        //this.enemies.add(this.provaFG);
+		//DEBUG
 
         //SPAWNS DE ZOMBIES
-        /*this.spawns.add(new platformer.spawnZombiePrefab(this.game,475,350,this));
+        this.spawns.add(new platformer.spawnZombiePrefab(this.game,475,350,this));
         this.spawns.add(new platformer.spawnZombiePrefab(this.game,800,350,this));
         this.spawns.add(new platformer.spawnZombiePrefab(this.game,1200,350,this));
         this.spawns.add(new platformer.spawnZombiePrefab(this.game,1450,350,this));
         this.spawns.add(new platformer.spawnZombiePrefab(this.game,1900,350,this));
         this.spawns.add(new platformer.spawnZombiePrefab(this.game,2250,350,this));
 
-
         //SPAWNS DE GHOSTS
-		this.spawnGhost1 = new platformer.ghostSpawnPrefab(this.game,4569,350,this); 	//pos inicial 4769
-		this.spawnGhost2 = new platformer.ghostSpawnPrefab(this.game,5206,350,this); 	//pos inicial 5406
-*/
+		this.spawnGhost1 = new platformer.ghostSpawnPrefab(this.game,3861,350,this); 	//pos inicial 4769,5406
+		this.spawnGhost2 = new platformer.ghostSpawnPrefab(this.game,4569,350,this);
+		
+        //SPAWNS DE FOREST GHOSTS
+		this.forestGhostSpawn = new platformer.forestGhostSpawnPrefab(this.game,5206,350,this);
+		this.forestGhostSpawn2 = new platformer.forestGhostSpawnPrefab(this.game,5900,350,this);
+		
         //BOTINS FIXES
         this.createFixedLoot();
 
@@ -369,12 +368,6 @@ platformer.tutorial.createCrows = function(){
         if(points[i].x > this.checkpoints[gameOptions.currentCheckpoint].x) //només si estan més endavant que l'últim chekpoint
             this.enemies.add(new platformer.crowPrefab(this.game,points[i].x,points[i].y,this));
     }
-
-   /* this.enemies.add(new platformer.crowPrefab(this.game,1498,332,this));
-	this.enemies.add(new platformer.crowPrefab(this.game,1724,172,this));
-	this.enemies.add(new platformer.crowPrefab(this.game,2206,332,this));
-	this.enemies.add(new platformer.crowPrefab(this.game,2524,332,this));
-	this.enemies.add(new platformer.crowPrefab(this.game,3036,332,this));*/
 };
 platformer.tutorial.createFixedLoot = function(){
     new platformer.lootPrefab(this.game, 700, 370, this, false);

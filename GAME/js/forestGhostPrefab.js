@@ -50,7 +50,7 @@ platformer.forestGhostPrefab.prototype.update = function () {
     	   this.animations.play('turning1');
            this.body.acceleration.x = -this.dir*350;
            if(this.y < 360){
-               this.body.velocity.y = this.game.rnd.integerInRange(1,10)>4 ? this.verticalSpeed : -this.verticalSpeed;
+               this.body.velocity.y = this.game.rnd.integerInRange(1,10)>3 ? this.verticalSpeed : -this.verticalSpeed;
            }
             this.dir *=-1;
        } else{
