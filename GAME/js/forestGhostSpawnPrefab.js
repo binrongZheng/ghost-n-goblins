@@ -11,9 +11,8 @@ platformer.forestGhostSpawnPrefab=function(game,x,y,_level){
     this.level			= _level;
 	this.game 			= game;
     this.spawning 		= false;						//el PJ està dintre del rang
-	this.spawnedGhosts 	= 0;							//quants forestGhost s'han spawnejat (màxim de 3 per tongada)
 	this.spawnPosX		= this.x+gameOptions.gameWidth+200;    //punt de referencia per spawnejar forestGhost (hi haurà un marge)
-	this.forestGHosts   = game.add.group();
+	this.aliveGhosts	= 0;							//quants ghosts queden vius (màxim de 3)
     
 };
 
@@ -38,16 +37,16 @@ platformer.forestGhostSpawnPrefab.prototype.spawnForGhost = function(){
     console.log("spawning FG");
 	if(this.spawning){
 		//this.level.enemies.add(new platformer.ghostPrefab(this.game,this.spawnPosX,this.spawnPosY,this.level));		//espawnegem un fantasma
-		
-		if(this.forestGHosts.countLiving() < 4){
-            //fer un getFirstDead()
-            this.forestGHosts.add(new platformer.forestGhostPrefab(this.game,this.spawnPosX,this.level));		//espawnegem un fantasma
+		if(this.aliveGhosts < 3){
+    		console.log("actual spawn FG");
+            //this.forestGhosts.add(new platformer.forestGhostPrefab(this.game,this.spawnPosX,this.level));		//espawnegem un fantasma
+			this.level.enemies.add(new platformer.forestGhostPrefab(this.game,this.spawnPosX,this,this.level));
             //mirar com fer que tambe funcionnin amb les colisions (afegir al level.enemies d'alguna manera?)
 			this.level.game.time.events.add(this.game.rnd.realInRange (gameOptions.minTimeGhostSpawn,gameOptions.maxTimeGhostSpawn),this.spawnForGhost,this);								//si encara no hem arribat a 3, espawnejarem un altre
+			this.aliveGhosts++;
 		} else{
 			//cridem evento següent tongada
-			this.spawnedGhosts = 0;
 			this.level.game.time.events.add(gameOptions.ghostWaitTime,this.spawnForGhost,this);
 		}
 	}
-}
+};

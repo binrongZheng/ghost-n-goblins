@@ -225,13 +225,13 @@ platformer.tutorial = {
         this.createBosses();
 		
 		//debug
-		//this.spawnForestGhost = new platformer.forestGhostSpawnPrefab(this.game,400,350,this);
+		this.spawnForestGhost = new platformer.forestGhostSpawnPrefab(this.game,400,350,this);
         
         //this.provaFG = new platformer.forestGhostPrefab(this.game,450,this);
         //this.enemies.add(this.provaFG);
 
         //SPAWNS DE ZOMBIES
-        this.spawns.add(new platformer.spawnZombiePrefab(this.game,475,350,this));
+        /*this.spawns.add(new platformer.spawnZombiePrefab(this.game,475,350,this));
         this.spawns.add(new platformer.spawnZombiePrefab(this.game,800,350,this));
         this.spawns.add(new platformer.spawnZombiePrefab(this.game,1200,350,this));
         this.spawns.add(new platformer.spawnZombiePrefab(this.game,1450,350,this));
@@ -242,7 +242,7 @@ platformer.tutorial = {
         //SPAWNS DE GHOSTS
 		this.spawnGhost1 = new platformer.ghostSpawnPrefab(this.game,4569,350,this); 	//pos inicial 4769
 		this.spawnGhost2 = new platformer.ghostSpawnPrefab(this.game,5206,350,this); 	//pos inicial 5406
-
+*/
         //BOTINS FIXES
         this.createFixedLoot();
 

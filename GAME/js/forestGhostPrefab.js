@@ -1,12 +1,13 @@
 var platformer = platformer || {};
 
-platformer.forestGhostPrefab=function(game,x,_level){
+platformer.forestGhostPrefab=function(game,x,spawn,_level){
     Phaser.Sprite.call(this,game,x,100,'forestGhost');
     game.add.existing(this);
 	this.anchor.setTo(.5);
     
     this.y              = game.rnd.realInRange(360,100);	                        //per fer que apareixi en una altura random
-    this.level          = _level;
+    this.spawnPrefab	= spawn;
+	this.level          = _level;
     this.hp             = 80;
     this.goal           = this.x + 200;
     this.shootPos       = 0;
@@ -120,6 +121,7 @@ platformer.forestGhostPrefab.prototype.startMoving = function () {
 platformer.forestGhostPrefab.prototype.forestGhostPoints = function () {
 	this.level.hud.updateScore(100);
 	this.level.explosions.add(new platformer.explosionPrefab(this.level.game,this.x,this.y,0, this.level));
+	this.spawnPrefab.aliveGhosts--;		//per fer un seguiment de quants queden vius
 };
 
 platformer.forestGhostPrefab.prototype.setNewGoal = function(){
