@@ -68,9 +68,9 @@ platformer.zombiePrefab.prototype.update = function () {
        this.animations.currentAnim.onComplete.add (function(){this.kill();},this);
     }
     
-    if (this.frame == 5) {
+    /*if (this.frame == 5) {
         this.body.setSize(this.width/4*this.direction, this.height/4, this.direction*this.width/8, this.height/4);
-    }
+    }*/
     if (this.frame == 4){
         this.body.setSize(this.width/4*this.direction, this.height/2, this.direction*this.width/8, 0);
     }
