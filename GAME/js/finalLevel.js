@@ -103,12 +103,11 @@ platformer.finalLevel={
       this.playKey = this.game.input.keyboard.addKey(Phaser.Keyboard.P);
       //this.escKey = this.game.input.keyboard.addKey(Phaser.Keyboard.ESC);
 
-
-      //hero
-      this.hero = new platformer.playerPrefab(this.game,this.checkpoints[gameOptions.currentCheckpoint].x,this.checkpoints[gameOptions.currentCheckpoint].y,this,this.player_life,this.cursors,this.jump_key,this.space,this.with_cloth,this.playerHaveLife );
-
         //BOSS
     this.boss = new platformer.finalBossPrefab(this.game, 330, 290, this);
+        
+      //hero
+      this.hero = new platformer.playerPrefab(this.game,this.checkpoints[gameOptions.currentCheckpoint].x,this.checkpoints[gameOptions.currentCheckpoint].y,this,this.player_life,this.cursors,this.jump_key,this.space,this.with_cloth,this.playerHaveLife );
 
 
       //BALES DEL PERSONATGE
