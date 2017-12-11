@@ -74,6 +74,7 @@ platformer.tutorial = {
         this.playerHaveLife=gameOptions.playerLife;//playerLife==false;
         this.isPlay=true;
         this.canPlay=true;
+        gameOptions.currentLevel = 'tutorial';
 	},
 	preload:function(){
         //MAPA

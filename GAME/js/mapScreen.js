@@ -28,7 +28,7 @@ platformer.mapScreen={
     update:function(){
         if(this.bg.x <= -this.bg.width/2) {
           this.mapMusic.stop();
-          this.game.state.start('tutorial');
+          this.game.state.start(gameOptions.currentLevel);
         }
 
         this.bg.x+=this.cameraMovement;

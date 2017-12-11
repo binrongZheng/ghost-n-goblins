@@ -74,9 +74,12 @@ platformer.finalLevel={
       this.game.physics.arcade.gravity.y = gameOptions.playerGravity;
 
       //CHECKPOINT
+      gameOptions.currentCheckpoint = 0;
       this.checkpoints = [];
       var c1 = new Phaser.Point(gameOptions.gameWidth/4+32,330);//+47
       this.checkpoints.push(c1);
+        
+      gameOptions.currentLevel = 'finalLevel';
 },
     create:function(){
       //platform
