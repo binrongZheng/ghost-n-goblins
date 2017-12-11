@@ -80,9 +80,9 @@ platformer.playerBulletPrefab.prototype.update = function () {
     if (Phaser.Math.difference(this.position.x,this.level.hero.position.x) > gameOptions.gameWidth/2){
         this.kill();
     }
-    this.game.physics.arcade.overlap (this, this.level.graves,function (bullet, enemy){
+    this.game.physics.arcade.overlap (this, this.level.graves,function (bullet, grave){
         bullet.game.time.events.add(30, function() {
-            bullet.level.explosions.add(new platformer.explosionPrefab(bullet.level.game,bullet.x,bullet.y,2, this.level));
+            bullet.level.explosions.add(new platformer.explosionPrefab(bullet.level.game,bullet.x+bullet.width/2,bullet.y,2, this.level));
             bullet.hitGrave.play();
             bullet.kill();
         }.bind(bullet),bullet);
