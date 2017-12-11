@@ -122,6 +122,7 @@ platformer.forestGhostPrefab.prototype.forestGhostPoints = function () {
 	this.level.hud.updateScore(100);
 	this.level.explosions.add(new platformer.explosionPrefab(this.level.game,this.x,this.y,0, this.level));
 	this.spawnPrefab.aliveGhosts--;		//per fer un seguiment de quants queden vius
+    this.destroy();
 };
 
 platformer.forestGhostPrefab.prototype.setNewGoal = function(){

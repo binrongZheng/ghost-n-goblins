@@ -113,6 +113,9 @@ platformer.RedDemonPrefab.prototype.update = function () {
         
         //this.game.debug.body(this);
     }
+    else{
+        this.destroy();
+    }
 };
 platformer.RedDemonPrefab.prototype.goUp = function () { //es posa a volar i després de 1s comença el seguent moviment
 
@@ -177,4 +180,7 @@ platformer.RedDemonPrefab.prototype.die = function () {
     this.numHits = -1;
     this.level.hud.updateScore(500);
 	this.level.explosions.add(new platformer.explosionPrefab(this.level.game,this.x,this.y,0, this.level));
+    
+    this.body = null;
+    
 }

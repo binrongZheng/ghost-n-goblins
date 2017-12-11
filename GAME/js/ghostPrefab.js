@@ -38,6 +38,7 @@ platformer.ghostPrefab.prototype.update = function () {
 platformer.ghostPrefab.prototype.ghostPoints = function () {
 	this.level.hud.updateScore(100);
 	this.level.explosions.add(new platformer.explosionPrefab(this.level.game,this.x,this.y,1, this.level));
+    this.destroy();
 };
 platformer.ghostPrefab.prototype.killGhostFrom = function (xBulletPosition) {
 	//no l'he pogut utilitzar des del playerBullet :(
