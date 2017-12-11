@@ -353,9 +353,7 @@ else {
     //timer del dispar
     if (!this.canShoot && this.level.game.time.now - this.timeCheck > this.shootWait){
         this.canShoot = true;
-    }
-	
-	
+    }	
 	
     //quan ens fan daño no ens podem moure fins que tornem a tocar el terra
     if(this.damaged && (this.body.blocked.down || this.touchGrave) ){

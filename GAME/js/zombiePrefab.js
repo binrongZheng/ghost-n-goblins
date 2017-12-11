@@ -42,7 +42,9 @@ platformer.zombiePrefab=function(game,x,y,_level){
     this.events.onKilled.add(this.die, this);
     
     //triar si tindrà boti
-    this.dropsLoot = game.rnd.integerInRange(0,7);
+    this.dropsLoot = game.rnd.integerInRange(0,9);
+    
+    this.bury = false;
         
 };
 
@@ -59,13 +61,14 @@ platformer.zombiePrefab.prototype.update = function () {
     }    
     
    if (Phaser.Math.difference(this.position.x,platformer.tutorial.hero.position.x) > 300 && !this.isSpawning){
-        this.body.velocity.x = 0;
+       this.bury = true; 
+       this.body.velocity.x = 0;
         this.animations.stop('walk');
         this.animations.play('deSpawn');
        this.animations.currentAnim.onComplete.add (function(){this.kill();},this);
     }
     
-    if (this.frame == 6 || this.frame == 5) {
+    if (this.frame == 5) {
         this.body.setSize(this.width/4*this.direction, this.height/4, this.direction*this.width/8, this.height/4);
     }
     if (this.frame == 4){
@@ -76,10 +79,13 @@ platformer.zombiePrefab.prototype.update = function () {
      //this.level.game.debug.body(this);   
 };
 platformer.zombiePrefab.prototype.die = function () {    
-    this.level.hud.updateScore(100);
-	this.level.explosions.add(new platformer.explosionPrefab(this.level.game,this.x,this.y,0, this.level));
+    if (!this.bury) {
+        this.level.hud.updateScore(100);
+	    this.level.explosions.add(new platformer.explosionPrefab(this.level.game,this.x,this.y,0, this.level));
+    }
+    else this.bury = false;
     if (this.dropsLoot == 0){
         new platformer.lootPrefab(this.game, this.x, this.y, this.level, true);
     }
-    
+    this.destroy();
 };
