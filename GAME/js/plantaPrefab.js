@@ -28,9 +28,9 @@ platformer.plantaPrefab.prototype.constructor=platformer.plantaPrefab;
 
 platformer.plantaPrefab.prototype.update = function () {
     //girem la planta si fa falta
-    if(this.scale.x==1 && platformer.tutorial.hero.x>this.x){                                                       //planta mirant a la esquerra pero enemic a la dreta
+    if(this.scale.x==1 && this.level.hero.x>this.x){                                                       //planta mirant a la esquerra pero enemic a la dreta
        this.scale.x =-1;
-    } else if(this.scale.x==-1 && platformer.tutorial.hero.x<this.x){                                               //planta mirant a la dreta pero enemic a la esquerra
+    } else if(this.scale.x==-1 && this.level.hero.x<this.x){                                               //planta mirant a la dreta pero enemic a la esquerra
        this.scale.x =1;
     }
     
@@ -39,9 +39,9 @@ platformer.plantaPrefab.prototype.update = function () {
     }
     
     //depenent de la distancia podrà disparar o no
-    if(Phaser.Math.difference(this.x,platformer.tutorial.hero.x) < gameOptions.gameWidth/2 && this.aggro == false){ //només mirem la distancia horitzontal
+    if(Phaser.Math.difference(this.x,this.level.hero.x) < gameOptions.gameWidth/2 && this.aggro == false){ //només mirem la distancia horitzontal
        this.aggro = true;
-    }else if(Phaser.Math.difference(this.x,platformer.tutorial.hero.x) > gameOptions.gameWidth/2 && this.aggro == true){
+    }else if(Phaser.Math.difference(this.x,this.level.hero.x) > gameOptions.gameWidth/2 && this.aggro == true){
        this.aggro = false;
     }
     
@@ -49,7 +49,7 @@ platformer.plantaPrefab.prototype.update = function () {
     if(this.animations.currentFrame.index == 3 && this.shot == false && this.aggro == true){
         this.shot = true;
         //mirar la velocitat que pilla
-        var bulletDir = new Phaser.Point(platformer.tutorial.hero.x-this.x,platformer.tutorial.hero.y-6-this.y);
+        var bulletDir = new Phaser.Point(this.level.hero.x-this.x,this.level.hero.y-6-this.y);
         bulletDir.normalize().multiply(gameOptions.eyeSpeed,gameOptions.eyeSpeed);
         var bala = new platformer.enemyBulletPrefab(this.game,this.x,this.y-14,0,bulletDir.x,bulletDir.y, this.level);
         

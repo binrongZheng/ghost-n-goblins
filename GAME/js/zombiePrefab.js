@@ -60,7 +60,7 @@ platformer.zombiePrefab.prototype.update = function () {
         this.body.velocity.x = gameOptions.zombieSpeed * this.direction;
     }    
     
-   if (Phaser.Math.difference(this.position.x,platformer.tutorial.hero.position.x) > 300 && !this.isSpawning){
+   if (Phaser.Math.difference(this.position.x,this.level.hero.position.x) > 300 && !this.isSpawning){
        this.bury = true; 
        this.body.velocity.x = 0;
         this.animations.stop('walk');
