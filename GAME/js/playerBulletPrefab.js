@@ -55,28 +55,28 @@ platformer.playerBulletPrefab.prototype.update = function () {
     }
 
     this.game.physics.arcade.overlap (this, this.level.enemies,function (bullet, enemy){
-        
-        if (enemy.frame < 7 || !enemy instanceof platformer.zombiePrefab){ //per no matar el zombie just quan surt
-            if(!(enemy instanceof platformer.ghostPrefab)){		//si es un ghost, cridem el metode especial per saber d'on venia la bala
-            enemy.hp -= bullet.dmg;
-            if(enemy.hp <= 0){
-                if(bullet.bullet_type == 2)
-                    new platformer.firePrefab(bullet.game, bullet.x, 360, bullet.level);
-                enemy.kill();
-             }
-            }
-            else{
-                if(bullet.x>enemy.x){
-				    enemy.kill();
-			     }else{
-				    //posar una explosió?
-			     }
-            }
-            
-            bullet.kill();
-        }
+        if(enemy instanceof platformer.ghostPrefab){
+			if(bullet.x>enemy.x){
+				enemy.kill();
+			}else{
+				//posar una explosió?
+			}
+        	bullet.kill();
+		} else{
+			if(!(enemy instanceof platformer.zombiePrefab && enemy.frame>7)){  //per no matar el zombie just quan surt
+				enemy.hp -= bullet.dmg;
+				if(enemy.hp <= 0){
+					if(bullet.bullet_type == 2){
+						new platformer.firePrefab(bullet.game, bullet.x, 360, bullet.level);
+					}
+					enemy.kill();
+				}
+        		bullet.kill();
+			}
+		}
 		
     });
+	
     if (Phaser.Math.difference(this.position.x,this.level.hero.position.x) > gameOptions.gameWidth/2){
         this.kill();
     }
