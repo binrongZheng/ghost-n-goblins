@@ -33,16 +33,16 @@ platformer.ciclopPrefab.prototype.update = function () {
 	this.game.physics.arcade.collide(this, this.level.hero);
 	
 	//Quan el comencem a veure en pantalla es posa aggro
-	if(!this.aggro && Phaser.Math.difference(this.x,platformer.tutorial.hero.x) < (gameOptions.gameWidth/2)-this.width/2){
+	if(!this.aggro && Phaser.Math.difference(this.x,this.level.hero.x) < (gameOptions.gameWidth/2)-this.width/2){
 		this.aggro = true;
 		this.level.game.time.events.add(500,this.getAngry,this);
 	}
 	
 	if(this.aggro){
 		//girem el ciclop si fa falta
-		if(this.scale.x == -1 && platformer.tutorial.hero.x > this.x){
+		if(this.scale.x == -1 && this.level.hero.x > this.x){
 		   this.scale.x =1;
-		} else if(this.scale.x == 1 && platformer.tutorial.hero.x < this.x){
+		} else if(this.scale.x == 1 && this.level.hero.x < this.x){
 		   this.scale.x =-1;
 		}
 	}
@@ -66,7 +66,7 @@ platformer.ciclopPrefab.prototype.getAngry = function () {
 };
 
 platformer.ciclopPrefab.prototype.pursue = function () {
-	if(Phaser.Math.difference(this.x,platformer.tutorial.hero.x) > 150){		//caminar
+	if(Phaser.Math.difference(this.x,this.level.hero.x) > 150){		//caminar
 		this.body.velocity.x = this.scale.x*gameOptions.ciclopWalkSpeed;		//scale-> la direcció cap on ha d'anar
 		this.animations.play('walk1');
 		this.level.game.time.events.add(500,this.pursue,this);

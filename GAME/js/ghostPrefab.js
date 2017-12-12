@@ -30,7 +30,7 @@ platformer.ghostPrefab.prototype.update = function () {
     if(this.alive){
         this.y += Math.sin(((this.x-this.startX)/this.xScale) + this.randomX)*this.yScale;
         //Si surt de la pantalla, es mor
-        if(this.x < (platformer.tutorial.hero.x-gameOptions.gameWidth/2)){
+        if(this.x < (this.level.hero.x-gameOptions.gameWidth/2)){
             this.destroy();
         }
     }

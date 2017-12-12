@@ -30,5 +30,5 @@ platformer.platformPrefab.prototype.update = function () {
 	if(this.x >= this.marginRight){
 		this.body.velocity.x = -gameOptions.platformSpeed;
 	}
-	this.game.debug.body(this);
+	//this.game.debug.body(this);
 };

@@ -29,7 +29,7 @@ platformer.crowPrefab.prototype.constructor=platformer.crowPrefab;
 
 platformer.crowPrefab.prototype.update = function () {
     //Si apareix per pantalla, es torna aggro
-    if(this.aggro == false && Phaser.Math.difference(this.x,platformer.tutorial.hero.x) < gameOptions.gameWidth/2){ //només mirem la distancia horitzontal
+    if(this.aggro == false && Phaser.Math.difference(this.x,this.level.hero.x) < gameOptions.gameWidth/2){ //només mirem la distancia horitzontal
         this.aggro = true;
         this.animations.play('crowAggro');
     }
@@ -46,7 +46,7 @@ platformer.crowPrefab.prototype.update = function () {
             this.y += Math.sin((this.x-this.startX)/gameOptions.crowXoffset)*gameOptions.crowYoffset;
         }
         //Si surt de la pantalla, es mor
-        if(this.flying == true && this.x < (platformer.tutorial.hero.x-gameOptions.gameWidth/2)){
+        if(this.flying == true && this.x < (this.level.hero.x-gameOptions.gameWidth/2)){
             this.destroy();
         }
     }
