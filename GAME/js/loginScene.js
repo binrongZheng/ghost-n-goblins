@@ -25,12 +25,15 @@ platformer.loginScene={
         this.userNameText = platformer.game.add.bitmapText(gameOptions.gameWidth/2,  55,  'gngFont', 'AAAAAA', this.textSize);                        
         this.userNameText.size = 15;
         
-        this.userNameText.x   = gameOptions.gameWidth/2 - this.userNameText.width/2;        
+        this.userNameText.anchor.setTo(   .5);
+        this.userNameText.x   = gameOptions.gameWidth/2;        
         this.userNameText.y = 180;
         
         //STRING ON GUARDAR EL NOM D'USUARI
         this.userName = "";       
         
+        //CONTROLS
+        this.enter = this.game.input.keyboard.addKey(Phaser.Keyboard.ENTER);
     },
     update:function(){
         
@@ -38,19 +41,21 @@ platformer.loginScene={
         this.game.input.keyboard.onDownCallback = function() {
             
             if (this.game.input.keyboard.event.keyCode == 8 && this.userName.length > 0) //borrar
-                this.userName = this.userName.substr(0, this.userName.length-1);
+                this.userName = this.userName.substr(0, this.userName.length-1);          
             
-            else if (this.game.input.keyboard.event.keyCode == 13 && this.userName.length > 0){ //enter carga escena menu i guarda el nom d'usuari
-                gameOptions.userName = this.userName;
-                platformer.game.state.start('mainMenu');
-            }
-            
-            else
+            else if (this.userName.length  < 6)
                 this.userName += String.fromCharCode(this.game.input.keyboard.event.keyCode);
             
         }.bind(this);
+        
         //ho pintem
-        this.userNameText.setText(this.userName);
+        this.userNameText.setText(this.userName); 
+        
+        if(this.enter.isDown && this.userName.length > 0){
+             gameOptions.userName = this.userName;                
+             platformer.game.state.start('mainMenu');
+        }
+        
         
     }
 }

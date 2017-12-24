@@ -74,9 +74,11 @@ platformer.mainMenu={
         this.enterKey = this.game.input.keyboard.addKey(Phaser.Keyboard.ENTER);
         this.escKey = this.game.input.keyboard.addKey(Phaser.Keyboard.ESC);
         //music-stop
-        platformer.tutorial.themeMusic.stop();
+        if (platformer.tutorial.themeMusic != null)
+            platformer.tutorial.themeMusic.stop();
         platformer.tutorial.inPlay=false;
-        platformer.mapScreen.mapMusic.stop();
+        if (platformer.tutorial.mapMusic != null)
+            platformer.mapScreen.mapMusic.stop();
     },
     update:function(){
 
@@ -108,9 +110,8 @@ platformer.mainMenu={
                 this.cursor.position.x = this.buttons.children[this.buttonIndex].position.x - this.cursor.width;
                 this.cursor.position.y = this.buttons.children[this.buttonIndex].position.y + this.buttons.children[this.buttonIndex].height/2;
             }
-
             //SELECCIONAR OPCIO
-            if (this.enterKey.isDown) {
+            if (this.enterKey.isDown) {                
                 switch (this.buttonIndex) {
                     case 0: platformer.game.state.start('intro_scene');break;
                     case 1: platformer.game.state.start('ranking');break;

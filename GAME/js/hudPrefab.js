@@ -21,7 +21,7 @@ platformer.hudPrefab=function(game,_level,lives){
 	this.changeLives(lives);
 
 	/*---TEXTOS---*/
-	this.playerName		= platformer.game.add.bitmapText(10,  0,  'gngFont', 'PLAYER 1',  					18);	//Enjoy the OCD :D
+	this.playerName		= platformer.game.add.bitmapText(10,  0,  'gngFont', gameOptions.userName,			18);	//Enjoy the OCD :D
 	this.topScore		= platformer.game.add.bitmapText(200, 0,  'gngFont', 'TOP SCORE', 					18);
 	this.scoreText		= platformer.game.add.bitmapText(10, 17,  'gngFont', ''+gameOptions.currentScore,	18);
 	this.topScoreText 	= platformer.game.add.bitmapText(200,17,  'gngFont', '1000', 	  					18);
