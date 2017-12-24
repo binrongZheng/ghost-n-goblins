@@ -74,6 +74,7 @@ platformer.tutorial = {
         this.playerHaveLife=gameOptions.playerLife;//playerLife==false;
         this.isPlay=true;
         this.canPlay=true;
+        this.pauseHud=false;
         gameOptions.currentLevel = 'tutorial';
 	},
 	preload:function(){
@@ -225,7 +226,7 @@ platformer.tutorial = {
   		this.createPlants();
 		this.createCrows();
         this.createBosses();
-		
+
 		//DEBUG
 
         //SPAWNS DE ZOMBIES
@@ -239,11 +240,11 @@ platformer.tutorial = {
         //SPAWNS DE GHOSTS
 		this.spawnGhost1 = new platformer.ghostSpawnPrefab(this.game,3861,350,this); 	//pos inicial 4769,5406
 		this.spawnGhost2 = new platformer.ghostSpawnPrefab(this.game,4569,350,this);
-		
+
         //SPAWNS DE FOREST GHOSTS
 		this.forestGhostSpawn = new platformer.forestGhostSpawnPrefab(this.game,5206,350,this);
 		this.forestGhostSpawn2 = new platformer.forestGhostSpawnPrefab(this.game,5900,350,this);
-		
+
         //BOTINS FIXES
         this.createFixedLoot();
 

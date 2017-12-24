@@ -80,6 +80,8 @@ platformer.finalLevel={
       this.checkpoints.push(c1);
 
       gameOptions.currentLevel = 'finalLevel';
+
+      this.pauseHud=false;
 },
     create:function(){
       //platform
@@ -165,6 +167,7 @@ platformer.finalLevel={
     this.boss.activate();
 	  //HUD
       this.hud = new platformer.hudPrefab(this.game,this,this.hero.player_life);
+
  },
  gotoEndAnimation:function(){
    //END VIDEO
@@ -177,7 +180,7 @@ platformer.finalLevel={
    this.endVideo.play(true);
 
 	 this.hud = new platformer.hudPrefab(this.game,this,this.hero.player_life);
-
+this.pauseHud=true;
    this.game.time.events.add(20000, this.gotoRanking, this);
  },
  gotoRanking:function(){

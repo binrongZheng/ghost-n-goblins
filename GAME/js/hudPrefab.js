@@ -4,9 +4,9 @@ var platformer = platformer || {};
 platformer.hudPrefab=function(game,_level,lives){
 	this.level = _level;
     this.vides = 0;
-	
+
 	/*---SPRITES---*/
-	//Frame de l'arma 
+	//Frame de l'arma
 	Phaser.Sprite.call(this,game,gameOptions.gameWidth/2,13*gameOptions.gameHeight/14,'hud');
     game.add.existing(this);
     this.anchor.setTo(.5);
@@ -19,11 +19,11 @@ platformer.hudPrefab=function(game,_level,lives){
 	this.lives = game.add.sprite(5,gameOptions.gameHeight-30,'lives',1);
 	this.lives.fixedToCamera = true;
 	this.changeLives(lives);
-	
+
 	/*---TEXTOS---*/
 	this.playerName		= platformer.game.add.bitmapText(10,  0,  'gngFont', 'PLAYER 1',  					18);	//Enjoy the OCD :D
 	this.topScore		= platformer.game.add.bitmapText(200, 0,  'gngFont', 'TOP SCORE', 					18);
-	this.scoreText		= platformer.game.add.bitmapText(10, 17,  'gngFont', ''+gameOptions.currentScore,	18); 
+	this.scoreText		= platformer.game.add.bitmapText(10, 17,  'gngFont', ''+gameOptions.currentScore,	18);
 	this.topScoreText 	= platformer.game.add.bitmapText(200,17,  'gngFont', '1000', 	  					18);
 	this.timeText 		= platformer.game.add.bitmapText(10, 34,  'gngFont', 'TIME', 	  					18);
 	this.timerText 		= platformer.game.add.bitmapText(10, 51,  'gngFont', '2.00', 	  					18);
@@ -44,7 +44,7 @@ platformer.hudPrefab=function(game,_level,lives){
 	this.topScoreText.fixedToCamera = true;
 	this.timeText.fixedToCamera 	= true;
 	this.timerText.fixedToCamera 	= true;
-	
+
 	/*---TEMPS---*/
 	this.timer = game.time.create(false);
 	this.timer.loop(gameOptions.tutorialTime*1000+999,this.timerFinished,this); 	//milisegons
@@ -56,6 +56,9 @@ platformer.hudPrefab.prototype=Object.create(Phaser.Sprite.prototype);
 platformer.hudPrefab.prototype.constructor=platformer.hudPrefab;
 platformer.hudPrefab.prototype.update=function(){
 	//actualitzem el text del contador al hud
+	if(this.level.pauseHud)
+	this.timer.pause();
+	else
 	this.timerText.setText(Math.floor(this.timer.duration/60000)+"."+Math.floor((this.timer.duration/1000)%60)); //min:seg
 };
 
