@@ -47,7 +47,8 @@ platformer.game.state.add('intro_scene',platformer.intro_scene);
 platformer.game.state.add('tutorial',platformer.tutorial);
 platformer.game.state.add('mapScreen',platformer.mapScreen);
 platformer.game.state.add('finalLevel',platformer.finalLevel);
+platformer.game.state.add('loginScene',platformer.loginScene);
 
 platformer.game.state.start('mainMenu');
 
-//platformer.game.state.start('finalLevel');
+//platformer.game.state.start('loginScene');
