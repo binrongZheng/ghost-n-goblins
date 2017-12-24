@@ -78,7 +78,7 @@ platformer.finalLevel={
       this.checkpoints = [];
       var c1 = new Phaser.Point(gameOptions.gameWidth/4+32,330);//+47
       this.checkpoints.push(c1);
-        
+
       gameOptions.currentLevel = 'finalLevel';
 },
     create:function(){
@@ -105,7 +105,7 @@ platformer.finalLevel={
 
         //BOSS
     this.boss = new platformer.finalBossPrefab(this.game, 330, 290, this);
-        
+
       //hero
       this.hero = new platformer.playerPrefab(this.game,this.checkpoints[gameOptions.currentCheckpoint].x,this.checkpoints[gameOptions.currentCheckpoint].y,this,this.player_life,this.cursors,this.jump_key,this.space,this.with_cloth,this.playerHaveLife );
 
@@ -124,12 +124,6 @@ platformer.finalLevel={
       this.introSprite.height=gameOptions.gameHeight-45;
 
       this.introVideo.play(true);
-
-
-
-      //CAMERA
-      //this.camera.follow(this.hero);
-
 
       //music
       this.themeMusic=this.add.audio('theme_music');
@@ -152,30 +146,22 @@ platformer.finalLevel={
     this.game_over = this.add.sprite(this.camera.x+gameOptions.gameWidth/2,this.camera.y+gameOptions.gameHeight/2, 'game_over');
     this.game_over.anchor.setTo(0.5);
     this.game_over.visible=false;
-    //this.map.forEach(function(t){if (t) {t.collideDown=false;}},this.game,0,0,this.map.width,this.map.height,'platform_up');
 
       if (this.win){
         this.playWinMusic++;
         if(this.playWinMusic==1)  this.win_Music.play();
         if(this.playWinMusic>100) this.playWinMusic=10;
-		  this.canPlay = false;
+		      this.canPlay = false;
           this.game.time.events.add(500, this.gotoEndAnimation, this);
-		  this.win = false;
+		      this.win = false;
       }
-
-      //console.log(this.canPlay);
-    /*  this.game_over = this.add.sprite(this.camera.x+gameOptions.gameWidth/2,this.camera.y+gameOptions.gameHeight/2, 'game_over');
-      this.game_over.anchor.setTo(0.5);
-      this.game_over.visible=false;
-      this.map.forEach(function(t){if (t) {t.collideDown=false;}},this.game,0,0,this.map.width,this.map.height,'platform_up');
-*/
   },
   changeState:function(){
     if(this.win)this.canPlay=false;
     else this.canPlay=true;
     this.introSprite.destroy();
     this.introVideo.stop();
-      //Deixem moure el boss;
+    //Deixem moure el boss;
     this.boss.activate();
 	  //HUD
       this.hud = new platformer.hudPrefab(this.game,this,this.hero.player_life);
@@ -183,16 +169,23 @@ platformer.finalLevel={
  gotoEndAnimation:function(){
    //END VIDEO
 
-     this.canPlay = false;
+   this.canPlay = false;
    this.endVideo = this.game.add.video('endVideo');
    this.endSprite = this.endVideo.addToWorld(gameOptions.gameWidth/2, gameOptions.gameHeight/2, 0.5, 0.5,1,0.7);
    this.endSprite.width=gameOptions.gameWidth+90;
    this.endSprite.height=gameOptions.gameHeight-89;
-    this.endVideo.play(true);
+   this.endVideo.play(true);
 
 	 this.hud = new platformer.hudPrefab(this.game,this,this.hero.player_life);
 
+   this.game.time.events.add(20000, this.gotoRanking, this);
+ },
+ gotoRanking:function(){
+
+   platformer.game.state.start('ranking');
+
  }
+
 
 
 }
