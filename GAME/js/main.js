@@ -35,7 +35,8 @@ var gameOptions = {
 	ciclopPoints:2000,
     finalBossSpeed:15,
     bossPoints:10000,
-    currentLevel:'tutorial'
+    currentLevel:'tutorial',
+    userName:''
 };
 
 platformer.game = new Phaser.Game(gameOptions.gameWidth,gameOptions.gameHeight,Phaser.AUTO,null,this,false,false);
@@ -49,6 +50,6 @@ platformer.game.state.add('mapScreen',platformer.mapScreen);
 platformer.game.state.add('finalLevel',platformer.finalLevel);
 platformer.game.state.add('loginScene',platformer.loginScene);
 
-platformer.game.state.start('mainMenu');
+//platformer.game.state.start('mainMenu');
 
-//platformer.game.state.start('loginScene');
+platformer.game.state.start('loginScene');
