@@ -21,26 +21,40 @@ platformer.loginScene={
         this.enterNameText.x   = gameOptions.gameWidth/2 - this.enterNameText.width/2;        
         this.enterNameText.y = 100;
         
+        this.advice = platformer.game.add.bitmapText(gameOptions.gameWidth/2,  55,  'gngFont', '(max 6 letters)', this.textSize);                        
+        
+        this.advice.tint = '0xc40f0f';
+        this.advice.size = 10;
+        this.advice.x   = gameOptions.gameWidth/2 - this.advice.width/2;        
+        this.advice.y = 130;
+        
         //EL TEXT DEL NOM D'USUARI
         this.userNameText = platformer.game.add.bitmapText(gameOptions.gameWidth/2,  55,  'gngFont', 'AAAAAA', this.textSize);                        
         this.userNameText.size = 15;
         
         this.userNameText.anchor.setTo(   .5);
         this.userNameText.x   = gameOptions.gameWidth/2;        
-        this.userNameText.y = 180;
+        this.userNameText.y = 195;
         
         //STRING ON GUARDAR EL NOM D'USUARI
-        this.userName = "";       
+        this.userName = "ARTHUR";
+        this.blinkEvent = this.game.time.events.loop(Phaser.Timer.SECOND/3,this.nameBlink,this);
         
         //CONTROLS
         this.enter = this.game.input.keyboard.addKey(Phaser.Keyboard.ENTER);
     },
     update:function(){
         
-        //agafem el que escrius i afegim lletra o borrem o carguem el menu
+        //agafem el que escrius i afegim/borrem lletra
         this.game.input.keyboard.onDownCallback = function() {
             
-            if (this.game.input.keyboard.event.keyCode == 8 && this.userName.length > 0) //borrar
+            if (this.userName == "ARTHUR"){ //la primera vegada hem de netejar el string i parar el blink
+                this.userName = String.fromCharCode(this.game.input.keyboard.event.keyCode);                
+                this.game.time.events.remove(this.blinkEvent);
+                this.userNameText.alpha = 1;
+            }
+            
+            else if (this.game.input.keyboard.event.keyCode == 8 && this.userName.length > 0) 
                 this.userName = this.userName.substr(0, this.userName.length-1);          
             
             else if (this.userName.length  < 6)
@@ -57,5 +71,13 @@ platformer.loginScene={
         }
         
         
+    },
+    nameBlink:function(){
+        if(this.userNameText.alpha == 0){
+		this.userNameText.alpha = 0.8;
+	}
+	else {
+		this.userNameText.alpha = 0;
+	}
     }
 }
