@@ -189,11 +189,11 @@ else {
     }
 
     //si no estem saltant posem a 0 la velocitat
-	
+
     if (!this.damaged && (this.touchGrave || this.body.blocked.down) ) {
         this.body.velocity.x = 0;
     }
-	
+
     //POSAR TAMANY COLISIO A NORMAL SI NO HO ESTA
     if (this.body.height != this.height)
         this.body.setSize(this.width*this.scale.x, this.height, 0,0);
@@ -259,7 +259,7 @@ else {
             }
                  //STAND
             else if(!this.damaged && (this.body.blocked.down||this.touchGrave==true) ){
-                this.ajupir_attack=false;                
+                this.ajupir_attack=false;
 				this.body.velocity.x = 0;
                 this.animations.play('stand');
             }
@@ -353,8 +353,8 @@ else {
     //timer del dispar
     if (!this.canShoot && this.level.game.time.now - this.timeCheck > this.shootWait){
         this.canShoot = true;
-    }	
-	
+    }
+
     //quan ens fan daño no ens podem moure fins que tornem a tocar el terra
     if(this.damaged && (this.body.blocked.down || this.touchGrave) ){
         this.damaged = false;
@@ -421,7 +421,7 @@ platformer.playerPrefab.prototype.killPlayer = function (hero,enemy) {
                 this.isKill=0;
                 this.body.checkCollision.up=false;
                 this.body.checkCollision.left=false;
-                this.body.checkCollision.right=false;                
+                this.body.checkCollision.right=false;
 				this.body.velocity.x = 0;
                 this.playerDieSo.play();
                 this.playerDieSo.onStop.addOnce(function() {    this.game.time.events.add(Phaser.Timer.SECOND * 0.75, this.map_Screen, this);}, this);
@@ -438,7 +438,7 @@ platformer.playerPrefab.prototype.killPlayer = function (hero,enemy) {
             this.body.checkCollision.left=false;
             this.body.checkCollision.right=false;
             this.level.themeMusic.stop();
-            this.level.gameoverMusic.play();           
+            this.level.gameoverMusic.play();
 			this.body.velocity.x = 0;
             this.game.time.events.add(Phaser.Timer.SECOND * 5, this.gameover,this);
             this.level.currentCheckpoint = 0; //posem el respawn al inici un altre cop
