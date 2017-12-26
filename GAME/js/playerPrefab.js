@@ -27,7 +27,7 @@ platformer.playerPrefab = function (game,x,y, _level,_player_life,_cursors,_jump
 	  game.add.existing (this);
 	  this.anchor.setTo(.5);
 	//ARMADURA - GONE
-    this.animations.add("removeArmour", [32,33], 8, false);
+    //this.animations.add("removeArmour", [32,33], 8, false);
     //PLAYER - WITH CLOTH
     this.animations.add('walk', [0,1,2,3],10,true);
     this.animations.add('stand', [4],10,false);
@@ -86,6 +86,11 @@ platformer.playerPrefab = function (game,x,y, _level,_player_life,_cursors,_jump
 
     //LA POSICIO DEL DISPAR
     this.shootOffset = 7;
+    
+    //L'armadura que es trencara
+    this.damagedArmour = this.addChild(game.make.sprite(-this.width, -this.height, 'armaduraGone'));
+    this.damagedArmour.frame = 4;
+    this.damagedArmour.animations.add('break', [0,1,2,3,4],10,false);    
 };
 
 platformer.playerPrefab.prototype = Object.create(Phaser.Sprite.prototype);
@@ -402,11 +407,11 @@ platformer.playerPrefab.prototype.killPlayer = function (hero,enemy) {
 			this.invincible = true;
 		  	this.game.time.events.add(1060,this.stopInvincible,this);	//para dejar de ser invencible
           	//this.showArmourGone(hero,enemy);					//da error (no puede conseguir la x del enemigo)
-
+            this.damagedArmour.animations.play('break');
             //no deixem moure i apliquem força fins que tornem a tocar el terra
             this.damaged = true;
             this.removeArmourSo.play();
-            this.animations.play('removeArmour');
+            //this.animations.play('removeArmour');
             this.body.velocity.x = -200;
             this.body.velocity.y = -250;
       			this.body.position.y -=50;
