@@ -50,11 +50,22 @@ platformer.ranking={
 
         //CONTROLS
         this.escKey = this.game.input.keyboard.addKey(Phaser.Keyboard.ESC);
+        
+        console.log(this.getScores());
     },
     update:function(){
         if(this.escKey.isDown){
             platformer.game.state.start('mainMenu');
         }
+    },
+    getScores:function(){           //llama esta funcion para conseguir las puntuaciones (más adelante haré que cargue del localStorage)
+        //las puntuaciones estan en objetos que siempre tendrán las propiedades 'name' y 'score'
+        var firstScore = {name:"JeffK",score:"10000"};
+        var secondScore = {name:"Adolf",score:"3000"};
+        var thirdScore = {name:"Radev",score:"0"};
+        
+        var scores = [firstScore,secondScore,thirdScore];
+        return scores;
     }
 
 }
