@@ -51,21 +51,66 @@ platformer.ranking={
         //CONTROLS
         this.escKey = this.game.input.keyboard.addKey(Phaser.Keyboard.ESC);
         
-        console.log(this.getScores());
+        this.getScores();
+        this.saveNewScore(332);
+        this.getScores();
     },
     update:function(){
         if(this.escKey.isDown){
             platformer.game.state.start('mainMenu');
         }
     },
-    getScores:function(){           //llama esta funcion para conseguir las puntuaciones (más adelante haré que cargue del localStorage)
+    checkLocalStorage:function(){               //check if browser has localStorage
+        return ('localStorage' in window) && window['localStorage']!==null;
+    },
+    getScores:function(){           //llama esta funcion para conseguir las puntuaciones (es un array)
         //las puntuaciones estan en objetos que siempre tendrán las propiedades 'name' y 'score'
-        var firstScore = {name:"JeffK",score:"10000"};
-        var secondScore = {name:"Adolf",score:"3000"};
-        var thirdScore = {name:"Radev",score:"0"};
+        var testScores = '[{"name":"JeffK","score":10000},{"name":"Adolf","score":3000},{"name":"Radev","score":0}]';
         
-        var scores = [firstScore,secondScore,thirdScore];
-        return scores;
+        var defaultScores = '[{"name":"Radev","score":"0"}]';
+        var result;
+        
+        if(this.checkLocalStorage()){
+            if(localStorage["hscoring"]==null){                //si no hi ha cap puntuació guardada
+                localStorage["hscoring"] = defaultScores;
+                console.log("NewScores");
+            }
+            localStorage["hscoring"] = testScores; -------------TEST ONLY
+            savedScores = localStorage["hscoring"];
+            result = JSON.parse(savedScores);
+            console.log(result);
+            for (i=0;i<result.length;i++) {
+                console.log(result[i].score);
+            }
+            //console.log(localStorage["hscores"]);
+        } else{
+            result = JSON.parse(defaultScores);     //si no tenim localStorage, carreguem el default
+        }
+        gameOptions.highScores = result;
+    },
+    saveNewScore:function(newScore){
+        var playerName = gameOptions.userName;
+        
+        //comprovar si hem arribat al tope de 10 scores
+        if(gameOptions.highScores.length < 9){                          //afegeix automaticament
+            gameOptions.highScores.push({"name":gameOptions.userName,"score":newScore});
+        }else{
+            //comprovar que com a minim és superior a la pitjor score
+            var lastScore = gameOptions.highScores[gameOptions.highScores.length-1];
+            console.log(gameOptions.highScores);
+            console.log(gameOptions.highScores[2]);
+            if(lastScore.score < newScore){
+                gameOptions.highScores.pop();
+                gameOptions.highScores.push({"name":gameOptions.userName,"score":newScore});
+            }
+        }
+        
+        //ordenar les scores
+        
+        //guardarles
+        if(this.checkLocalStorage()){
+            localStorage["hscoring"] = JSON.stringify(gameOptions.highScores);
+        }
     }
 
 }

@@ -36,7 +36,9 @@ var gameOptions = {
     finalBossSpeed:15,
     bossPoints:10000,
     currentLevel:'tutorial',
-    userName:''
+    userName:'',
+    topScore:'0',
+    highScores:[]
 };
 
 platformer.game = new Phaser.Game(gameOptions.gameWidth,gameOptions.gameHeight,Phaser.AUTO,null,this,false,false);
@@ -53,3 +55,4 @@ platformer.game.state.add('loginScene',platformer.loginScene);
 //platformer.game.state.start('mainMenu');
 
 platformer.game.state.start('loginScene');
+console.log("esto es una prieba");
