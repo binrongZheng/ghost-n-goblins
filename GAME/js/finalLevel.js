@@ -171,7 +171,6 @@ platformer.finalLevel={
  },
  gotoEndAnimation:function(){
    //END VIDEO
-
    this.canPlay = false;
    this.endVideo = this.game.add.video('endVideo');
    this.endSprite = this.endVideo.addToWorld(gameOptions.gameWidth/2, gameOptions.gameHeight/2, 0.5, 0.5,1,0.7);
@@ -184,7 +183,10 @@ this.pauseHud=true;
    this.game.time.events.add(20000, this.gotoRanking, this);
  },
  gotoRanking:function(){
-
+     if(gameOptions.currentScore > gameOptions.topScore){
+         gameOptions.topScore = gameOptions.currentScore;
+     }
+     platformer.localStorageController.saveNewScore(gameOptions.currentScore); //antes de ir al ranking, guardamos la puntuacion
    platformer.game.state.start('ranking');
 
  }

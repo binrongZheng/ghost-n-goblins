@@ -544,6 +544,10 @@ platformer.playerPrefab.prototype.gameover = function () {
 
     if(this.killOnComplete){
       //todo lo que esta aqui tiene que ser platformer con this.level no funciona
+      if(gameOptions.currentScore > gameOptions.topScore){
+          gameOptions.topScore = gameOptions.currentScore;
+      }
+      platformer.localStorageController.saveNewScore(gameOptions.currentScore);
       gameOptions.currentScore = 0;
       this.level.gameoverMusic.stop();
       platformer.game.state.start('mainMenu');
