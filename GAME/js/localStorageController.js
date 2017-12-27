@@ -18,7 +18,6 @@ platformer.localStorageController = {
             if(localStorage["highscores"]==null){                //si no hi ha cap puntuació guardada
                 localStorage["highscores"] = defaultScores;
             }
-            //localStorage["highscores"] = defaultScores; //-------------TEST ONLY-DELTE
             savedScores = localStorage["highscores"];
             result = JSON.parse(savedScores);
         } else{

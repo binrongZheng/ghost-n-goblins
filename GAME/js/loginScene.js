@@ -46,7 +46,7 @@ platformer.loginScene={
     update:function(){
         
         //agafem el que escrius i afegim/borrem lletra
-        this.game.input.keyboard.onDownCallback = function() {
+        this.game.input.keyboard.onDownCallback = function() {  //Get ready for some "discípulo de Radev" Action:
             
             if (this.userName == "ARTHUR"){ //la primera vegada hem de netejar el string i parar el blink
                 this.userName = String.fromCharCode(this.game.input.keyboard.event.keyCode);                
@@ -54,11 +54,11 @@ platformer.loginScene={
                 this.userNameText.alpha = 1;
             }
             
-            else if (this.game.input.keyboard.event.keyCode == 8 && this.userName.length > 0) 
+            else if (this.game.input.keyboard.event.keyCode == 8 && this.userName.length > 0)       // No tens en compte el enter!
                 this.userName = this.userName.substr(0, this.userName.length-1);          
             
             else if (this.userName.length  < 6)
-                this.userName += String.fromCharCode(this.game.input.keyboard.event.keyCode);
+                this.userName += String.fromCharCode(this.game.input.keyboard.event.keyCode);       //Pot ser problemàtic pq estàs afegint tots els símbols (que no es poden veure però estan a la string. I si poses un " segurament et carregues les partides guardades)
             
         }.bind(this);
         
@@ -66,6 +66,10 @@ platformer.loginScene={
         this.userNameText.setText(this.userName); 
         
         if(this.enter.isDown && this.userName.length > 0){
+            if(this.userName.length == 1 && this.userName.charCodeAt(0) == 13){       //BUGFIX TEMPORAL---------- 
+                //(si hem apretat enter hi haurà el caracter 13)
+                this.userName = "ARTHUR";
+            }
              gameOptions.userName = this.userName;                
              platformer.game.state.start('mainMenu');
         }
