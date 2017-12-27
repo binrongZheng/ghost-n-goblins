@@ -55,4 +55,3 @@ platformer.game.state.add('loginScene',platformer.loginScene);
 //platformer.game.state.start('mainMenu');
 
 platformer.game.state.start('loginScene');
-console.log("esto es una prieba");
