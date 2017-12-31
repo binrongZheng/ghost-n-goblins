@@ -5,7 +5,7 @@ var gameOptions = {
 		gameHeight:448,
 		level1Height:448,
 		level1Width:7168,
-	currentScore:0,
+		currentScore:0,
     playerLife:true,
     playerGravity:1000,
 		playerSpeed:200,
@@ -17,22 +17,22 @@ var gameOptions = {
     crowSpeed:170,
     crowXoffset:20,
     crowYoffset:3,
-	ghostSpeed:170,
+		ghostSpeed:170,
     zombieSpeed: 150,
     levelOption:3,
     lastOption:3,
-	tutorialTime:120,
-	minTimeGhostSpawn:250,		//mínim de temps entre ghost i ghost
-	maxTimeGhostSpawn:1000,		//màxim  "  "  "
-	ghostWaitTime:4000,			//temps entre cada serie de 3 fantasmes que apareixen
-	ghostSpawnPosY:300,
-	forestGhostSpawnTime:300,
-	foresGhostSpeed:180,
-	distanceToStop:120,
+		tutorialTime:120,
+		minTimeGhostSpawn:250,		//mínim de temps entre ghost i ghost
+		maxTimeGhostSpawn:1000,		//màxim  "  "  "
+		ghostWaitTime:4000,			//temps entre cada serie de 3 fantasmes que apareixen
+		ghostSpawnPosY:300,
+		forestGhostSpawnTime:300,
+		foresGhostSpeed:180,
+		distanceToStop:120,
     currentCheckpoint:0,
-	platformSpeed:120,
-	ciclopWalkSpeed:100,
-	ciclopPoints:2000,
+	  platformSpeed:120,
+	  ciclopWalkSpeed:100,
+	  ciclopPoints:2000,
     finalBossSpeed:15,
     bossPoints:10000,
     currentLevel:'tutorial',
