@@ -9,7 +9,9 @@ platformer.loginScene={
 	},
     preload:function(){
       //FONT
-      this.game.load.bitmapFont('gngFont','fonts/gng_font.png','fonts/gng_font.xml');      
+      this.game.load.bitmapFont('gngFont','fonts/gng_font.png','fonts/gng_font.xml');
+      
+      this.allowedLetters = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
         
     },
     create:function(){
@@ -42,34 +44,34 @@ platformer.loginScene={
         
         //CONTROLS
         this.enter = this.game.input.keyboard.addKey(Phaser.Keyboard.ENTER);
+        
+        
+        
     },
     update:function(){
         
         //agafem el que escrius i afegim/borrem lletra
         this.game.input.keyboard.onDownCallback = function() {  //Get ready for some "discípulo de Radev" Action:
             
-            if (this.userName == "ARTHUR"){ //la primera vegada hem de netejar el string i parar el blink
-                this.userName = String.fromCharCode(this.game.input.keyboard.event.keyCode);                
-                this.game.time.events.remove(this.blinkEvent);
-                this.userNameText.alpha = 1;
-            }
+            if (this.allowedLetters.indexOf(String.fromCharCode(this.game.input.keyboard.event.keyCode)) > -1) { //nomes si es una lletra de les permeses afegim a l'array
+               if (this.userName == "ARTHUR"){ //la primera vegada hem de netejar el string i parar el blink
+                    this.userName = String.fromCharCode(this.game.input.keyboard.event.keyCode);                
+                    this.game.time.events.remove(this.blinkEvent);
+                    this.userNameText.alpha = 1;
+                }
+                else if (this.userName.length  < 6)
+                    this.userName += String.fromCharCode(this.game.input.keyboard.event.keyCode);       
+            }           
+            else if (this.game.input.keyboard.event.keyCode == 8 && this.userName.length > 0) //el backslash per borrar      
+                this.userName = this.userName.substr(0, this.userName.length-1);           
             
-            else if (this.game.input.keyboard.event.keyCode == 8 && this.userName.length > 0)       // No tens en compte el enter!
-                this.userName = this.userName.substr(0, this.userName.length-1);          
-            
-            else if (this.userName.length  < 6)
-                this.userName += String.fromCharCode(this.game.input.keyboard.event.keyCode);       //Pot ser problemàtic pq estàs afegint tots els símbols (que no es poden veure però estan a la string. I si poses un " segurament et carregues les partides guardades)
             
         }.bind(this);
         
         //ho pintem
         this.userNameText.setText(this.userName); 
         
-        if(this.enter.isDown && this.userName.length > 0){
-            if(this.userName.length == 1 && this.userName.charCodeAt(0) == 13){       //BUGFIX TEMPORAL---------- 
-                //(si hem apretat enter hi haurà el caracter 13)
-                this.userName = "ARTHUR";
-            }
+        if(this.enter.isDown && this.userName.length > 0){            
              gameOptions.userName = this.userName;                
              platformer.game.state.start('mainMenu');
         }
