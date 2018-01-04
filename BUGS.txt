@@ -1,0 +1,6 @@
+- dimoni continua perseguir a protagonista quan passi el riu
+- quan surtir el play la putuacio y la vida no esta actualitzat
+- quan morrir en el lloc on hi ha dimoni, encara que no ha matat el dimoni, s'ha posa que ha matat
+- quita armadura muy raro
+- hud, player score no es veu bé
+- boss level 1 saltar fora de la pantalla
