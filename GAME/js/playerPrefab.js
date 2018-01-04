@@ -9,6 +9,7 @@ platformer.playerPrefab = function (game,x,y, _level,_player_life,_cursors,_jump
     this.jump_key = _jump_key;
     this.space = _space;
     this.with_cloth = _with_cloth;
+    //this.with_cloth = false;
     this.ladderArea;//detectce ladder
     this.onLadder=false; //esta xoca amb ladder
     this.climbing=false; //no esta pujant
@@ -97,8 +98,8 @@ platformer.playerPrefab.prototype = Object.create(Phaser.Sprite.prototype);
 platformer.playerPrefab.prototype.constructor = platformer.playerPrefab;
 
 platformer.playerPrefab.prototype.update = function () {
-
-	  this.game.physics.arcade.collide(this, this.level.platform_collision);
+        
+    this.game.physics.arcade.collide(this, this.level.platform_collision);
     this.touchGrave=false;
     this.game.physics.arcade.collide(this, this.level.graves, this.touch, null, this);
     this.game.physics.arcade.collide(this, this.level.movingPlatform, this.touch, null, this);	//utilizo lo mismo para la movingPlatform
@@ -205,7 +206,7 @@ else {
         //this.body.setSize(this.width/2*this.scale.x, this.height, this.width/4*this.scale.x,0);
 
     //WITH CLOTH ANIMATION
-        if(this.with_cloth&&!this.climbing && !this.celebrating && !this.damaged&&this.level.canPlay){
+        if(this.with_cloth&&!this.climbing && !this.celebrating && !this.damaged &&this.level.canPlay){
             //ATTACK
             if (this.space.isDown){
               if(this.ajupir_attack) this.animations.play('attack_ajupir');
@@ -359,16 +360,16 @@ else {
     if (!this.canShoot && this.level.game.time.now - this.timeCheck > this.shootWait){
         this.canShoot = true;
     }
-
+    
     //quan ens fan daño no ens podem moure fins que tornem a tocar el terra
-    if(this.damaged && (this.body.blocked.down || this.touchGrave) ){
+    if(this.damaged == true && (this.body.blocked.down || this.touchGrave)){
         this.damaged = false;
     }
     //QUAN NO ESTEM AJUPITS POSEM L'ALÇADA DEL DISPAR AL NORMAL
     if (!this.cursors.down.isDown && this.shootOffset != 7){
         this.shootOffset = 7;
     }
-
+    console.log(this.frame);
 }
 platformer.playerPrefab.prototype.shoot = function () {
     //crear arma-----------TODO: FALTA PER MIRAR SI EL PLAYER ESTÀ AJUPIT O NO (surt més amunt o avall)
@@ -407,18 +408,24 @@ platformer.playerPrefab.prototype.killPlayer = function (hero,enemy) {
 			this.invincible = true;
 		  	this.game.time.events.add(1060,this.stopInvincible,this);	//para dejar de ser invencible
           	//this.showArmourGone(hero,enemy);					//da error (no puede conseguir la x del enemigo)
-            this.damagedArmour.animations.play('break');
+            //animacio treure armadura i posem el frame del damage
+            //this.damagedArmour.animations.play('break');
+            
             //no deixem moure i apliquem força fins que tornem a tocar el terra
             this.damaged = true;
+            this.frame = 33;
+                        
             this.removeArmourSo.play();
             //this.animations.play('removeArmour');
             this.body.velocity.x = -200;
             this.body.velocity.y = -250;
       			this.body.position.y -=50;
       			this.game.time.events.repeat(Phaser.Timer.SECOND/27,28,this.invincibleBlink,this);	//evento para que se ponga a parpadear
+            this.with_cloth=false;
+            this.body.blocked.down = false; //pq no entri a la primera de totes            
         }
-        this.with_cloth=false;
         this.isKill--;
+                
         if(this.with_cloth==false&&this.isKill==0){
             lastLife=this.player_life;
             this.player_life--;
