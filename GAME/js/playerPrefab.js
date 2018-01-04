@@ -188,7 +188,8 @@ else {
         }
     }
 
-
+    
+    
 	//INVENCIBILITAT
 	if(this.invincibleKey.isDown && this.invincibleKey.downDuration(10)){
         this.invincible = !this.invincible;
@@ -196,10 +197,10 @@ else {
 
     //si no estem saltant posem a 0 la velocitat
 
-    if (!this.damaged && (this.touchGrave || this.body.blocked.down) ) {
+    if (!this.damaged && (this.touchGrave || this.body.blocked.down || ( (this.x+this.width/2) < this.level.camera.position.x) ) ) {
         this.body.velocity.x = 0;
     }
-
+    
     //POSAR TAMANY COLISIO A NORMAL SI NO HO ESTA
     if (this.body.height != this.height)
         this.body.setSize(this.width*this.scale.x, this.height, 0,0);
@@ -225,9 +226,9 @@ else {
             else if (this.cursors.left.isDown){
                 this.ajupir_attack=false;
                 if(this.body.blocked.down||this.touchGrave==true){
-                    if ((this.x+this.width/2) > (this.level.checkpoints[gameOptions.currentCheckpoint].x - gameOptions.gameWidth/2)) //per no poder caminar mes enrere del checkpoint
+                    if ((this.x+this.width/2) > this.level.camera.position.x) //per no poder caminar mes enrere del checkpoint
                         this.body.velocity.x = -gameOptions.playerSpeed;
-
+                    
                     this.animations.play('walk');
                     this.scale.x = -1;
                 }
@@ -236,7 +237,7 @@ else {
                     this.animations.play('jump_throw');
 
                     this.scale.x = -1;
-                    if ((this.x+this.width/2) > (this.level.checkpoints[gameOptions.currentCheckpoint].x - gameOptions.gameWidth/2)) //per no caminar mes enrere del checkpoint
+                    if ((this.x+this.width/2) > this.level.camera.position.x) //per no caminar mes enrere del checkpoint
                         this.body.velocity.x = -gameOptions.playerSpeed;
 
                 }
@@ -298,7 +299,7 @@ else {
            else if (this.cursors.left.isDown){
              this.ajupir_attack=false;
                if(this.body.blocked.down||this.touchGrave==true){
-                   if ((this.x+this.width/2) > (this.level.checkpoints[gameOptions.currentCheckpoint].x - gameOptions.gameWidth/2))
+                   if ((this.x+this.width/2) > this.level.camera.x)
                         this.body.velocity.x = -gameOptions.playerSpeed;
 
                    this.animations.play('walk_N');
@@ -309,7 +310,7 @@ else {
                    this.animations.play('jump_throw_N');
 
                    this.scale.x = -1;
-                   if ((this.x+this.width/2) > (this.level.checkpoints[gameOptions.currentCheckpoint].x - gameOptions.gameWidth/2))
+                   if ((this.x+this.width/2) > this.level.camera.x)
                         this.body.velocity.x = -gameOptions.playerSpeed;
 
                }
@@ -369,7 +370,7 @@ else {
     if (!this.cursors.down.isDown && this.shootOffset != 7){
         this.shootOffset = 7;
     }
-    console.log(this.frame);
+    
 }
 platformer.playerPrefab.prototype.shoot = function () {
     //crear arma-----------TODO: FALTA PER MIRAR SI EL PLAYER ESTÀ AJUPIT O NO (surt més amunt o avall)
@@ -413,6 +414,7 @@ platformer.playerPrefab.prototype.killPlayer = function (hero,enemy) {
             
             //no deixem moure i apliquem força fins que tornem a tocar el terra
             this.damaged = true;
+            this.animations.stop();
             this.frame = 33;
                         
             this.removeArmourSo.play();

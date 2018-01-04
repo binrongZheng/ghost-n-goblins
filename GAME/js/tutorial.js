@@ -277,23 +277,27 @@ platformer.tutorial = {
         this.keyMusic.play();
       }
 
-
+        
         //GAMEOVER screen
         this.game_over = this.add.sprite(this.camera.x+gameOptions.gameWidth/2,this.camera.y+gameOptions.gameHeight/2, 'game_over');
         this.game_over.anchor.setTo(0.5);
         this.game_over.visible=false;
 
-
+        
         if(this.themeMusic.loop==false) this.themeMusic.stop();
                 this.map.forEach(function(t){if (t) {t.collideDown=false;}},this.game,0,0,this.map.width,this.map.height,'platform_up');
-
+        
         //NO SEGUIR AL PERSONATGE LA CAMERA SI INTENTES TIRAR ENRERE DEL CHECKPOINT
-        if (this.hero.position.x < this.checkpoints[gameOptions.currentCheckpoint].x && this.camera.target != null){
+        if (this.camera.target != null && (this.redDevil.active || this.hero.position.x < this.checkpoints[gameOptions.currentCheckpoint].x)){
             this.camera.target = null;
         }
-        else if (this.hero.position.x >= this.checkpoints[gameOptions.currentCheckpoint].x && this.camera.target == null){
+        else if (this.camera.target == null && this.hero.position.x >= this.checkpoints[gameOptions.currentCheckpoint].x && !this.redDevil.active){
             this.camera.follow(this.hero);
         }
+        else if (this.camera.target == null && this.redDevil.dead && this.redDevil.active && Phaser.Math.difference(this.hero.position.x,this.camera.position.x + gameOptions.gameWidth/2) < 5 ) {
+            this.camera.follow(this.hero);
+            this.redDevil.active = false;
+        }   
 
 
 	},
