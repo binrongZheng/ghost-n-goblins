@@ -177,11 +177,7 @@ else {
     for (var i = 0; i < this.level.checkpoints.length;i++){
         if (Phaser.Math.difference(this.position.x,this.level.checkpoints[i].x) < 10){
             if (i > gameOptions.currentCheckpoint){ //aixi nomes ho fa un cop
-				this.level.hud.resetTimer();		//vaig crear la funcio per algo.... >.< , ostia sry haha
-                /*var hud = this.level.hud;
-                hud.timer = this.level.game.time.create(false);
-	            hud.timer.loop(gameOptions.tutorialTime*1000+999,hud.timerFinished,hud);
-				hud.timer.start();*/
+				this.level.hud.resetTimer();               
                 gameOptions.currentCheckpoint = i;
             }
 
@@ -196,7 +192,6 @@ else {
     }
 
     //si no estem saltant posem a 0 la velocitat
-
     if (!this.damaged && (this.touchGrave || this.body.blocked.down || ( (this.x+this.width/2) < this.level.camera.position.x) ) ) {
         this.body.velocity.x = 0;
     }
@@ -387,38 +382,21 @@ platformer.playerPrefab.prototype.touch = function (hero,grave) {
     if(hero.body.touching.down&&grave.body.touching.up)
     this.touchGrave=true;
 }
-platformer.playerPrefab.prototype.showArmourGone = function(hero,enemy){
-
-  if(hero.x>enemy.x){ var span = 16; }
-  else var span = -16;
-
-  armourGone = this.game.add.sprite(this.x+span,  this.y-32, "armaduraGone");
-  armourGone.anchor.setTo(0.5);
-  anim = armourGone.animations.add("armourGone", [0,1,2,3,3], 14, false);
-  //anim.play("armourGone");
-   anim.killOnComplete = true;
-/*  anim.currentAnim.onComplete.add(function () {
-    console.log('animation complete');
-    this.with_cloth=false;
-}, this);*/
-}
 platformer.playerPrefab.prototype.killPlayer = function (hero,enemy) {
 
     if(!this.invincible){
         if(this.with_cloth==true && this.isKill==2) {
 			this.invincible = true;
-		  	this.game.time.events.add(1060,this.stopInvincible,this);	//para dejar de ser invencible
-          	//this.showArmourGone(hero,enemy);					//da error (no puede conseguir la x del enemigo)
+		  	this.game.time.events.add(1060,this.stopInvincible,this);	//para dejar de ser invencible          	        
+            //da error (no puede conseguir la x del enemigo)
             //animacio treure armadura i posem el frame del damage
-            //this.damagedArmour.animations.play('break');
-            
-            //no deixem moure i apliquem força fins que tornem a tocar el terra
             this.damaged = true;
             this.animations.stop();
             this.frame = 33;
-                        
+            this.damagedArmour.animations.play('break');            
             this.removeArmourSo.play();
-            //this.animations.play('removeArmour');
+            
+            //no deixem moure i apliquem força fins que tornem a tocar el terra           
             this.body.velocity.x = -200;
             this.body.velocity.y = -250;
       			this.body.position.y -=50;
@@ -438,10 +416,7 @@ platformer.playerPrefab.prototype.killPlayer = function (hero,enemy) {
                 this.body.checkCollision.right=false;
 				this.body.velocity.x = 0;
                 this.playerDieSo.play();
-                this.playerDieSo.onStop.addOnce(function() {    this.game.time.events.add(Phaser.Timer.SECOND * 0.75, this.map_Screen, this);}, this);
-
-
-                //this.game.state.start('tutorial');
+                this.playerDieSo.onStop.addOnce(function() {    this.game.time.events.add(Phaser.Timer.SECOND * 0.75, this.map_Screen, this);}, this);                
             }
         }
         if(this.playerHaveLife){
@@ -476,8 +451,7 @@ platformer.playerPrefab.prototype.killPlayer = function (hero,enemy) {
 }
 platformer.playerPrefab.prototype.PlayerDie = function (hero,water) {
   if(!this.invincible){
-        //play so of died
-
+        
         lastLife=this.player_life;
         this.player_life--;
 
@@ -486,10 +460,8 @@ platformer.playerPrefab.prototype.PlayerDie = function (hero,water) {
             this.level.themeMusic.stop();
             hero.kill();
             this.playerDieSo.play();
-//this.playerDieSo.onStop.addOnce(function() {    this.game.time.events.add(Phaser.Timer.SECOND * 0.75, this.map_Screen, this);}, this);
-            this.playerDieSo.onStop.addOnce(function() { this.game.state.start('mapScreen');}, this);
-
-            //this.game.state.start('tutorial');
+            //this.playerDieSo.onStop.addOnce(function() {    this.game.time.events.add(Phaser.Timer.SECOND * 0.75, this.map_Screen, this);}, this);
+            this.playerDieSo.onStop.addOnce(function() { this.game.state.start('mapScreen');}, this);            
 
         }
         if(this.playerHaveLife){

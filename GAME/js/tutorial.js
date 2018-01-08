@@ -288,16 +288,12 @@ platformer.tutorial = {
                 this.map.forEach(function(t){if (t) {t.collideDown=false;}},this.game,0,0,this.map.width,this.map.height,'platform_up');
         
         //NO SEGUIR AL PERSONATGE LA CAMERA SI INTENTES TIRAR ENRERE DEL CHECKPOINT
-        if (this.camera.target != null && (this.redDevil.active || this.hero.position.x < this.checkpoints[gameOptions.currentCheckpoint].x)){
+        if (this.camera.target != null && this.hero.position.x < this.checkpoints[gameOptions.currentCheckpoint].x){
             this.camera.target = null;
         }
-        else if (this.camera.target == null && this.hero.position.x >= this.checkpoints[gameOptions.currentCheckpoint].x && !this.redDevil.active){
+        else if (this.camera.target == null && this.hero.position.x >= this.checkpoints[gameOptions.currentCheckpoint].x){
             this.camera.follow(this.hero);
-        }
-        else if (this.camera.target == null && this.redDevil.dead && this.redDevil.active && Phaser.Math.difference(this.hero.position.x,this.camera.position.x + gameOptions.gameWidth/2) < 5 ) {
-            this.camera.follow(this.hero);
-            this.redDevil.active = false;
-        }   
+        }     
 
 
 	},
