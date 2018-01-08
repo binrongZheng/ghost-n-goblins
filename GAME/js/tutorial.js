@@ -71,6 +71,7 @@ platformer.tutorial = {
         //player init value
         this.with_cloth=true;
         this.player_life=gameOptions.levelOption;
+        Debug.log("init");
         this.playerHaveLife=gameOptions.playerLife;//playerLife==false;
         this.isPlay=true;
         this.canPlay=true;
@@ -206,9 +207,13 @@ platformer.tutorial = {
         this.door = new platformer.doorPrefab(this.game, 6962, 256, this);
         //this.key = new platformer.keyPrefab(this.game,6850,50,this);	//la afegeixo quan matem el ciclop
 
+        //PUNTUACIÓ I VIDES
+        gameOptions.currentScore = 0;
+        
+        
         //PLAYER ->(game,x,y, _level,_player_life,_cursors,_jump_key,_space,_with_cloth)
         this.hero = new platformer.playerPrefab(this.game,this.checkpoints[gameOptions.currentCheckpoint].x,this.checkpoints[gameOptions.currentCheckpoint].y,this,this.player_life,this.cursors,this.jump_key,this.space,this.with_cloth,this.playerHaveLife );
-
+        
 
 
         //BALES DEL PERSONATGE

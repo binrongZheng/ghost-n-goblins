@@ -15,8 +15,7 @@ platformer.forestGhostSpawnPrefab.prototype=Object.create(Phaser.Sprite.prototyp
 platformer.forestGhostSpawnPrefab.prototype.constructor=platformer.forestGhostSpawnPrefab;
 
 platformer.forestGhostSpawnPrefab.prototype.update = function () {
-	if(this.level.hero.x>this.x && !this.spawning && this.x > this.level.checkpoints[gameOptions.currentCheckpoint].x){			//comença a espawnejar fantasmes -------AQUEST ES EL BO
-	//if(this.level.hero.x>this.x && !this.spawning){			//comença a espawnejar fantasmes
+	if(this.level.hero.x>this.x && !this.spawning && this.x > this.level.checkpoints[gameOptions.currentCheckpoint].x){			//comença a espawnejar fantasmes
 		this.spawning = true;
 		this.level.game.time.events.add(100,this.spawnForGhost,this);
 	}
