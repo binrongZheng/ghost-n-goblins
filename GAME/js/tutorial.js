@@ -71,7 +71,6 @@ platformer.tutorial = {
         //player init value
         this.with_cloth=true;
         this.player_life=gameOptions.levelOption;
-        Debug.log("init");
         this.playerHaveLife=gameOptions.playerLife;//playerLife==false;
         this.isPlay=true;
         this.canPlay=true;
