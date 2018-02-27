@@ -1,8 +1,8 @@
 ![screenshot](https://i.imgur.com/qwvLQRC.png)
 ### This Project was made by:
 - [**Adrià Biarnés**](https://github.com/AdriaB-Enti "Adrià's GitHub page")
-- [**Pau Blanes**](https://github.com/binrongZheng "Pau's GitHub page")
-- [**Zheng Binrong**](https://github.com/PauBlanes "Zheng's GitHub page")
+- [**Pau Blanes**](https://github.com/PauBlanes "Pau's GitHub page")
+- [**Zheng Binrong**](https://github.com/binrongZheng "Zheng's GitHub page")
 ## 
 
 ![screenshot](/gngGIF.gif)
