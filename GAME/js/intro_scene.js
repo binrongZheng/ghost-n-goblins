@@ -9,10 +9,7 @@ platformer.intro_scene={
 	},
     preload:function(){
       //BACKGROUND
-		console.log("this works?");
-		console.log("testing: "+window.location.pathname);
       this.game.load.video('introVideo', 'video/introVideo.mp4');
-		console.log("how about this?");
       this.game.load.audio('map_music','sounds/intro_map.mp3');
 
     },
@@ -20,7 +17,6 @@ platformer.intro_scene={
 
         //BACKGROUND
         this.video = this.game.add.video('introVideo');
-		console.log("intro video ok");
         //this.video.onPlay.addOnce(start, this);
         this.sprite = this.video.addToWorld(0, 0, 0.0, 0.0,1,1.1);
         this.sprite.width=gameOptions.gameWidth;

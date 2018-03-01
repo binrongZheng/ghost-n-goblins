@@ -60,7 +60,7 @@ platformer.finalLevel={
       //introVideo
       this.game.load.video('introVideo', 'video/Intro_bossLevel.mp4');
       //endVideo
-      this.game.load.video('endVideo', 'video/End_bossLevel.mp4');
+      this.game.load.video('endVideo', 'video/end_bossLevel.mp4');
       //para menu pausa
       this.inPlay==true
       //comprovar si puede jugar o no
