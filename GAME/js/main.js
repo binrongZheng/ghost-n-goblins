@@ -56,4 +56,3 @@ platformer.game.state.add('loginScene',platformer.loginScene);
 
 platformer.game.state.start('loginScene');
 platformer.localStorageController.readScores();
-console.log(gameOptions.highScores);    //DEBUG - es pot esborrar
