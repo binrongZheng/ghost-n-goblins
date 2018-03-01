@@ -16,12 +16,12 @@ platformer.localStorageController = {
 
         if(this.checkLocalStorage()){
             if(localStorage["highscores"]==null){                //si no hi ha cap puntuació guardada
-                //localStorage["highscores"] = defaultScores;
+                localStorage["highscores"] = defaultScores;
             }
             savedScores = localStorage["highscores"];
             result = JSON.parse(savedScores);
         } else{
-            //result = JSON.parse(defaultScores);                 //si no tenim localStorage, carreguem el default
+            result = JSON.parse(defaultScores);                 //si no tenim localStorage, carreguem el default
         }
         gameOptions.highScores = result;
         gameOptions.topScore = result[0].score;
