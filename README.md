@@ -3,6 +3,8 @@
 - [**Adrià Biarnés**](https://github.com/AdriaB-Enti "Adrià's GitHub page")
 - [**Pau Blanes**](https://github.com/PauBlanes "Pau's GitHub page")
 - [**Zheng Binrong**](https://github.com/binrongZheng "Zheng's GitHub page")
+
+You can Play the game in your browser [**right here!**](https://binrongzheng.github.io/ghost-n-goblins/GAME)
 ## 
 
 ![screenshot](/gngGIF.gif)
