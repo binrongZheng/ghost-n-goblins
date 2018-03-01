@@ -11,7 +11,7 @@ platformer.intro_scene={
       //BACKGROUND
 		console.log("this works?");
 		console.log("testing: "+window.location.pathname);
-      this.game.load.video('introVideo', '/video/introVideo.mp4');
+      this.game.load.video('introVideo', 'video/introVideo.mp4');
 		console.log("how about this?");
       this.game.load.audio('map_music','sounds/intro_map.mp3');
 
